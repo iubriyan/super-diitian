@@ -18,7 +18,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 15, hPct: 20, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 38, hPct: 19, align: 'center' },
       teacher:   { xPct: 17, wPct: 41, yPct: 62.8, hPct: 17, align: 'left' },
-      student:   { xPct: 65, wPct: 25, yPct: 64.5, hPct: 17, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 64.5, hPct: 17, align: 'left' },
     }
   },
   {
@@ -27,7 +27,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 15, hPct: 13, align: 'center' },
       course:    { xPct: 12, wPct: 75, yPct: 30, hPct: 15, align: 'center' },
       teacher:   { xPct: 9,  wPct: 28, yPct: 47, hPct: 23, align: 'left' },
-      student:   { xPct: 41, wPct: 24, yPct: 48.8, hPct: 23, align: 'left' },
+      student:   { xPct: 41, wPct: 40, yPct: 48.8, hPct: 23, align: 'left' },
     }
   },
   {
@@ -36,7 +36,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 13, hPct: 17, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 35, hPct: 14, align: 'center' },
       teacher:   { xPct: 17, wPct: 41, yPct: 51.8, hPct: 20, align: 'left' },
-      student:   { xPct: 65, wPct: 25, yPct: 53.6, hPct: 20, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 53.6, hPct: 20, align: 'left' },
     }
   },
   {
@@ -45,7 +45,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 18, hPct: 15, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 37, hPct: 14, align: 'center' },
       teacher:   { xPct: 17, wPct: 41, yPct: 55, hPct: 18, align: 'left' },
-      student:   { xPct: 65, wPct: 24, yPct: 56.6, hPct: 18, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 56.6, hPct: 18, align: 'left' },
     }
   },
   {
@@ -54,7 +54,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 17.6, hPct: 14, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 34, hPct: 14, align: 'center' },
       teacher:   { xPct: 17, wPct: 41, yPct: 55, hPct: 11, align: 'left' },
-      student:   { xPct: 65, wPct: 27, yPct: 56.5, hPct: 11, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 56.5, hPct: 11, align: 'left' },
     }
   },
   {
@@ -63,7 +63,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 15.6, hPct: 11, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 31, hPct: 14, align: 'center' },
       teacher:   { xPct: 17, wPct: 41, yPct: 50, hPct: 18, align: 'left' },
-      student:   { xPct: 65, wPct: 25, yPct: 51.6, hPct: 18, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 51.6, hPct: 18, align: 'left' },
     }
   },
   {
@@ -72,7 +72,7 @@ const TEMPLATES = [
       deptBatch: { xPct: 10, wPct: 80, yPct: 16.6, hPct: 15, align: 'center' },
       course:    { xPct: 10, wPct: 80, yPct: 35, hPct: 14, align: 'center' },
       teacher:   { xPct: 17, wPct: 43, yPct: 51, hPct: 23, align: 'left' },
-      student:   { xPct: 65, wPct: 27, yPct: 52.8, hPct: 23, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 52.8, hPct: 23, align: 'left' },
     }
   },
   {
