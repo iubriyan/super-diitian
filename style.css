@@ -370,21 +370,86 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Footer
+   Professional Footer Design
    ============================================================ */
-.site-footer{
-  text-align: center;
-  padding: 30px 20px 40px;
-  color: var(--muted);
-  font-size: .85rem;
+.site-footer {
+  margin-top: 40px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  padding: 20px 20px;
+  box-shadow: 0 -2px 10px rgba(16, 36, 56, 0.02);
 }
-.site-footer a{
-  color: var(--blue-deep);
-  font-weight: 600;
-  text-decoration: none;
-}
-.site-footer a:hover{ text-decoration: underline; }
 
+.site-footer__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.footer-badge span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--blue-deep);
+  background: #EBF3FA;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid #D2E4F5;
+  letter-spacing: 0.3px;
+}
+
+.footer-credits {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+
+.footer-credits .heart {
+  color: #e25555;
+  display: inline-block;
+  margin: 0 2px;
+  animation: pulse 1.8s infinite;
+}
+
+.footer-credits .divider {
+  margin: 0 8px;
+  color: var(--line);
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+  margin-top: 2px;
+}
+
+.footer-links a {
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--blue-deep);
+  text-decoration: underline;
+}
+
+.footer-copy {
+  margin: 8px 0 0;
+  font-size: 0.80rem;
+  color: #8C99A6;
+}
+
+/* Heart icon pulse animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
 /* Media Query */
 /* Mobile Responsive Design */
 @media (max-width: 768px) {
