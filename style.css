@@ -78,7 +78,7 @@ button{ font-family: inherit; }
 }
 
 .site-header__logo {
-  height: 90px; 
+  height: 75px; 
   width: auto;
   object-fit: contain;
   display: block;
