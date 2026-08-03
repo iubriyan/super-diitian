@@ -382,3 +382,19 @@ button{ font-family: inherit; }
   text-decoration: none;
 }
 .site-footer a:hover{ text-decoration: underline; }
+
+/* Media Query */
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .site-header__inner {
+        flex-direction: column !important; 
+        align-items: center !important; 
+        text-align: center !important; 
+        gap: 20px !important; 
+    }
+    
+    .site-header__logo {
+        max-width: 80% !important; 
+        height: auto !important;
+    }
+}
