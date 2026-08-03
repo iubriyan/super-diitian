@@ -478,3 +478,38 @@ document.addEventListener('DOMContentLoaded', () => {
   wireDownload();
   scheduleRender();
 });
+
+// ============================================================
+// Prevent Direct Download / Context Menu on Template Images
+// ============================================================
+function protectTemplateImages() {
+  const templateImages = document.querySelectorAll('.template-card img');
+  templateImages.forEach(img => {
+    // Disable right-click / long-press menu
+    img.removeEventListener('contextmenu', blockEvent);
+    img.addEventListener('contextmenu', blockEvent);
+
+    // Disable dragging
+    img.removeEventListener('dragstart', blockEvent);
+    img.addEventListener('dragstart', blockEvent);
+  });
+}
+
+function blockEvent(e) {
+  e.preventDefault();
+}
+
+// Run protection on load and watch for dynamically generated images
+document.addEventListener('DOMContentLoaded', () => {
+  protectTemplateImages();
+
+  // If templates are loaded dynamically via JS, observe changes
+  const observer = new MutationObserver(() => {
+    protectTemplateImages();
+  });
+
+  const grid = document.getElementById('templateGrid');
+  if (grid) {
+    observer.observe(grid, { childList: true, subtree: true });
+  }
+});
