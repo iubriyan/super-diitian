@@ -8,8 +8,9 @@
 
 const CANVAS_W = 1414;
 const CANVAS_H = 2000;
+const STORAGE_PREFIX = 'super_diitian_';
 
-// zone shorthand: xPct/wPct/yPct/hPct are all percentages (0-100)
+// Zone shorthand: xPct/wPct/yPct/hPct are all percentages (0-100)
 // of canvas width/height. align: 'center' | 'left'.
 const TEMPLATES = [
   {
@@ -78,8 +79,6 @@ const TEMPLATES = [
   {
     id: 't8', file: 'assets/templates/t8.jpg', label: 'EEC Lab Report', fixed: true,
     zones: {
-      // Department / LAB REPORT / Course Code / Title / Teacher block are
-      // already printed on this template. Only the student block is dynamic.
       student:   { xPct: 44, wPct: 46, yPct: 53, hPct: 27, align: 'left' },
     }
   },
@@ -94,9 +93,9 @@ const DEFAULTS = {
   teacherTitle: 'Senior Lecturer',
   teacherDept: 'Department of CSE, DIIT',
   studentName: 'Iftekhar U. Bhuiyan',
-  studentSecVal: 'A',
-  studentIdVal: '260013',
-  studentRegVal: '',
+  studentSec: 'A',
+  studentId: '260013',
+  studentReg: '',
 };
 
 const FIELD_IDS = [
@@ -128,13 +127,12 @@ function wrapText(ctx, text, maxWidth, font) {
   return lines;
 }
 
-// Fits a stack of text "entries" inside a pixel box, shrinking font size
-// until every wrapped line fits both the width and the total height.
+// Fits a stack of text "entries" inside a pixel box
 function fitBlock(ctx, entries, boxPx, opts = {}) {
   const lineHeightMult = opts.lineHeightMult || 1.22;
   const gapPx = opts.gapPx ?? boxPx.height * 0.06;
   const minFont = opts.minFontPx || 13;
-  const maxFont = opts.maxFontPx;
+  const maxFont = opts.maxFontPx || 32; // Added safety default fallback
 
   let best = null;
   for (let s = 1.0; s >= 0.22; s -= 0.02) {
@@ -142,7 +140,10 @@ function fitBlock(ctx, entries, boxPx, opts = {}) {
     let ok = true;
     const rendered = [];
     for (const e of entries) {
-      if (!e.text) { rendered.push({ lines: [''], fs: 0, fontStr: '', lineH: 0 }); continue; }
+      if (!e.text) { 
+        rendered.push({ lines: [''], fs: 0, fontStr: '', lineH: 0 }); 
+        continue; 
+      }
       const fs = Math.max(minFont, maxFont * s * (e.weight || 1));
       const fontStr = `${e.bold ? 'bold ' : ''}${fs}px "Times New Roman", Times, serif`;
       const lines = wrapText(ctx, e.text, boxPx.width, fontStr);
@@ -153,11 +154,11 @@ function fitBlock(ctx, entries, boxPx, opts = {}) {
         if (ctx.measureText(ln).width > boxPx.width + 0.75) ok = false;
       }
     }
-    totalH += gapPx * (entries.length - 1);
+    totalH += gapPx * Math.max(0, entries.length - 1);
     if (ok && totalH <= boxPx.height) { best = rendered; break; }
   }
+
   if (!best) {
-    // last-resort fallback at minimum size, may slightly overflow on absurd input
     best = entries.map(e => {
       if (!e.text) return { lines: [''], fs: 0, fontStr: '', lineH: 0 };
       const fs = minFont * (e.weight || 1);
@@ -172,9 +173,12 @@ function drawFittedBlock(ctx, entries, boxPx, opts = {}) {
   const { rendered, gapPx } = fitBlock(ctx, entries, boxPx, opts);
   const align = opts.align || 'center';
   let totalH = 0;
-  rendered.forEach((r, i) => { totalH += r.lines.length * r.lineH; if (i > 0) totalH += gapPx; });
+  rendered.forEach((r, i) => { 
+    totalH += r.lines.length * r.lineH; 
+    if (i > 0 && r.fs > 0) totalH += gapPx; 
+  });
 
-  let cursorY = boxPx.y + (boxPx.height - totalH) / 2; // vertically center the whole stack
+  let cursorY = boxPx.y + (boxPx.height - totalH) / 2; // Vertically center the stack
   const textX = align === 'center' ? boxPx.x + boxPx.width / 2 : boxPx.x;
 
   ctx.textAlign = align === 'center' ? 'center' : 'left';
@@ -201,7 +205,7 @@ function pctBox(zone) {
 }
 
 /* ------------------------------------------------------------
-   Image cache
+   Image cache (with error eviction)
    ------------------------------------------------------------ */
 const imageCache = {};
 function loadImage(src) {
@@ -209,7 +213,10 @@ function loadImage(src) {
   const p = new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = (err) => {
+      delete imageCache[src]; // Evict broken promise from cache
+      reject(err);
+    };
     img.src = src;
   });
   imageCache[src] = p;
@@ -217,26 +224,31 @@ function loadImage(src) {
 }
 
 /* ------------------------------------------------------------
-   App state
+   App state & Data Collection
    ------------------------------------------------------------ */
 let selectedTemplateId = TEMPLATES[0].id;
 let renderQueued = false;
 
-function getTemplate(id) { return TEMPLATES.find(t => t.id === id); }
+function getTemplate(id) { return TEMPLATES.find(t => t.id === id) || TEMPLATES[0]; }
+
+function getInputValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
 
 function collectData() {
   return {
-    deptName: document.getElementById('deptName').value.trim(),
-    batchName: document.getElementById('batchName').value.trim(),
-    courseCode: document.getElementById('courseCode').value.trim(),
-    courseTitle: document.getElementById('courseTitle').value.trim(),
-    teacherName: document.getElementById('teacherName').value.trim(),
-    teacherTitle: document.getElementById('teacherTitle').value.trim(),
-    teacherDept: document.getElementById('teacherDept').value.trim(),
-    studentName: document.getElementById('studentName').value.trim(),
-    studentSecVal: document.getElementById('studentSec').value.trim(),
-    studentIdVal: document.getElementById('studentId').value.trim(),
-    studentRegVal: document.getElementById('studentReg').value.trim(),
+    deptName: getInputValue('deptName'),
+    batchName: getInputValue('batchName'),
+    courseCode: getInputValue('courseCode'),
+    courseTitle: getInputValue('courseTitle'),
+    teacherName: getInputValue('teacherName'),
+    teacherTitle: getInputValue('teacherTitle'),
+    teacherDept: getInputValue('teacherDept'),
+    studentName: getInputValue('studentName'),
+    studentSecVal: getInputValue('studentSec'),
+    studentIdVal: getInputValue('studentId'),
+    studentRegVal: getInputValue('studentReg'),
   };
 }
 
@@ -272,7 +284,7 @@ async function renderTemplate(ctx, templateId, data) {
     ], pctBox(z.teacher), { maxFontPx: CANVAS_W * 0.026, minFontPx: 13, align: z.teacher.align });
   }
 
-  // Student block (always dynamic, including on the fixed template)
+  // Student block (always dynamic)
   const sectionLine = data.studentSecVal ? `Section: ${data.studentSecVal}` : '';
   const idLine = data.studentIdVal ? `ID No: ${data.studentIdVal}` : '';
   const regLine = `Reg No: ${data.studentRegVal || ''}`;
@@ -287,14 +299,21 @@ async function renderTemplate(ctx, templateId, data) {
 function scheduleRender() {
   if (renderQueued) return;
   renderQueued = true;
+
   requestAnimationFrame(async () => {
     renderQueued = false;
     const canvas = document.getElementById('previewCanvas');
+    if (!canvas) return;
+
+    // Ensure strict canvas dimension scaling
+    if (canvas.width !== CANVAS_W) canvas.width = CANVAS_W;
+    if (canvas.height !== CANVAS_H) canvas.height = CANVAS_H;
+
     const ctx = canvas.getContext('2d');
     const loading = document.getElementById('canvasLoading');
     try {
       await renderTemplate(ctx, selectedTemplateId, collectData());
-      loading.hidden = true;
+      if (loading) loading.hidden = true;
     } catch (err) {
       console.error('Render failed:', err);
     }
@@ -309,13 +328,21 @@ function updateFixedState() {
   const detailsPanel = document.getElementById('detailsPanel');
   const teacherSection = document.getElementById('teacherSection');
   const fixedNote = document.getElementById('fixedNote');
-  const generalFields = document.querySelectorAll('#deptName, #batchName, #courseCode, #courseTitle, #teacherName, #teacherTitle, #teacherDept');
+  const generalFieldIds = ['deptName', 'batchName', 'courseCode', 'courseTitle', 'teacherName', 'teacherTitle', 'teacherDept'];
 
   const isFixed = !!tpl.fixed;
-  fixedNote.hidden = !isFixed;
-  teacherSection.style.display = isFixed ? 'none' : '';
-  generalFields.forEach(el => { el.closest('.field').style.display = isFixed ? 'none' : ''; });
-  detailsPanel.classList.toggle('is-fixed', isFixed);
+  if (fixedNote) fixedNote.hidden = !isFixed;
+  if (teacherSection) teacherSection.style.display = isFixed ? 'none' : '';
+
+  generalFieldIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const fieldBox = el.closest('.field');
+      if (fieldBox) fieldBox.style.display = isFixed ? 'none' : '';
+    }
+  });
+
+  if (detailsPanel) detailsPanel.classList.toggle('is-fixed', isFixed);
 }
 
 /* ------------------------------------------------------------
@@ -323,7 +350,9 @@ function updateFixedState() {
    ------------------------------------------------------------ */
 function buildTemplateGrid() {
   const grid = document.getElementById('templateGrid');
+  if (!grid) return;
   grid.innerHTML = '';
+
   TEMPLATES.forEach(tpl => {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -344,11 +373,13 @@ function buildTemplateGrid() {
     btn.addEventListener('click', () => {
       selectedTemplateId = tpl.id;
       grid.querySelectorAll('.template-card').forEach(c => {
-        c.classList.toggle('is-selected', c === btn);
-        c.setAttribute('aria-pressed', c === btn ? 'true' : 'false');
+        const isSelected = c === btn;
+        c.classList.toggle('is-selected', isSelected);
+        c.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
       });
       updateFixedState();
-      document.getElementById('canvasLoading').hidden = false;
+      const loading = document.getElementById('canvasLoading');
+      if (loading) loading.hidden = false;
       scheduleRender();
     });
 
@@ -357,51 +388,78 @@ function buildTemplateGrid() {
 }
 
 /* ------------------------------------------------------------
-   Form wiring
+   Form & LocalStorage Data Handling
    ------------------------------------------------------------ */
-function applyDefaults() {
-  document.getElementById('deptName').value = DEFAULTS.deptName;
-  document.getElementById('batchName').value = DEFAULTS.batchName;
-  document.getElementById('courseCode').value = DEFAULTS.courseCode;
-  document.getElementById('courseTitle').value = DEFAULTS.courseTitle;
-  document.getElementById('teacherName').value = DEFAULTS.teacherName;
-  document.getElementById('teacherTitle').value = DEFAULTS.teacherTitle;
-  document.getElementById('teacherDept').value = DEFAULTS.teacherDept;
-  document.getElementById('studentName').value = DEFAULTS.studentName;
-  document.getElementById('studentSec').value = DEFAULTS.studentSecVal;
-  document.getElementById('studentId').value = DEFAULTS.studentIdVal;
-  document.getElementById('studentReg').value = DEFAULTS.studentRegVal;
+function loadFormData() {
+  FIELD_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Load from LocalStorage or fall back to defaults
+    const saved = localStorage.getItem(STORAGE_PREFIX + id);
+    if (saved !== null) {
+      el.value = saved;
+    } else {
+      el.value = DEFAULTS[id] || '';
+    }
+  });
 }
 
 function wireForm() {
   FIELD_IDS.forEach(id => {
-    document.getElementById(id).addEventListener('input', scheduleRender);
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.addEventListener('input', (e) => {
+      // Save data locally on typing
+      localStorage.setItem(STORAGE_PREFIX + id, e.target.value);
+      scheduleRender();
+    });
   });
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    applyDefaults();
-    scheduleRender();
-  });
+
+  const resetBtn = document.getElementById('resetBtn') || document.querySelector('.reset-link');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      FIELD_IDS.forEach(id => {
+        localStorage.removeItem(STORAGE_PREFIX + id);
+        const el = document.getElementById(id);
+        if (el) el.value = DEFAULTS[id] || '';
+      });
+      scheduleRender();
+    });
+  }
 }
 
 /* ------------------------------------------------------------
-   Download
+   Download Handler
    ------------------------------------------------------------ */
 function wireDownload() {
   const btn = document.getElementById('downloadBtn');
+  if (!btn) return;
+
   btn.addEventListener('click', () => {
     const canvas = document.getElementById('previewCanvas');
+    if (!canvas) return;
+
     btn.disabled = true;
     const originalLabel = btn.innerHTML;
+    btn.innerHTML = 'Generating...';
+
     canvas.toBlob((blob) => {
-      if (!blob) { btn.disabled = false; return; }
+      if (!blob) { 
+        btn.disabled = false; 
+        btn.innerHTML = originalLabel;
+        return; 
+      }
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       const stamp = new Date().toISOString().slice(0, 10);
       a.href = url;
-      a.download = `super-diitian-cover-img-${selectedTemplateId}-${stamp}.jpg`;
+      a.download = `super-diitian-cover-${selectedTemplateId}-${stamp}.jpg`;
       document.body.appendChild(a);
       a.click();
       a.remove();
+
       setTimeout(() => URL.revokeObjectURL(url), 4000);
       btn.disabled = false;
       btn.innerHTML = originalLabel;
@@ -410,10 +468,10 @@ function wireDownload() {
 }
 
 /* ------------------------------------------------------------
-   Boot
+   App Initialization
    ------------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
-  applyDefaults();
+  loadFormData();
   buildTemplateGrid();
   updateFixedState();
   wireForm();
