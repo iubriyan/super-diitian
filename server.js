@@ -19,7 +19,7 @@ if (!GEMINI_API_KEY) {
 }
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 
 function loadRoutine() {
   const filePath = path.join(__dirname, "data", "routine.json");
