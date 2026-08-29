@@ -1,0 +1,181 @@
+{
+  "batch_info": {
+    "institution": "Daffodil Institute of IT (DIIT)",
+    "batch": "CSE 26th Batch",
+    "semester": "1st Year, 2nd Semester",
+    "effective_from": "13th July, 2026",
+    "developer": {
+      "name": "ইফতেখার উদ্দিন ভূইয়া (Iftekhar Uddin Bhuiyan)",
+      "nickname": "রিয়ান (Riyan)",
+      "student_id": "260013"
+    },
+    "current_crs": [
+      { "name": "Prionty Sarker (প্রিয়ন্তি সরকার)", "student_id": "260031" },
+      { "name": "Rafee Haque (রাফি হক / Tahsinul Haque)", "student_id": "260028" }
+    ]
+  },
+  "faculty_members": {
+    "SQ": "Sabrina Quadir",
+    "PB": "Poly Bhoumik",
+    "MZH": "Md. Zakir Hossain",
+    "SR": "Saidur Rahman",
+    "MIH": "Md. Imran Hossain",
+    "FP": "Farjana Parvin",
+    "MMR": "Md. Mushfiqur Rahaman",
+    "RKD": "Ramen Kumar Das",
+    "MFO": "Mubtasim Fuad Opee",
+    "PRM": "Md. Parvezur Rahman Mahin"
+  },
+  "class_schedule": {
+    "Sunday": {
+      "Section_A": {
+        "room": "704",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Calculus", "faculty": "Md. Zakir Hossain (MZH)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Structured Programming Language", "faculty": "Poly Bhoumik (PB)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Structured Programming Language Lab", "faculty": "Poly Bhoumik (PB)" }
+        ]
+      },
+      "Section_B": {
+        "room": "706",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Physics", "faculty": "Md. Parvezur Rahman Mahin (PRM)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Electrical and Electronic Circuit", "faculty": "Saidur Rahman (SR)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Calculus", "faculty": "Md. Imran Hossain (MIH)" }
+        ]
+      }
+    },
+    "Monday": {
+      "Section_A": {
+        "room": "704",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Calculus", "faculty": "Md. Zakir Hossain (MZH)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Electrical and Electronic Circuit", "faculty": "Ramen Kumar Das (RKD)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "English", "faculty": "Sabrina Quadir (SQ)" }
+        ]
+      },
+      "Section_B": {
+        "room": "706",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "English", "faculty": "Farjana Parvin (FP)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Calculus", "faculty": "Md. Imran Hossain (MIH)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Electrical and Electronic Circuit Lab", "faculty": "Saidur Rahman (SR)" }
+        ]
+      }
+    },
+    "Tuesday": {
+      "Section_A": {
+        "room": "704",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Electrical and Electronic Circuit", "faculty": "Ramen Kumar Das (RKD)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Physics", "faculty": "Mubtasim Fuad Opee (MFO)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Electrical and Electronic Circuit Lab", "faculty": "Saidur Rahman (SR)" }
+        ]
+      },
+      "Section_B": {
+        "room": "706",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Electrical and Electronic Circuit", "faculty": "Saidur Rahman (SR)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Structured Programming Language", "faculty": "Md. Mushfiqur Rahaman (MMR)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Physics", "faculty": "Md. Parvezur Rahman Mahin (PRM)" }
+        ]
+      }
+    },
+    "Wednesday": {
+      "Section_A": {
+        "room": "704",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "English", "faculty": "Sabrina Quadir (SQ)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "Structured Programming Language", "faculty": "Poly Bhoumik (PB)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Physics", "faculty": "Mubtasim Fuad Opee (MFO)" }
+        ]
+      },
+      "Section_B": {
+        "room": "706",
+        "classes": [
+          { "time": "11:40 AM - 12:50 PM", "subject": "Structured Programming Language", "faculty": "Md. Mushfiqur Rahaman (MMR)" },
+          { "time": "12:50 PM - 02:00 PM", "subject": "English", "faculty": "Farjana Parvin (FP)" },
+          { "time": "02:20 PM - 03:30 PM", "subject": "Structured Programming Language Lab", "faculty": "Md. Mushfiqur Rahaman (MMR)" }
+        ]
+      }
+    }
+  },
+  "students": [
+    { "id": "260001", "name": "FAIAZ HOSSAIN FARHAN" },
+    { "id": "260002", "name": "FAIYAZ BIN BAKAR" },
+    { "id": "260003", "name": "MD. JANON" },
+    { "id": "260004", "name": "FAHAD BIN NUR" },
+    { "id": "260005", "name": "TANJILUR RAHMAN" },
+    { "id": "260006", "name": "KHALID BIN SYAM" },
+    { "id": "260007", "name": "LAMYA AKTER EMO" },
+    { "id": "260009", "name": "MD. SAKIB MIA" },
+    { "id": "260010", "name": "MAHENUR RAHMAN" },
+    { "id": "260011", "name": "NAWRIN HOSSAIN OISHI" },
+    { "id": "260012", "name": "MD. NAHID HASAN" },
+    { "id": "260013", "name": "IFTEKHAR UDDIN BHUIYAN (Riyan)" },
+    { "id": "260014", "name": "MEHEDI HASSAN BAPPI" },
+    { "id": "260015", "name": "AYSHA AKTER MISHITA" },
+    { "id": "260016", "name": "TOLI" },
+    { "id": "260017", "name": "SHAMS MAHMUD WALID" },
+    { "id": "260018", "name": "NOUSHIN AHMED" },
+    { "id": "260019", "name": "SAZNIN FERDOUSI OYSHI" },
+    { "id": "260020", "name": "TASFIM MONJABIN" },
+    { "id": "260021", "name": "SYED REJOYAN HAQUE" },
+    { "id": "260022", "name": "NAFISA KHAN" },
+    { "id": "260023", "name": "MAHI SHAHRIAR APURBO" },
+    { "id": "260024", "name": "MD. SHAHNAWAZ KOBIR" },
+    { "id": "260025", "name": "AJIM UDDIN AKASH" },
+    { "id": "260026", "name": "MD. HASAN HABIB" },
+    { "id": "260027", "name": "MONIM AHMAD" },
+    { "id": "260028", "name": "TAHSINUL HAQUE (Rafee Haque)" },
+    { "id": "260029", "name": "TANIM KHAN" },
+    { "id": "260030", "name": "ZAYED BIN ABDULLAH" },
+    { "id": "260031", "name": "PRIONTY SARKER" },
+    { "id": "260032", "name": "MARIA SULTANA MOONMOON" },
+    { "id": "260033", "name": "UMAIYA RISTA URBOSHI" },
+    { "id": "260034", "name": "SAJIDUL ISLAM" },
+    { "id": "260035", "name": "MALIHA JAMAN" },
+    { "id": "260036", "name": "ANIKA TASNIM" },
+    { "id": "260037", "name": "MUSIDUL ISLAM SAYEB" },
+    { "id": "260038", "name": "MD. JOBAIR UDDIN" },
+    { "id": "260039", "name": "MAHMODUL HASAN" },
+    { "id": "260040", "name": "JANNAT TASNIN RAKA" },
+    { "id": "260041", "name": "FARHANA SADIA" },
+    { "id": "260042", "name": "SEMEKA BARMAN" },
+    { "id": "260043", "name": "SAILA SAJIN RINI" },
+    { "id": "260044", "name": "TAMIM EQBAL" },
+    { "id": "260045", "name": "NABILA HOSSAIN" },
+    { "id": "260046", "name": "MD. EYAKUB HOSSIN" },
+    { "id": "260047", "name": "SK. MD. SADIP" },
+    { "id": "260048", "name": "SK. TAZIM" },
+    { "id": "260049", "name": "SAMIRA TABASSUM" },
+    { "id": "260050", "name": "SOHANUR RAHAMAN NUR" },
+    { "id": "260051", "name": "ARIAN ABDULLAH" },
+    { "id": "260052", "name": "MD. SHEFAT ALI" },
+    { "id": "260053", "name": "RAFIUL ISLAM" },
+    { "id": "260054", "name": "SK. SADIK SAGAR" },
+    { "id": "260055", "name": "MD. ALBIR SAMI" },
+    { "id": "260056", "name": "MOHAMMED JUNAYED HOSSAINFARDIN" },
+    { "id": "260057", "name": "REDWAN AHMMED" },
+    { "id": "260058", "name": "MD. HRIDOY MONDOL" },
+    { "id": "260059", "name": "AMRIN AKTER ALISA" },
+    { "id": "260060", "name": "ASHRAFUL HOQUE RIMON" },
+    { "id": "260061", "name": "KAZI MD. ARAFAT HOSSAIN SHANTO" },
+    { "id": "260062", "name": "MD WHIDUN NABI NION" },
+    { "id": "260063", "name": "IKON SHEIKH" },
+    { "id": "260064", "name": "SHARMIN HOSSAIN ANUD" },
+    { "id": "260065", "name": "TASNIM HASNAT" },
+    { "id": "260066", "name": "MD. ANISUL HAQUE ANIK" },
+    { "id": "260067", "name": "IREEN AKTER" },
+    { "id": "260068", "name": "SIFATUL ISLAM SIFAT" },
+    { "id": "260069", "name": "HAFSA HOSSAIN TOMA" },
+    { "id": "260070", "name": "SINHA AKTER SEAN" },
+    { "id": "260071", "name": "MOHAMMAD TANVIR HOSSEN TAMIM" },
+    { "id": "260072", "name": "TUSTY ISLAM" },
+    { "id": "260073", "name": "MD. TAHASANUR KHAN" },
+    { "id": "260074", "name": "S.N. OMI" },
+    { "id": "260075", "name": "SALSABILA NAHIN AFNAN" },
+    { "id": "260076", "name": "MD. EFAZ BHUIYAN" },
+    { "id": "260077", "name": "MST. LOTA MONY" }
+  ]
+}

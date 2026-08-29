@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3S1BPW4HG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G3S1BPW4HG');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super DIITian — Cover Page Maker</title>
+<meta name="description" content="Generate a print-ready lab report or assignment cover page in seconds. Pick a design, fill in your details, download a high-quality JPG.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <img class="site-header__logo" src="./templates/diititan-logo.PNG" alt="Super DIITian logo">
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- LEFT COLUMN: form + template picker -->
+  <div class="layout__main">
+
+    <section class="panel" id="detailsPanel">
+      <div class="panel__head">
+        <span class="panel__eyebrow">Step 1</span>
+        <h2>Your details</h2>
+        <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
+      </div>
+
+      <div class="field-grid">
+        <label class="field">
+          <span>Your Department Name</span>
+          <input type="text" id="deptName" maxlength="120">
+        </label>
+        <label class="field">
+          <span>Your Batch Name</span>
+          <input type="text" id="batchName" maxlength="80">
+        </label>
+        <label class="field">
+          <span>Your Course Code</span>
+          <input type="text" id="courseCode" maxlength="40">
+        </label>
+        <label class="field">
+          <span>Your Course Title</span>
+          <input type="text" id="courseTitle" maxlength="120">
+        </label>
+      </div>
+
+      <p class="fixed-note" id="fixedNote" hidden>
+        This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
+        details are already printed on it. Just fill in <strong>Your Info</strong> below.
+      </p>
+
+      <div class="sub-section" id="teacherSection">
+        <h3>Teacher info <span>Submitted to</span></h3>
+        <div class="field-grid">
+          <label class="field">
+            <span>Teacher Name</span>
+            <input type="text" id="teacherName" maxlength="80">
+          </label>
+          <label class="field">
+            <span>Teacher Title</span>
+            <input type="text" id="teacherTitle" maxlength="80">
+          </label>
+          <label class="field field--wide">
+            <span>Teacher Department</span>
+            <input type="text" id="teacherDept" maxlength="120">
+          </label>
+        </div>
+      </div>
+
+      <div class="sub-section" id="studentSection">
+        <h3>Your info <span>Submitted by</span></h3>
+        <div class="field-grid">
+          <label class="field">
+            <span>Your Name</span>
+            <input type="text" id="studentName" maxlength="80">
+          </label>
+          <label class="field">
+            <span>Your Section</span>
+            <input type="text" id="studentSec" maxlength="30">
+          </label>
+          <label class="field">
+            <span>Your ID No</span>
+            <input type="text" id="studentId" maxlength="40">
+          </label>
+          <label class="field">
+            <span>Your Reg No</span>
+            <input type="text" id="studentReg" maxlength="40">
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="templatesPanel">
+      <div class="panel__head">
+        <span class="panel__eyebrow">Step 2</span>
+        <h2>Choose a cover design</h2>
+      </div>
+      <div class="template-grid" id="templateGrid"><!-- filled by script.js --></div>
+    </section>
+
+  </div>
+
+  <!-- RIGHT COLUMN: sticky live preview -->
+  <div class="layout__side">
+    <section class="panel preview-panel">
+      <div class="panel__head">
+        <span class="panel__eyebrow">Step 3</span>
+        <h2>Preview &amp; download</h2>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
+        <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
+      </div>
+      <button type="button" class="download-btn" id="downloadBtn">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z"/></svg>
+        Download high-quality JPG
+      </button>
+      <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
+    </section>
+  </div>
+</main>
+
+<!-- footer -->
+
+<footer class="site-footer">
+  <div class="site-footer__card">
+    <!-- Footer Top: Brand badge and navigation links -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-badge">🚀 Built for DIITians</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.facebook.com/share/1C4VXsD7J7/" target="_blank" rel="noopener"><strong>Say Hello 👋</strong></a>
+        <span class="link-divider">•</span>
+        <a href="https://diit.edu.bd" target="_blank" rel="noopener">DIIT Official Website</a>
+      </div>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <!-- Footer Bottom: Credits and copyright -->
+    <div class="footer-bottom">
+      <p class="footer-credits">
+        Brain: <strong>Riyan</strong>
+        <span class="credit-divider">|</span>
+        Backup Brain: <strong>Al Mama</strong>
+      </p>
+      <p class="footer-copy">&copy; 2026 Super DIITian. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="spl-generator.js"></script>
+
+
+<!-- CR GPT Floating Widget -->
+  <div id="cr-widget-container">
+    <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
+    <div id="cr-chat-box" class="cr-hidden">
+      <div class="cr-chat-header">
+        <strong>CR GPT (CSE 26)</strong>
+        <button id="cr-chat-close">✖</button>
+      </div>
+      <div id="cr-messages" class="cr-messages-body">
+        <div class="cr-msg cr-bot">
+          আসসালামু আলাইকুম! 👋 আমি তোমাদের CR GPT। ক্লাসের রুটিন জানতে মেসেজ দাও!
+        </div>
+      </div>
+      <div class="cr-chat-input-area">
+        <input type="text" id="cr-input" placeholder="আজকে কী ক্লাস আছে?..." />
+        <button id="cr-send-btn">➤</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
