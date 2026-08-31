@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         routineData = fs.readFileSync(routinePath, "utf8");
       }
     } catch {
-      // Ignore if routine file not present
+      // রুটিন ফাইল না থাকলে উপেক্ষা করবে
     }
 
     const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা চ্যাটবট 'CR GPT'। 
@@ -37,45 +37,56 @@ export default async function handler(req, res) {
 
 ইউজারের প্রশ্ন: ${message}`;
 
-    // সক্রিয় সমর্থিত মডেলের লিস্ট
-    const modelCandidates = ["gemini-2.0-flash", "gemini-2.0-flash-exp", "gemini-1.5-flash-latest"];
-    let reply = "";
-    let lastErrorMsg = "";
+    // ১. গুগলের কাছে বর্তমানে সক্রিয় ও অনুমোদিত মডেলের তালিকা চাওয়া
+    const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+    const listResponse = await fetch(listUrl);
+    const listData = await listResponse.json();
 
-    for (const model of modelCandidates) {
-      try {
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [{ text: systemPrompt }]
-              }
-            ]
-          })
-        });
-
-        const data = await response.json();
-        if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
-          reply = data.candidates[0].content.parts[0].text;
-          break;
-        } else {
-          lastErrorMsg = data.error?.message || "Model request failed";
-        }
-      } catch (err) {
-        lastErrorMsg = err.message;
-      }
+    if (!listResponse.ok) {
+      throw new Error(listData.error?.message || "এপিআই কি দিয়ে মডেল লিস্ট পাওয়া যায়নি");
     }
 
-    if (!reply) {
-      throw new Error(lastErrorMsg || "কোনো মডেল থেকে উত্তর পাওয়া যায়নি");
+    // ২. জেনারেট সাপোর্ট করে এমন মডেল ফিল্টার করা
+    const validModels = (listData.models || [])
+      .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
+      .map((m) => m.name.replace("models/", ""));
+
+    if (validModels.length === 0) {
+      throw new Error("আপনার এপিআই কি-তে কোনো সক্রিয় মডেল পাওয়া যায়নি।");
     }
+
+    // ৩. অগ্রাধিকার অনুযায়ী সেরা মডেল বাছাই
+    let chosenModel =
+      validModels.find((m) => m.includes("flash") && !m.includes("exp")) ||
+      validModels.find((m) => m.includes("flash")) ||
+      validModels.find((m) => m.includes("gemini")) ||
+      validModels[0];
+
+    // ৪. লাইভ মডেল এন্ডপয়েন্টে রিকোয়েস্ট পাঠানো
+    const generateUrl = `https://generativelanguage.googleapis.com/v1beta/models/${chosenModel}:generateContent?key=${apiKey}`;
+    const response = await fetch(generateUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: systemPrompt }]
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error?.message || "কনটেন্ট জেনারেশনে সমস্যা হয়েছে");
+    }
+
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "দুঃখিত, উত্তর পাওয়া যায়নি।";
 
     return res.status(200).json({ reply });
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini Live Resolver Error:", error);
     return res.status(500).json({ 
       reply: `Gemini এরর: ${error.message || "সার্ভার এরর"}` 
     });
