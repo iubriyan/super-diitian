@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3S1BPW4HG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3S1BPW4HG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-G3S1BPW4HG');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super DIITian — Cover Page Maker</title>
-<meta name="description" content="Generate a print-ready lab report or assignment cover page in seconds. Pick a design, fill in your details, download a high-quality JPG.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    gtag('config', 'G-G3S1BPW4HG');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super DIITian — Cover Page Maker</title>
+  <meta name="description" content="Generate a print-ready lab report or assignment cover page in seconds. Pick a design, fill in your details, download a high-quality JPG.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="site-header__inner">
-    <img class="site-header__logo" src="./templates/diititan-logo.PNG" alt="Super DIITian logo">
+    <img class="site-header__logo" src="./templates/diitian-logo.PNG" alt="Super DIITian logo">
   </div>
 </header>
 
 <main class="layout">
 
-  <!-- LEFT COLUMN: form + template picker -->
   <div class="layout__main">
 
     <section class="panel" id="detailsPanel">
@@ -109,12 +107,11 @@
         <span class="panel__eyebrow">Step 2</span>
         <h2>Choose a cover design</h2>
       </div>
-      <div class="template-grid" id="templateGrid"><!-- filled by script.js --></div>
+      <div class="template-grid" id="templateGrid"></div>
     </section>
 
   </div>
 
-  <!-- RIGHT COLUMN: sticky live preview -->
   <div class="layout__side">
     <section class="panel preview-panel">
       <div class="panel__head">
@@ -134,11 +131,8 @@
   </div>
 </main>
 
-<!-- footer -->
-
 <footer class="site-footer">
   <div class="site-footer__card">
-    <!-- Footer Top: Brand badge and navigation links -->
     <div class="footer-top">
       <div class="footer-brand">
         <span class="footer-badge">🚀 Built for DIITians</span>
@@ -152,7 +146,6 @@
 
     <div class="footer-divider"></div>
 
-    <!-- Footer Bottom: Credits and copyright -->
     <div class="footer-bottom">
       <p class="footer-credits">
         Brain: <strong>Riyan</strong>
@@ -164,28 +157,74 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
-<script src="spl-generator.js"></script>
-
-
-<!-- CR GPT Floating Widget -->
-  <div id="cr-widget-container">
-    <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
-    <div id="cr-chat-box" class="cr-hidden">
-      <div class="cr-chat-header">
-        <strong>CR GPT (CSE 26)</strong>
-        <button id="cr-chat-close">✖</button>
-      </div>
-      <div id="cr-messages" class="cr-messages-body">
-        <div class="cr-msg cr-bot">
-          আসসালামু আলাইকুম! 👋 আমি তোমাদের CR GPT। ক্লাসের রুটিন জানতে মেসেজ দাও!
-        </div>
-      </div>
-      <div class="cr-chat-input-area">
-        <input type="text" id="cr-input" placeholder="আজকে কী ক্লাস আছে?..." />
-        <button id="cr-send-btn">➤</button>
+<div id="cr-widget-container">
+  <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
+  <div id="cr-chat-box" class="cr-hidden">
+    <div class="cr-chat-header">
+      <strong>CR GPT (CSE 26)</strong>
+      <button id="cr-chat-close">✖</button>
+    </div>
+    
+    <div id="cr-messages" class="cr-messages-body">
+      <div class="cr-msg cr-bot">
+        আসসালামু আলাইকুম! আমি তোমাদের ক্লাসের CR GPT! আমি প্রিয়ন্তি এবং রাফির থেকেও বেশী প্রো! 😎
+        <br><br>
+        আমাকে ব্যবহার করতে এই লিংকে ক্লিক করো:<br>
+        <a href="https://super-diitian.onrender.com" target="_blank" style="color: #0084ff; text-decoration: underline; font-weight: bold; word-break: break-all; display: inline-block; margin-top: 5px;">
+          👉 super-diitian.onrender.com
+        </a>
       </div>
     </div>
+
+    <div class="cr-chat-input-area">
+      <input type="text" id="cr-input" placeholder="আজকে কী ক্লাস আছে?..." />
+      <button id="cr-send-btn">➤</button>
+    </div>
   </div>
+</div>
+
+<div id="bkash-modal" class="bkash-overlay bkash-hidden">
+  <div class="bkash-card">
+    <div class="bkash-header">
+      <div class="bkash-logo-text">bKash <span>Payment</span></div>
+      <button id="bkash-close-btn">&times;</button>
+    </div>
+
+    <div class="bkash-body" id="bkash-main-view">
+      <div class="bkash-merchant">
+        <p class="merchant-name">Super DIITian Premium</p>
+        <p class="merchant-inv">Invoice: EEC-2026</p>
+      </div>
+
+      <div class="bkash-amount-box">
+        <span>Amount to Pay</span>
+        <h3>৳ 99.00</h3>
+      </div>
+
+      <div class="bkash-input-group">
+        <label>Your bKash Account Number</label>
+        <input type="tel" id="bkash-phone-input" placeholder="e.g 017XXXXXXXX" value="017" maxlength="11" />
+      </div>
+
+      <p class="bkash-terms">By clicking Pay, you agree to terms & conditions.</p>
+
+      <button id="bkash-pay-btn" class="bkash-confirm-btn">Pay ৳ 99.00</button>
+    </div>
+
+    <div class="bkash-loading-view bkash-hidden" id="bkash-loading-view">
+      <div class="bkash-spinner"></div>
+      <p>Processing Payment...</p>
+    </div>
+
+    <div class="bkash-success-view bkash-hidden" id="bkash-success-view">
+      <div class="fun-emoji">😁🎉</div>
+      <h3 class="fun-title">আচ্ছা থাক টাকা লাগবে না!</h3>
+      <p class="fun-desc">ফ্রিতেই আনলক করে দিয়ে দিলাম, এনজয় করো!</p>
+      <button id="bkash-enjoy-btn" class="bkash-confirm-btn">থ্যাংক ইউ! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

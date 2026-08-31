@@ -77,7 +77,7 @@ const TEMPLATES = [
     }
   },
   {
-    id: 't8', file: 'templates/t8.jpg', label: 'EEC Lab Report', fixed: true,
+    id: 't8', file: 'templates/t8.jpg', label: 'EEC Lab Report', fixed: true, isPremium: true,
     zones: {
       student:   { xPct: 44, wPct: 46, yPct: 53, hPct: 27, align: 'left' },
     }
@@ -127,12 +127,11 @@ function wrapText(ctx, text, maxWidth, font) {
   return lines;
 }
 
-// Fits a stack of text "entries" inside a pixel box
 function fitBlock(ctx, entries, boxPx, opts = {}) {
   const lineHeightMult = opts.lineHeightMult || 1.22;
   const gapPx = opts.gapPx ?? boxPx.height * 0.06;
   const minFont = opts.minFontPx || 13;
-  const maxFont = opts.maxFontPx || 32; // Added safety default fallback
+  const maxFont = opts.maxFontPx || 32;
 
   let best = null;
   for (let s = 1.0; s >= 0.22; s -= 0.02) {
@@ -178,7 +177,7 @@ function drawFittedBlock(ctx, entries, boxPx, opts = {}) {
     if (i > 0 && r.fs > 0) totalH += gapPx; 
   });
 
-  let cursorY = boxPx.y + (boxPx.height - totalH) / 2; // Vertically center the stack
+  let cursorY = boxPx.y + (boxPx.height - totalH) / 2;
   const textX = align === 'center' ? boxPx.x + boxPx.width / 2 : boxPx.x;
 
   ctx.textAlign = align === 'center' ? 'center' : 'left';
@@ -214,7 +213,7 @@ function loadImage(src) {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = (err) => {
-      delete imageCache[src]; // Evict broken promise from cache
+      delete imageCache[src];
       reject(err);
     };
     img.src = src;
@@ -228,6 +227,7 @@ function loadImage(src) {
    ------------------------------------------------------------ */
 let selectedTemplateId = TEMPLATES[0].id;
 let renderQueued = false;
+let isEecUnlocked = false;
 
 function getTemplate(id) { return TEMPLATES.find(t => t.id === id) || TEMPLATES[0]; }
 
@@ -262,13 +262,11 @@ async function renderTemplate(ctx, templateId, data) {
   const z = tpl.zones;
 
   if (!tpl.fixed) {
-    // Department + Batch
     drawFittedBlock(ctx, [
       { text: data.deptName, bold: true, weight: 1.12 },
       { text: data.batchName, bold: true, weight: 0.9 },
     ], pctBox(z.deptBatch), { maxFontPx: CANVAS_W * 0.034, minFontPx: 16, align: z.deptBatch.align });
 
-    // Course code + title
     const codeLine = data.courseCode ? `Course Code: ${data.courseCode}` : '';
     const titleLine = data.courseTitle ? `Title: ${data.courseTitle}` : '';
     drawFittedBlock(ctx, [
@@ -276,7 +274,6 @@ async function renderTemplate(ctx, templateId, data) {
       { text: titleLine, bold: false, weight: 1 },
     ], pctBox(z.course), { maxFontPx: CANVAS_W * 0.0285, minFontPx: 15, align: z.course.align });
 
-    // Teacher block
     drawFittedBlock(ctx, [
       { text: data.teacherName, bold: true, weight: 1.05 },
       { text: data.teacherTitle, bold: false, weight: 0.92 },
@@ -284,7 +281,6 @@ async function renderTemplate(ctx, templateId, data) {
     ], pctBox(z.teacher), { maxFontPx: CANVAS_W * 0.026, minFontPx: 13, align: z.teacher.align });
   }
 
-  // Student block (always dynamic)
   const sectionLine = data.studentSecVal ? `Section: ${data.studentSecVal}` : '';
   const idLine = data.studentIdVal ? `ID No: ${data.studentIdVal}` : '';
   const regLine = `Reg No: ${data.studentRegVal || ''}`;
@@ -305,7 +301,6 @@ function scheduleRender() {
     const canvas = document.getElementById('previewCanvas');
     if (!canvas) return;
 
-    // Ensure strict canvas dimension scaling
     if (canvas.width !== CANVAS_W) canvas.width = CANVAS_W;
     if (canvas.height !== CANVAS_H) canvas.height = CANVAS_H;
 
@@ -346,8 +341,24 @@ function updateFixedState() {
 }
 
 /* ------------------------------------------------------------
-   Template picker grid
+   Template picker grid & Selection
    ------------------------------------------------------------ */
+function selectTemplate(tplId) {
+  selectedTemplateId = tplId;
+  const grid = document.getElementById('templateGrid');
+  if (grid) {
+    grid.querySelectorAll('.template-card').forEach(c => {
+      const isSelected = c.getAttribute('data-id') === tplId;
+      c.classList.toggle('is-selected', isSelected);
+      c.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+    });
+  }
+  updateFixedState();
+  const loading = document.getElementById('canvasLoading');
+  if (loading) loading.hidden = false;
+  scheduleRender();
+}
+
 function buildTemplateGrid() {
   const grid = document.getElementById('templateGrid');
   if (!grid) return;
@@ -356,31 +367,34 @@ function buildTemplateGrid() {
   TEMPLATES.forEach(tpl => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'template-card';
+    btn.className = `template-card ${tpl.isPremium && !isEecUnlocked ? 'is-premium' : ''}`;
     btn.setAttribute('data-id', tpl.id);
     btn.setAttribute('aria-pressed', tpl.id === selectedTemplateId ? 'true' : 'false');
     if (tpl.id === selectedTemplateId) btn.classList.add('is-selected');
 
+    let badgeHtml = '';
+    if (tpl.isPremium && !isEecUnlocked) {
+      badgeHtml = '<span class="premium-badge">👑 PRO</span>';
+    } else if (tpl.fixed) {
+      badgeHtml = '<span class="template-card__badge">Fixed</span>';
+    }
+
     btn.innerHTML = `
       <span class="template-card__clip" aria-hidden="true"></span>
+      ${badgeHtml}
       <span class="template-card__frame">
         <img src="${tpl.file}" alt="${tpl.label} cover design" loading="lazy">
-        ${tpl.fixed ? '<span class="template-card__badge">Fixed</span>' : ''}
       </span>
       <span class="template-card__label">${tpl.label}</span>
     `;
 
-    btn.addEventListener('click', () => {
-      selectedTemplateId = tpl.id;
-      grid.querySelectorAll('.template-card').forEach(c => {
-        const isSelected = c === btn;
-        c.classList.toggle('is-selected', isSelected);
-        c.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-      });
-      updateFixedState();
-      const loading = document.getElementById('canvasLoading');
-      if (loading) loading.hidden = false;
-      scheduleRender();
+    btn.addEventListener('click', (e) => {
+      if (tpl.isPremium && !isEecUnlocked) {
+        e.preventDefault();
+        openBkashModal();
+        return;
+      }
+      selectTemplate(tpl.id);
     });
 
     grid.appendChild(btn);
@@ -395,7 +409,6 @@ function loadFormData() {
     const el = document.getElementById(id);
     if (!el) return;
 
-    // Load from LocalStorage or fall back to defaults
     const saved = localStorage.getItem(STORAGE_PREFIX + id);
     if (saved !== null) {
       el.value = saved;
@@ -411,7 +424,6 @@ function wireForm() {
     if (!el) return;
 
     el.addEventListener('input', (e) => {
-      // Save data locally on typing
       localStorage.setItem(STORAGE_PREFIX + id, e.target.value);
       scheduleRender();
     });
@@ -468,6 +480,133 @@ function wireDownload() {
 }
 
 /* ------------------------------------------------------------
+   Prevent Image Drag & Context Menu
+   ------------------------------------------------------------ */
+function blockEvent(e) { e.preventDefault(); }
+function protectTemplateImages() {
+  const templateImages = document.querySelectorAll('.template-card img');
+  templateImages.forEach(img => {
+    img.removeEventListener('contextmenu', blockEvent);
+    img.addEventListener('contextmenu', blockEvent);
+    img.removeEventListener('dragstart', blockEvent);
+    img.addEventListener('dragstart', blockEvent);
+  });
+}
+
+/* ------------------------------------------------------------
+   bKash Prank Modal Functions
+   ------------------------------------------------------------ */
+const bkashModal = document.getElementById("bkash-modal");
+const bkashCloseBtn = document.getElementById("bkash-close-btn");
+const bkashPayBtn = document.getElementById("bkash-pay-btn");
+const bkashEnjoyBtn = document.getElementById("bkash-enjoy-btn");
+const bkashMainView = document.getElementById("bkash-main-view");
+const bkashLoadingView = document.getElementById("bkash-loading-view");
+const bkashSuccessView = document.getElementById("bkash-success-view");
+
+function openBkashModal() {
+  if (!bkashModal) return;
+  bkashMainView.classList.remove("bkash-hidden");
+  bkashLoadingView.classList.add("bkash-hidden");
+  bkashSuccessView.classList.add("bkash-hidden");
+  bkashModal.classList.remove("bkash-hidden");
+}
+
+function closeBkashModal() {
+  if (bkashModal) bkashModal.classList.add("bkash-hidden");
+}
+
+if (bkashCloseBtn) bkashCloseBtn.onclick = closeBkashModal;
+
+if (bkashPayBtn) {
+  bkashPayBtn.onclick = () => {
+    bkashMainView.classList.add("bkash-hidden");
+    bkashLoadingView.classList.remove("bkash-hidden");
+
+    setTimeout(() => {
+      bkashLoadingView.classList.add("bkash-hidden");
+      bkashSuccessView.classList.remove("bkash-hidden");
+      isEecUnlocked = true; // Unlock the template
+    }, 1500);
+  };
+}
+
+if (bkashEnjoyBtn) {
+  bkashEnjoyBtn.onclick = () => {
+    closeBkashModal();
+    // Re-render template grid to show unlocked state
+    buildTemplateGrid();
+    protectTemplateImages();
+    selectTemplate('t8'); // Automatically select EEC Lab Report
+  };
+}
+
+/* ------------------------------------------------------------
+   CR GPT Widget Logic
+   ------------------------------------------------------------ */
+function wireCrGptWidget() {
+  const chatToggle = document.getElementById("cr-chat-toggle");
+  const chatBox = document.getElementById("cr-chat-box");
+  const chatClose = document.getElementById("cr-chat-close");
+  const chatInput = document.getElementById("cr-input");
+  const sendBtn = document.getElementById("cr-send-btn");
+  const messagesBody = document.getElementById("cr-messages");
+
+  let chatHistory = [];
+
+  if (chatToggle && chatBox && chatClose) {
+    chatToggle.addEventListener("click", () => chatBox.classList.toggle("cr-hidden"));
+    chatClose.addEventListener("click", () => chatBox.classList.add("cr-hidden"));
+
+    async function handleSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      appendMsg(text, "cr-user");
+      chatInput.value = "";
+      const loading = appendMsg("টাইপ করছে...", "cr-bot");
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, history: chatHistory })
+        });
+        const data = await res.json();
+        loading.remove();
+
+        if (data.reply) {
+          appendMsg(data.reply, "cr-bot");
+          chatHistory.push({ role: "user", text: text });
+          chatHistory.push({ role: "model", text: data.reply });
+        } else {
+          appendMsg("সার্ভারে সমস্যা হয়েছে।", "cr-bot");
+        }
+      } catch (e) {
+        loading.remove();
+        appendMsg("কানেকশন এরর!", "cr-bot");
+      }
+    }
+
+    function appendMsg(msg, cls) {
+      const d = document.createElement("div");
+      d.className = `cr-msg ${cls}`;
+      d.innerText = msg;
+      messagesBody.appendChild(d);
+      messagesBody.scrollTop = messagesBody.scrollHeight;
+      return d;
+    }
+
+    if (sendBtn) sendBtn.addEventListener("click", handleSend);
+    if (chatInput) {
+      chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSend();
+      });
+    }
+  }
+}
+
+/* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
@@ -476,100 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFixedState();
   wireForm();
   wireDownload();
-  scheduleRender();
-});
-
-// ============================================================
-// Prevent Direct Download / Context Menu on Template Images
-// ============================================================
-function protectTemplateImages() {
-  const templateImages = document.querySelectorAll('.template-card img');
-  templateImages.forEach(img => {
-    // Disable right-click / long-press menu
-    img.removeEventListener('contextmenu', blockEvent);
-    img.addEventListener('contextmenu', blockEvent);
-
-    // Disable dragging
-    img.removeEventListener('dragstart', blockEvent);
-    img.addEventListener('dragstart', blockEvent);
-  });
-}
-
-function blockEvent(e) {
-  e.preventDefault();
-}
-
-// Run protection on load and watch for dynamically generated images
-document.addEventListener('DOMContentLoaded', () => {
   protectTemplateImages();
-
-  // If templates are loaded dynamically via JS, observe changes
-  const observer = new MutationObserver(() => {
-    protectTemplateImages();
-  });
-
-  const grid = document.getElementById('templateGrid');
-  if (grid) {
-    observer.observe(grid, { childList: true, subtree: true });
-  }
-
-
-  // --- CR GPT Widget Logic ---
-const chatToggle = document.getElementById("cr-chat-toggle");
-const chatBox = document.getElementById("cr-chat-box");
-const chatClose = document.getElementById("cr-chat-close");
-const chatInput = document.getElementById("cr-input");
-const sendBtn = document.getElementById("cr-send-btn");
-const messagesBody = document.getElementById("cr-messages");
-
-let chatHistory = [];
-
-if (chatToggle && chatBox && chatClose) {
-  chatToggle.addEventListener("click", () => chatBox.classList.toggle("cr-hidden"));
-  chatClose.addEventListener("click", () => chatBox.classList.add("cr-hidden"));
-
-  async function handleSend() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    appendMsg(text, "cr-user");
-    chatInput.value = "";
-    const loading = appendMsg("টাইপ করছে...", "cr-bot");
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history: chatHistory })
-      });
-      const data = await res.json();
-      loading.remove();
-
-      if (data.reply) {
-        appendMsg(data.reply, "cr-bot");
-        chatHistory.push({ role: "user", text: text });
-        chatHistory.push({ role: "model", text: data.reply });
-      } else {
-        appendMsg("সার্ভারে সমস্যা হয়েছে।", "cr-bot");
-      }
-    } catch (e) {
-      loading.remove();
-      appendMsg("কানেকশন এরর!", "cr-bot");
-    }
-  }
-
-  function appendMsg(msg, cls) {
-    const d = document.createElement("div");
-    d.className = `cr-msg ${cls}`;
-    d.innerText = msg;
-    messagesBody.appendChild(d);
-    messagesBody.scrollTop = messagesBody.scrollHeight;
-    return d;
-  }
-
-  sendBtn.addEventListener("click", handleSend);
-  chatInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSend();
-  });
-}
+  wireCrGptWidget();
+  scheduleRender();
 });

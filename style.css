@@ -91,10 +91,19 @@ button{ font-family: inherit; }
     padding: 12px 16px;
   }
   
+  .site-header__inner {
+    flex-direction: column !important; 
+    align-items: center !important; 
+    text-align: center !important; 
+    gap: 15px !important; 
+  }
+  
   .site-header__logo {
-    height: 48px; 
+    max-width: 80% !important;
+    height: auto !important;
   }
 }
+
 /* ============================================================
    Layout
    ============================================================ */
@@ -148,16 +157,6 @@ button{ font-family: inherit; }
   margin: 0;
   flex: 1 1 auto;
 }
-.reset-link{
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: .82rem;
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 4px 2px;
-}
-.reset-link:hover{ color: var(--blue-deep); }
 
 /* ============================================================
    Upgraded Form Fields & Sub-sections
@@ -178,7 +177,6 @@ button{ font-family: inherit; }
   grid-column: 1 / -1; 
 }
 
-/* Label Styling */
 .field span {
   font-size: 0.80rem;
   font-weight: 600;
@@ -186,7 +184,6 @@ button{ font-family: inherit; }
   letter-spacing: 0.2px;
 }
 
-/* Input Fields - Clean SaaS Look */
 .field input {
   font-family: var(--font-body);
   font-size: 0.92rem;
@@ -200,13 +197,11 @@ button{ font-family: inherit; }
   transition: all 0.2s ease;
 }
 
-/* Hover Effect */
 .field input:hover {
   border-color: #94A3B8;
   background: #F8FAFC;
 }
 
-/* Active Focus Ring Effect */
 .field input:focus {
   outline: none;
   border-color: var(--blue-deep);
@@ -214,7 +209,6 @@ button{ font-family: inherit; }
   box-shadow: 0 0 0 4px rgba(92, 114, 182, 0.18);
 }
 
-/* Sub-sections (Teacher Info & Your Info) */
 .sub-section { 
   margin-top: 24px; 
   padding-top: 20px; 
@@ -231,7 +225,6 @@ button{ font-family: inherit; }
   gap: 10px;
 }
 
-/* Sub-section Pill Badges */
 .sub-section h3 span {
   font-size: 0.72rem;
   font-weight: 600;
@@ -244,7 +237,6 @@ button{ font-family: inherit; }
   letter-spacing: 0.4px;
 }
 
-/* Upgrade Reset Link to a Subtle Button */
 .reset-link {
   background: #F1F5F9;
   border: 1px solid #E2E8F0;
@@ -266,6 +258,7 @@ button{ font-family: inherit; }
 @media (max-width: 480px) {
   .field-grid { grid-template-columns: 1fr; }
 }
+
 /* ============================================================
    Template picker
    ============================================================ */
@@ -357,6 +350,26 @@ button{ font-family: inherit; }
   z-index: 2;
 }
 
+/* --- Premium Badge on Card --- */
+.template-card.is-premium .template-card__frame {
+  outline: 2px solid #e2136e !important;
+}
+
+.premium-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: linear-gradient(135deg, #e2136e, #9b0b4b);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 10;
+  letter-spacing: 0.5px;
+}
+
 /* ============================================================
    Preview panel
    ============================================================ */
@@ -404,7 +417,7 @@ button{ font-family: inherit; }
   font-weight: 700;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: background .15s ease, transform .1s ease;
+  transition: background .15s ease, transform .15s ease;
 }
 .download-btn:hover{ background: #188540; }
 .download-btn:active{ transform: translateY(1px); }
@@ -502,13 +515,6 @@ button{ font-family: inherit; }
   color: var(--ink);
 }
 
-.footer-credits .heart {
-  color: #E25555;
-  display: inline-block;
-  margin: 0 2px;
-  animation: pulse 1.8s infinite;
-}
-
 .credit-divider {
   margin: 0 8px;
   color: var(--line);
@@ -520,14 +526,6 @@ button{ font-family: inherit; }
   font-size: 0.80rem;
 }
 
-/* Heart icon pulse animation */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.18); }
-  100% { transform: scale(1); }
-}
-
-/* Responsive adjustment for Mobile screens */
 @media (max-width: 768px) {
   .site-footer__card {
     padding: 20px 18px;
@@ -552,27 +550,6 @@ button{ font-family: inherit; }
   }
 }
 
-/* Heart icon pulse animation */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-/* Media Query */
-/* Mobile Responsive Design */
-@media (max-width: 768px) {
-    .site-header__inner {
-        flex-direction: column !important; 
-        align-items: center !important; 
-        text-align: center !important; 
-        gap: 20px !important; 
-    }
-    
-    .site-header__logo {
-        max-width: 80% !important; 
-        height: auto !important;
-    }
-}
 /* ============================================================
    Protect Template Images from Direct Download
    ============================================================ */
@@ -582,13 +559,16 @@ button{ font-family: inherit; }
   user-select: none !important;
 }
 
-/* --- CR GPT Floating Widget Style --- */
+/* ============================================================
+   CR GPT Floating Widget Style
+   ============================================================ */
 #cr-widget-container {
   position: fixed;
   bottom: 25px;
   right: 25px;
   z-index: 99999;
 }
+
 #cr-chat-toggle {
   background: #1e3c72;
   color: #fff;
@@ -598,13 +578,20 @@ button{ font-family: inherit; }
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
 }
+
+#cr-chat-toggle:hover {
+  transform: scale(1.05);
+}
+
 #cr-chat-box {
   position: absolute;
   bottom: 60px;
   right: 0;
   width: 330px;
   height: 450px;
+  max-height: calc(100vh - 120px);
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.25);
@@ -612,55 +599,292 @@ button{ font-family: inherit; }
   flex-direction: column;
   overflow: hidden;
   border: 1px solid #ccc;
+  min-height: 0;
 }
+
 .cr-hidden { display: none !important; }
+
 .cr-chat-header {
   background: #1e3c72;
   color: #fff;
-  padding: 12px;
+  padding: 12px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
-#cr-chat-close { background: none; border: none; color: #fff; cursor: pointer; }
+
+#cr-chat-close { 
+  background: none; 
+  border: none; 
+  color: #fff; 
+  cursor: pointer; 
+  font-size: 16px; 
+}
+
 .cr-messages-body {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 12px;
   overflow-y: auto;
   background: #f8f9fa;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
+
 .cr-msg {
-  max-width: 85%;
-  padding: 8px 12px;
+  max-width: 88%;
+  padding: 10px 12px;
   border-radius: 10px;
   font-size: 13px;
   white-space: pre-line;
-  line-height: 1.4;
+  line-height: 1.45;
+  word-break: break-word;
 }
-.cr-bot { background: #fff; border: 1px solid #e0e0e0; align-self: flex-start; }
-.cr-user { background: #1e3c72; color: #fff; align-self: flex-end; }
+
+.cr-bot { 
+  background: #fff; 
+  border: 1px solid #e0e0e0; 
+  align-self: flex-start; 
+  color: #222;
+}
+
+.cr-bot a {
+  color: #0084ff;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.cr-user { 
+  background: #1e3c72; 
+  color: #fff; 
+  align-self: flex-end; 
+}
+
 .cr-chat-input-area {
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
   background: #fff;
-  gap: 5px;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
 }
+
 #cr-input {
   flex: 1;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 20px;
   outline: none;
+  font-size: 13px;
 }
+
+#cr-input:focus {
+  border-color: #1e3c72;
+}
+
 #cr-send-btn {
   background: #1e3c72;
   color: #fff;
   border: none;
   border-radius: 50%;
   width: 35px;
+  height: 35px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   bKash Prank Modal Overlay & Card
+   ============================================================ */
+.bkash-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.bkash-hidden {
+  display: none !important;
+}
+
+.bkash-card {
+  width: 100%;
+  max-width: 360px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  animation: bkashPop 0.25s ease-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes bkashPop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.bkash-header {
+  background: #e2136e;
+  color: #fff;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bkash-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.bkash-logo-text span {
+  font-weight: 400;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+#bkash-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.bkash-body, .bkash-loading-view, .bkash-success-view {
+  padding: 20px;
+  text-align: center;
+}
+
+.bkash-merchant {
+  margin-bottom: 12px;
+}
+
+.merchant-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.merchant-inv {
+  font-size: 12px;
+  color: #777;
+  margin: 2px 0 0 0;
+}
+
+.bkash-amount-box {
+  background: #fff0f6;
+  border: 1px dashed #e2136e;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.bkash-amount-box span {
+  font-size: 12px;
+  color: #666;
+}
+
+.bkash-amount-box h3 {
+  margin: 2px 0 0 0;
+  font-size: 22px;
+  color: #e2136e;
+}
+
+.bkash-input-group {
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.bkash-input-group label {
+  display: block;
+  font-size: 12px;
+  color: #444;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.bkash-input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.bkash-input-group input:focus {
+  border-color: #e2136e;
+}
+
+.bkash-terms {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.bkash-confirm-btn {
+  width: 100%;
+  background: #e2136e;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bkash-confirm-btn:active {
+  background: #b80c57;
+}
+
+.bkash-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #e2136e;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 15px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fun-emoji {
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+.fun-title {
+  color: #1e3c72;
+  font-size: 18px;
+  margin: 0 0 6px 0;
+}
+
+.fun-desc {
+  color: #555;
+  font-size: 14px;
+  margin: 0 0 18px 0;
+  line-height: 1.4;
 }
