@@ -37,34 +37,45 @@ export default async function handler(req, res) {
 
 ইউজারের প্রশ্ন: ${message}`;
 
-    // সরাসরি অফিশিয়াল REST API কল
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // স্টেবল v1 এন্ডপয়েন্ট এবং সাপোর্টেড মডেলগুলোর লিস্ট
+    const modelCandidates = ["gemini-2.5-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash"];
+    let reply = "";
+    let lastErrorMsg = "";
 
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: systemPrompt }]
-          }
-        ]
-      })
-    });
+    for (const model of modelCandidates) {
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [{ text: systemPrompt }]
+              }
+            ]
+          })
+        });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error?.message || "গুগল API থেকে এরর রেসপন্স এসেছে");
+        const data = await response.json();
+        if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          reply = data.candidates[0].content.parts[0].text;
+          break;
+        } else {
+          lastErrorMsg = data.error?.message || "Model request failed";
+        }
+      } catch (err) {
+        lastErrorMsg = err.message;
+      }
     }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "দুঃখিত, কোনো উত্তর পাওয়া যায়নি।";
+    if (!reply) {
+      throw new Error(lastErrorMsg || "কোনো মডেল থেকে উত্তর পাওয়া যায়নি");
+    }
 
     return res.status(200).json({ reply });
   } catch (error) {
-    console.error("Gemini Direct Error:", error);
+    console.error("Gemini Error:", error);
     return res.status(500).json({ 
       reply: `Gemini এরর: ${error.message || "সার্ভার এরর"}` 
     });
