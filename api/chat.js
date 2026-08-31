@@ -37,28 +37,45 @@ export default async function handler(req, res) {
 
 ইউজারের প্রশ্ন: ${message}`;
 
-    // গুগল এরর মেসেজে নির্দিষ্ট করা সক্রিয় মডেল
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+    // সক্রিয় ও দ্রুতগতির বিকল্প মডেলের তালিকা
+    const modelCandidates = [
+      "gemini-3.6-flash",
+      "gemini-3.6-pro",
+      "gemini-2.0-flash",
+      "gemini-2.0-flash-lite",
+      "gemini-1.5-flash-8b"
+    ];
 
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: systemPrompt }]
-          }
-        ]
-      })
-    });
+    let reply = "";
+    let lastErrorMsg = "";
 
-    const data = await response.json();
+    for (const model of modelCandidates) {
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: systemPrompt }] }]
+          })
+        });
 
-    if (!response.ok) {
-      throw new Error(data.error?.message || "গুগল রেসপন্স তৈরিতে ব্যর্থ হয়েছে");
+        const data = await response.json();
+
+        if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          reply = data.candidates[0].content.parts[0].text;
+          break;
+        } else {
+          lastErrorMsg = data.error?.message || "Model request failed";
+        }
+      } catch (err) {
+        lastErrorMsg = err.message;
+      }
     }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "দুঃখিত, কোনো উত্তর পাওয়া যায়নি।";
+    if (!reply) {
+      throw new Error(lastErrorMsg || "গুগল সার্ভারে সাময়িক সমস্যা হচ্ছে।");
+    }
 
     return res.status(200).json({ reply });
   } catch (error) {
