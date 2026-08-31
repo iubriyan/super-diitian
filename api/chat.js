@@ -29,21 +29,37 @@ export default async function handler(req, res) {
         routineData = fs.readFileSync(routinePath, "utf8");
       }
     } catch {
-      // Ignore if file not found
+      // Ignore if routine not present
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের তৈরি করা স্মার্ট অ্যাসিস্ট্যান্ট 'CR GPT'।
-তুমি সর্বদা বাংলায় মার্জিত, বন্ধুসুলভ ও রসবোধপূর্ণ ভাষায় কথা বলবে।
-ক্লাস রুটিন, পরীক্ষার সময়সূচি বা নোটিশ সংক্রান্ত তথ্যের ভিত্তিতে উত্তর দাও:
-${routineData}
+    const fullPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা চ্যাটবট 'CR GPT'। 
+বন্ধুত্বপূর্ণ, রসবোধপূর্ণ ও সাহায্যকারী ভঙ্গিতে বাংলায় উত্তর দাও।
+তথ্যসূত্র: ${routineData || "কোনো অতিরিক্ত ফাইল সংযুক্ত নেই।"}
 
 ইউজারের প্রশ্ন: ${message}`;
 
-    const result = await model.generateContent(prompt);
-    const reply = result.response.text();
+    // মডেল লিস্ট (একটিতে ব্যর্থ হলে অন্যটিতে চেষ্টা করবে)
+    const modelsToTry = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-pro"];
+    let reply = "";
+    let lastError = null;
+
+    for (const modelName of modelsToTry) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const result = await model.generateContent(fullPrompt);
+        const response = await result.response;
+        reply = response.text();
+        if (reply) break;
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (!reply) {
+      throw lastError || new Error("মডেল রেসপন্স দিতে পারেনি");
+    }
 
     return res.status(200).json({ reply });
   } catch (error) {
