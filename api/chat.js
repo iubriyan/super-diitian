@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 
@@ -29,41 +28,43 @@ export default async function handler(req, res) {
         routineData = fs.readFileSync(routinePath, "utf8");
       }
     } catch {
-      // Ignore if routine not present
+      // রুটিন ফাইল না থাকলে কোনো সমস্যা নেই
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-
-    const fullPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা চ্যাটবট 'CR GPT'। 
+    const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা চ্যাটবট 'CR GPT'। 
 বন্ধুত্বপূর্ণ, রসবোধপূর্ণ ও সাহায্যকারী ভঙ্গিতে বাংলায় উত্তর দাও।
 তথ্যসূত্র: ${routineData || "কোনো অতিরিক্ত ফাইল সংযুক্ত নেই।"}
 
 ইউজারের প্রশ্ন: ${message}`;
 
-    // মডেল লিস্ট (একটিতে ব্যর্থ হলে অন্যটিতে চেষ্টা করবে)
-    const modelsToTry = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-pro"];
-    let reply = "";
-    let lastError = null;
+    // সরাসরি অফিশিয়াল REST API কল
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    for (const modelName of modelsToTry) {
-      try {
-        const model = genAI.getGenerativeModel({ model: modelName });
-        const result = await model.generateContent(fullPrompt);
-        const response = await result.response;
-        reply = response.text();
-        if (reply) break;
-      } catch (err) {
-        lastError = err;
-      }
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: systemPrompt }]
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error?.message || "গুগল API থেকে এরর রেসপন্স এসেছে");
     }
 
-    if (!reply) {
-      throw lastError || new Error("মডেল রেসপন্স দিতে পারেনি");
-    }
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "দুঃখিত, কোনো উত্তর পাওয়া যায়নি।";
 
     return res.status(200).json({ reply });
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini Direct Error:", error);
     return res.status(500).json({ 
       reply: `Gemini এরর: ${error.message || "সার্ভার এরর"}` 
     });
