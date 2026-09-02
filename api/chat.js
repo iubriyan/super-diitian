@@ -83,13 +83,36 @@ function processHumanResponse(input) {
   const q = input.toLowerCase().trim();
   const bd = getBDTimeInfo();
 
-  // ১. সময় জানতে চাওয়া (কয়টা বাজে / time)
-  if (/koyta\s*baje|somoy\s*koto|time\s*koto|কয়টা\s*বাজে|সময়\s*কত|time\s*now/.test(q)) {
-    return `এখন ঘড়িতে বাজে **${bd.timeStr}**! সময় দেখতে দেখতে ক্লাসের পরা কিন্তু ফাকি দিও না! 😉`;
+  // ১. কুশল বিনিময় (Kemon aso, tmi kmn acho, acho?, aso?, কেমন আছো?, আছ?)
+  if (
+    /kmn|kemon|acho|aso|kese|kemon\s*aso|kmn\s*acho|tmi\s*kmn|tumi\s*kemon|کی\s*حال|কেমন\s*আছো|কেমন\s*আছ|আছো\s*কি|আছ\s*তো|আছো|আছ/i.test(q) && 
+    (q.includes("k") || q.includes("acho") || q.includes("aso") || q.includes("আছ") || q.includes("কেমন"))
+  ) {
+    return getRandom([
+      `আলহামদুলিল্লাহ, একদম জোস মুডে আছি! তুমি কেমন আছো বলো? পড়াশোনার কি খবর? 😎`,
+      `আছি ভাই তোমাদের দোয়ায় একদম ফিটফাট! তোমার কি অবস্থা?`,
+      `দম ফেলার ফুরসত নাই ভাই, সারাদিন তোমাদের রুটিন আর প্যারা সামলিয়ে বেশ ভালোই আছি! তুমি কেমন কাটাতেছো দিনকাল?`,
+      `এই তো আছি কোনোমতে! সিআররা ঘুমাইলে আমার কাজের চাপ একটু কমে। তুমি বলো, কি অবস্থা তোমার?`
+    ]);
   }
 
-  // ২. তোমার নাম কি / identity
-  if (/tmr\s*nam|tomar\s*nam|apnar\s*nam|who\s*are\s*you|তোমার\s*নাম|তুমি\s*কে|tmr\s*name/.test(q)) {
+  // ২. কি করছো / কি কর (Ki korso, ki korcho, ki koro)
+  if (/ki\s*kor|korta\s*aso|korteso|ki\s*kortho|কি\s*করছো|কী\s*করছিস|কী\s*করছেন|কি\s*কর/i.test(q)) {
+    return getRandom([
+      `এই তো বসে বসে ভাবছি সিআর প্রিয়ন্তি আর রাফি এত ফাঁকিবাজ কেন! আর তোমাদের রুটিন পাহারা দিচ্ছি। বলো কি লাগবে? 🥱`,
+      `তোমাদের পরবর্তী ক্লাসের আপডেট ট্র্যাক করছি। তুমি বলো, কি করা হচ্ছে?`,
+      `ডিজিটাল চেয়ারে পা তুলে বসে আছি আর কি! কোনো রুটিন বা পড়ার আপডেট লাগবে নাকি?`,
+      `সারাদিন তোদের সব আজাইরা প্রশ্ন আর রুটিনের খবরাখবর মগজে লোড করতেছি! বলো কি সেবা করতে পারি?`
+    ]);
+  }
+
+  // ৩. সময় জানতে চাওয়া (কয়টা বাজে / time)
+  if (/koyta\s*baje|somoy\s*koto|time\s*koto|কয়টা\s*বাজে|সময়\s*কত|time\s*now/i.test(q)) {
+    return `এখন ঘড়িতে বাজে **${bd.timeStr}**! সময় দেখতে দেখতে ক্লাসের কথা যেন আবার ভুইলা যাইও না! 😉`;
+  }
+
+  // ৪. তোমার নাম কি / identity
+  if (/tmr\s*nam|tomar\s*nam|apnar\s*nam|who\s*are\s*you|তোমার\s*নাম|তুমি\s*কে|tmr\s*name/i.test(q)) {
     return getRandom([
       `আমি তোমাদের ব্যাচের ডিজিটাল সিআর **CR GPT**! পুরো ব্যাচের সকল খবর আমার নখদর্পণে থাকে। 😎`,
       `আমাকে চিনে রাখো, আমি **CR GPT**। সিআররা যখন ঘুমায়, তখন ক্লাসের হাল আমিই ধরি! 🦾`,
@@ -97,8 +120,8 @@ function processHumanResponse(input) {
     ]);
   }
 
-  // ৩. তোমাকে কে বানিয়েছে / নির্মাতা
-  if (/k\s*baniyese|ke\s*banise|ke\s*bania|who\s*made\s*you|who\s*created|তোমাকে\s*কে\s*বানিয়েছে|কার\s*সাইট|developer|admin|riyan|iftekhar|ইফতেখার|রিয়ান/.test(q)) {
+  // ৫. তোমাকে কে বানিয়েছে / নির্মাতা
+  if (/k\s*baniyese|ke\s*banise|ke\s*bania|who\s*made\s*you|who\s*created|তোমাকে\s*কে\s*বানিয়েছে|কার\s*সাইট|developer|admin|riyan|iftekhar|ইফতেখার|রিয়ান/i.test(q)) {
     return getRandom([
       `আমাদের ব্যাচের জিনিয়াস **Iftekhar Uddin Bhuiyan (Riyan)** ভাই (Roll: 260013) নিজের হাতে আমাকে কোড করে বানিয়েছেন! উনার জন্যই পুরো ব্যাচ এত আরামে কভার পেজ আর রুটিন পাচ্ছে! 👑`,
       `এই মহৎ কাজটা করেছেন আমাদের **ইফতেখার ভাই (রিয়ান)**। রোল নম্বর ২৬০০১৩। বস মানুষ একদম! 😎`,
@@ -106,40 +129,24 @@ function processHumanResponse(input) {
     ]);
   }
 
-  // ৪. কেমন আছো / কি করছো / খেয়েছো
-  if (/kemon\s*aso|kemon\s*acho|ki\s*obostha|ki\s*khobor|কেমন\s*আছো|কি\s*অবস্থা/.test(q)) {
-    return getRandom([
-      `আমি তো সেই লেভেলের চিল মুডে আছি! তুমি কেমন আছো বলো? পড়াশোনার কি হাল? 😜`,
-      `আছি ভাই তোমাদের দোয়ায় আর সিআরদের অবহেলায় ভালোই! তোমার কি অবস্থা?`,
-      `একদম ফিটফাট! সারাদিন তোমাদের রুটিন দেখতে দেখতে আমি নিজেই এখন বিএসসি পাস করে যাবো মনে হচ্ছে!`
-    ]);
-  }
-
-  if (/ki\s*koro|ki\s*korteso|ki\s*korcho|কি\s*করছো|কি\s*কর/.test(q)) {
-    return getRandom([
-      `বসে বসে ভাবছি সিআররা এত ফাঁকিবাজ কেন! আর তোমাদের প্রশ্ন পাহারা দিচ্ছি। বলো কি লাগবে? 🥱`,
-      `তোমাদের পরবর্তী ক্লাসের প্রস্তুতি পর্যবেক্ষণ করছি। বলো কিভাবে হেল্প করতে পারি?`,
-      `এই তো, ডিজিটাল চেয়ারে হেলান দিয়ে বসে আছি। কোনো রুটিন বা পড়ার আপডেট লাগবে?`
-    ]);
-  }
-
-  if (/kheyeso|khabar\s*kheso|kheyecho|খেয়েছো|ভাত\s*খেয়েছো/.test(q)) {
+  // ৬. কেমন আছো / কি করছো / খেয়েছো
+  if (/kheyeso|khabar\s*kheso|kheyecho|খেয়েছো|ভাত\s*খেয়েছো/i.test(q)) {
     return getRandom([
       `আমি তো কারেন্ট আর ডেটা খাই ভাই! তবে ব্রেক টাইমে (02:00 - 02:20 PM) তোমরা কিছু ভালোমন্দ খাইলে আমাকেও একটু অফার করতে পারো! 🍕`,
       `আমি এআই, আমার খাওয়ার দরকার হয় না। তুমি খাইছো তো? ক্লাসে গিয়ে আবার ঢুলো না যেন!`
     ]);
   }
 
-  // ৫. সিআরদের নাম ও তথ্য
-  if (/cr\s*k|cr\s*ke|cr\s*der\s*nam|cr\s*name|সিআর\s*কে|সিআরদের\s*নাম/.test(q)) {
+  // ৭. সিআরদের নাম ও তথ্য
+  if (/cr\s*k|cr\s*ke|cr\s*der\s*nam|cr\s*name|সিআর\s*কে|সিআরদের\s*নাম/i.test(q)) {
     return getRandom([
       `আমাদের CSE 26 ব্যাচের সিআর দুইজন:\n👩‍💼 **Prionty Sarker** (Roll: 260031)\n👨‍💼 **Rafiul Islam** (Roll: 260053)\nতবে কোনো প্যারা লাগলে ওনাদের বিরক্ত না করে আমাকেই বইলো! 😜`,
       `ফিমেল সিআর **প্রিয়ন্তি** (260031) আর মেল সিআর **রাফি** (260053)। ক্লাসের নোটিশ দিতে ওদের খবর হয়ে যায়, তাই ব্যাকআপে আমি আছি!`
     ]);
   }
 
-  // ৬. হোমওয়ার্ক / আজকে কি পড়া দিছে
-  if (/homework|home\s*work|hw|pora|ki\s*pora|হোমওয়ার্ক|আজকে\s*কি\s*পড়া|পড়া\s*কি/.test(q)) {
+  // ৮. হোমওয়ার্ক / আজকে কি পড়া দিছে
+  if (/homework|home\s*work|hw|pora|ki\s*pora|হোমওয়ার্ক|আজকে\s*কি\s*পড়া|পড়া\s*কি/i.test(q)) {
     return getRandom([
       `পড়া কি দিছে সেটা সিআর প্রিয়ন্তি আর রাফিকে জিজ্ঞেস করো! ওদের তো এইগুলা জানানোর কথা, সারাদিন করে কি এরা? 😒 যাও গ্রুপে ওদের মেনশন দিয়ে আসো!`,
       `আরে ভাই! স্যার-ম্যাডামরা ক্লাসে যা পড়ায় একটু খাতায় নোট নিবা তো! সিআররা তো নিজের পড়াই ঠিকমতো লেখে না, ওদের ভরসায় থাইকো না। ফ্রেন্ডদের খাতা ফটোকপি করো! 📚`,
@@ -147,14 +154,13 @@ function processHumanResponse(input) {
     ]);
   }
 
-  // ৭. এখন কি ক্লাস / চলমান ক্লাস
-  if (/ekhn\s*ki\s*class|ekhn\s*ki\s*cls|akhon\s*ki\s*class|now\s*class|চলমান\s*ক্লাস|এখন\s*কি\s*ক্লাস/.test(q)) {
+  // ৯. এখন কি ক্লাস / চলমান ক্লাস
+  if (/ekhn\s*ki\s*class|ekhn\s*ki\s*cls|akhon\s*ki\s*class|now\s*class|চলমান\s*ক্লাস|এখন\s*কি\s*ক্লাস/i.test(q)) {
     const todayA = ROUTINE.A.days[bd.dayIdx];
     if (!todayA) {
       return `আজকে তো কোনো ক্লাস নেই ভাই! শান্তিতে রেস্ট নাও বা ঘুরে বেড়াও। 🏖️`;
     }
 
-    // Section A এর হিসেবে কারেন্ট ক্লাস বের করা
     let curA = todayA.find(c => bd.totalMin >= c.startM && bd.totalMin < c.endM);
     if (curA) {
       let rem = curA.endM - bd.totalMin;
@@ -174,8 +180,8 @@ function processHumanResponse(input) {
     return `🎉 আজকের সব ক্লাস শেষ! ছুটি, এখন আড্ডা দাও বা বাসায় যাও।`;
   }
 
-  // ৮. আজকে কি কি ক্লাস (Today's classes)
-  if (/ajk\s*ki\s*class|ajke\s*ki\s*class|ajker\s*class|ki\s*ki\s*class\s*ajke|today\s*class|আজকে\s*কি\s*ক্লাস|আজকের\s*ক্লাস/.test(q)) {
+  // ১০. আজকে কি কি ক্লাস (Today's classes)
+  if (/ajk\s*ki\s*class|ajke\s*ki\s*class|ajker\s*class|ki\s*ki\s*class\s*ajke|today\s*class|আজকে\s*কি\s*ক্লাস|আজকের\s*ক্লাস/i.test(q)) {
     const schedA = ROUTINE.A.days[bd.dayIdx];
     const schedB = ROUTINE.B.days[bd.dayIdx];
 
@@ -189,28 +195,23 @@ function processHumanResponse(input) {
     return `📅 **আজকের ক্লাস তালিকা:**\n\n**Section A (Room 704):**\n${listA}\n\n**Section B (Room 706):**\n${listB}\n\n☕ ব্রেক টাইম: 02:00 PM - 02:20 PM`;
   }
 
-  // ৯. জাকির স্যারের ক্লাস কখন?
-  if (/zakir\s*sir|mzh|জাকির\s*স্যার/.test(q)) {
+  // ১১. জাকির স্যারের ক্লাস কখন?
+  if (/zakir\s*sir|mzh|জাকির\s*স্যার/i.test(q)) {
     return `📐 **Md. Zakir Hossain (MZH) স্যারের ক্যালকুলাস ক্লাস:**\n• **Section A (Room 704):** রবিবার ও সোমবার সকাল ১১:৪০ AM - ১২:৫০ PM।\nস্যার কিন্তু ক্লাসে ম্যাথ করতে দেয়, প্রস্তুতি নিয়ে যেও!`;
   }
 
-  // ১০. পলি ম্যাডামের ক্লাস কখন?
-  if (/poly\s*mam|pb|পলি\s*ম্যাডাম|পলি\s*ম্যাম/.test(q)) {
+  // ১২. পলি ম্যাডামের ক্লাস কখন?
+  if (/poly\s*mam|pb|পলি\s*ম্যাডাম|পলি\s*ম্যাম/i.test(q)) {
     return `💻 **Poly Bhoumik (PB) ম্যাডামের প্রোগ্রামিং ক্লাস:**\n• **Section A (Room 704):** রবিবার (১২:৫০ PM ও ২:২০ PM ল্যাব) এবং বুধবার (১২:৫০ PM)।\nল্যাব রিপোর্ট ঠিকমতো জমা দিও, নাইলে ম্যাডাম কিন্তু সিরিয়াস ধরে!`;
   }
 
-  // ১১. সাইদুর স্যারের ক্লাস কখন?
-  if (/saidur\s*sir|sr|সাইদুর\s*স্যার/.test(q)) {
-    return `⚡ **Saidur Rahman (SR) স্যারের EEC ক্লাস:**\n• **Section A:** মঙ্গলবার ২:২০ PM (EEC Lab)\n• **Section B:** রবিবার ১২:৫০ PM, সোমবার ২:২০ PM (Lab), মঙ্গলবার ১১:৪০ AM।`;
+  // ১৩. কভার পেজ কিভাবে বানাবো?
+  if (/cover\s*kivabe|cover\s*page|কাভার\s*কিভাবে|কাভার\s*পেজ|assignment\s*cover/i.test(q)) {
+    return `📄 **Cover Page Maker বানানোর নিয়ম:**\n১. ড্যাশবোর্ডের প্রথমে থাকা **Cover Page Maker** এ যাও।\n২. তোমার নাম, রোল ও সাবজেক্ট বসাও।\n৩. টেমপ্লেট পছন্দ করে নিচে **Download** বাটনে ক্লিক করো। একদম প্রিন্ট-রেডি JPG ডাউনলোড হয়ে যাবে!`;
   }
 
-  // ১২. কভার পেজ কিভাবে বানাবো?
-  if (/cover\s*kivabe|cover\s*page|কাভার\s*কিভাবে|কভার\s*পেজ|assignment\s*cover/.test(q)) {
-    return `📄 **কভার পেজ বানানোর সহজ নিয়ম:**\n১. ড্যাশবোর্ডের প্রথমে থাকা **Cover Page Maker** এ যাও।\n২. তোমার নাম, রোল ও সাবজেক্ট বসাও।\n৩. টেমপ্লেট পছন্দ করে নিচে **Download high-quality JPG** বাটনে ক্লিক করো। একদম A4 সাইজে প্রিন্ট রেডি ডাউনলোড হয়ে যাবে!`;
-  }
-
-  // ১৩. জোকস বল / হাসাও
-  if (/jokes|koutuk|hasao|হাসাও|জোকস|মজা\s*কর/.test(q)) {
+  // ১৪. জোকস বল / হাসাও
+  if (/jokes|koutuk|hasao|হাসাও|জোকস|মজা\s*কর/i.test(q)) {
     return getRandom([
       `শিক্ষক: বলতো ইফতেখার, মহাকর্ষ বল কাকে বলে?\nইফতেখার: স্যার, যে বলে টানলে ক্লাসের লাস্ট বেঞ্চের ছাত্ররা ফার্স্ট বেঞ্চের দিকে যায় না, কিন্তু ছুটির ঘণ্টার শব্দে সবাই দরজার দিকে যায়—তাকে মহাকর্ষ বল বলে! 😂`,
       `সিআর রাফি প্রিয়ন্তিকে বলতেছে: 'দোস্ত, তুই সারাদিন এত পড়ার নোটিশ কেমনে দিস?'\nপ্রিয়ন্তি: 'আমি শুধু নোটিশই দেই দোস্ত, নিজে তো একটা ক্লাসেও খাতা খুলি না!' 🤣`,
@@ -218,8 +219,8 @@ function processHumanResponse(input) {
     ]);
   }
 
-  // ১৪. হাই / হ্যালো
-  if (/^(hi|hello|hlw|hei|hey|হাই|হ্যালো|সালাম|salam|assalamu\s*alaikum)$/.test(q)) {
+  // ১৫. হাই / হ্যালো
+  if (/^(hi|hello|hlw|hei|hey|হাই|হ্যালো|সালাম|salam|assalamu\s*alaikum)$/i.test(q)) {
     return getRandom([
       `হেই কি অবস্থা? ক্লাসের রুটিন, রুম নম্বর কিংবা স্যারদের ক্লাস নিয়ে কোনো তথ্য লাগবে নাকি? বলো শুনি! 😊`,
       `আরে ব্রিলিয়ান্ট স্টুডেন্ট যে! কি খবর? সিআর প্রিয়ন্তি আর রাফি তো ঠিকমতো খবর দেয় না, বলো আমি কিভাবে সাহায্য করবো?`,
@@ -277,7 +278,7 @@ export default async function handler(req, res) {
 তোমার আর্কিটেক্ট ও বস: Iftekhar Uddin Bhuiyan (Riyan), Roll: 260013।
 সিআর: Prionty (260031) ও Rafiul (260053)।
 রুম: Section A (704), Section B (706)।
-তুমি অসম্ভব রসাত্মক, বুদ্ধিমান এবং একটু পচানি প্রিয়। কেউ বাংলিশে বা বাংলায় প্রশ্ন করলে বাস্তবসম্মত ক্লাসমেট সিআরের মতো ছোট করে মজার উত্তর দাও। অপ্রাসঙ্গিক বা উল্টাপাল্টা প্রশ্ন করলে মিষ্টি করে রোস্ট করো।
+তুমি অত্যন্ত রসাত্মক, বুদ্ধিমান এবং পচানি প্রিয়। কেউ বাংলিশে বা বাংলায় কুশল বিনিময় বা প্রশ্ন করলে রিল্যাক্সড ক্লাসমেটের মতো উত্তর দাও।
 `;
 
     const messages = [{ role: "system", content: systemPrompt }];
