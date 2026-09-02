@@ -1835,3 +1835,152 @@ button{ font-family: inherit; }
   border-radius: 16px;
   border: 1.5px dashed #cbd5e1;
 }
+/* ============================================================
+   Daily Knowledge Hub Styles
+   ============================================================ */
+.knowledge-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: 'Inter', sans-serif;
+}
+
+.knowledge-categories-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+
+.knowledge-categories-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.k-cat-btn {
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.k-cat-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.k-cat-btn.is-active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.knowledge-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.knowledge-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 12px 28px -6px rgba(2, 132, 199, 0.12);
+}
+
+.knowledge-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.knowledge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.knowledge-source {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.knowledge-card__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.knowledge-card__body {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.knowledge-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.wiki-read-more-btn {
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wiki-read-more-btn:hover {
+  background: #0369a1;
+}
+
+.knowledge-loading {
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1.5px dashed #cbd5e1;
+}
