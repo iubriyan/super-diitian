@@ -1,17 +1,11 @@
 /* ============================================================
-   Super DIITian — Cover Page Maker
-   All coordinates below were measured directly off the supplied
-   template images (percentages of the 1414 x 2000 canvas), so
-   dynamic text always lands in the blank space the templates
-   already leave for it and never crosses the printed artwork.
+   Super DIITian — Hub & Cover Page Maker Engine
    ============================================================ */
 
 const CANVAS_W = 1414;
 const CANVAS_H = 2000;
 const STORAGE_PREFIX = 'super_diitian_';
 
-// Zone shorthand: xPct/wPct/yPct/hPct are all percentages (0-100)
-// of canvas width/height. align: 'center' | 'left'.
 const TEMPLATES = [
   {
     id: 't1', file: 'templates/t1.jpg', label: 'Template 1', fixed: false,
@@ -103,6 +97,113 @@ const FIELD_IDS = [
   'teacherName','teacherTitle','teacherDept',
   'studentName','studentSec','studentId','studentReg'
 ];
+
+/* ------------------------------------------------------------
+   Hub Navigation & Module Switcher
+   ------------------------------------------------------------ */
+window.navigateTo = function(viewKey) {
+  const hubDashboard = document.getElementById("hubDashboard");
+  const hubCoverMaker = document.getElementById("hubCoverMaker");
+  const hubDetailView = document.getElementById("hubDetailView");
+  const titleEl = document.getElementById("hubViewTitle");
+  const contentEl = document.getElementById("hubViewContent");
+
+  if (!hubDashboard || !hubCoverMaker || !hubDetailView) return;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (viewKey === 'dashboard') {
+    hubDashboard.style.display = "block";
+    hubCoverMaker.style.display = "none";
+    hubDetailView.style.display = "none";
+    return;
+  }
+
+  hubDashboard.style.display = "none";
+
+  if (viewKey === 'coverMaker') {
+    hubCoverMaker.style.display = "block";
+    hubDetailView.style.display = "none";
+    scheduleRender();
+    return;
+  }
+
+  hubCoverMaker.style.display = "none";
+  hubDetailView.style.display = "block";
+
+  // অন্যান্য ৫টি কার্ডের কনটেন্ট
+  const modules = {
+    routine: {
+      title: "Class Routine — DIIT CSE 26",
+      content: `
+        <div style="text-align: left; line-height: 1.8;">
+          <p><strong>Sunday:</strong> 10:00 AM — Structured Programming Language (Room 402)</p>
+          <p><strong>Monday:</strong> 11:30 AM — Mathematics I (Room 305)</p>
+          <p><strong>Tuesday:</strong> 09:30 AM — Physics / Electrical Lab (Lab 2)</p>
+          <p><strong>Wednesday:</strong> 10:00 AM — English &amp; Professional Communication (Room 402)</p>
+          <p><strong>Thursday:</strong> 11:00 AM — Basic Electrical Engineering (Room 401)</p>
+          <div style="margin-top: 24px; padding: 14px 18px; background: #f0fdfa; border-radius: 12px; color: #0f766e; border: 1px solid #ccfbf1;">
+            💡 <em>Need instant schedule updates? Ask <strong>CR GPT</strong> from the bottom right widget!</em>
+          </div>
+        </div>
+      `
+    },
+    notes: {
+      title: "Academic Notes &amp; Course Materials",
+      content: `
+        <div style="text-align: left;">
+          <p style="color: #64748b;">Direct links to official semester folders and lecture drives:</p>
+          <ul style="line-height: 2.2; margin-top: 14px;">
+            <li>📘 <strong>Structured Programming Language:</strong> <a href="#" target="_blank">Access Drive Folder &rarr;</a></li>
+            <li>📘 <strong>Discrete Mathematics:</strong> <a href="#" target="_blank">Download Handnotes &rarr;</a></li>
+            <li>📘 <strong>Electrical Engineering Principles:</strong> <a href="#" target="_blank">Course Slides Archive &rarr;</a></li>
+          </ul>
+        </div>
+      `
+    },
+    students: {
+      title: "CSE 26th Batch Student Directory",
+      content: `
+        <div style="text-align: left;">
+          <p style="color: #64748b;">Contact directory of 26th Batch CSE students.</p>
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; margin-top: 16px;">
+            <p style="margin: 0; font-size: 0.9rem; color: #475569;">Directory database is currently being populated.</p>
+          </div>
+        </div>
+      `
+    },
+    questions: {
+      title: "Previous Examination Question Bank",
+      content: `
+        <div style="text-align: left;">
+          <p style="color: #64748b;">Mid-term and semester final exam question archive:</p>
+          <ul style="line-height: 2.2; margin-top: 14px;">
+            <li>📄 <strong>Mid-Semester Question Archives:</strong> <a href="#" target="_blank">Browse Archive &rarr;</a></li>
+            <li>📄 <strong>Final Examination Papers:</strong> <a href="#" target="_blank">Browse Archive &rarr;</a></li>
+          </ul>
+        </div>
+      `
+    },
+    labCodes: {
+      title: "Lab Experiments &amp; Code Solutions",
+      content: `
+        <div style="text-align: left;">
+          <p style="color: #64748b;">Standard C programming lab experiments for lab manuals:</p>
+          <ul style="line-height: 2.2; margin-top: 14px;">
+            <li>💻 <strong>Lab 1:</strong> Variables, Input/Output &amp; Arithmetic Operations</li>
+            <li>💻 <strong>Lab 2:</strong> Branching Logic (if-else, nested condition, switch)</li>
+            <li>💻 <strong>Lab 3:</strong> Loop Controls (for, while, nested loops)</li>
+            <li>💻 <strong>Lab 4:</strong> 1D &amp; 2D Array Traversals &amp; Operations</li>
+          </ul>
+        </div>
+      `
+    }
+  };
+
+  const selected = modules[viewKey] || { title: "ফিচার", content: "তথ্য লোড হচ্ছে..." };
+  if (titleEl) titleEl.innerHTML = selected.title;
+  if (contentEl) contentEl.innerHTML = selected.content;
+};
 
 /* ------------------------------------------------------------
    Canvas text helpers
@@ -204,7 +305,7 @@ function pctBox(zone) {
 }
 
 /* ------------------------------------------------------------
-   Image cache (with error eviction)
+   Image cache
    ------------------------------------------------------------ */
 const imageCache = {};
 function loadImage(src) {
@@ -223,7 +324,7 @@ function loadImage(src) {
 }
 
 /* ------------------------------------------------------------
-   App state & Data Collection
+   State & Canvas Rendering
    ------------------------------------------------------------ */
 let selectedTemplateId = TEMPLATES[0].id;
 let renderQueued = false;
@@ -315,9 +416,6 @@ function scheduleRender() {
   });
 }
 
-/* ------------------------------------------------------------
-   Fixed-template UI toggling
-   ------------------------------------------------------------ */
 function updateFixedState() {
   const tpl = getTemplate(selectedTemplateId);
   const detailsPanel = document.getElementById('detailsPanel');
@@ -340,9 +438,6 @@ function updateFixedState() {
   if (detailsPanel) detailsPanel.classList.toggle('is-fixed', isFixed);
 }
 
-/* ------------------------------------------------------------
-   Template picker grid & Selection
-   ------------------------------------------------------------ */
 function selectTemplate(tplId) {
   selectedTemplateId = tplId;
   const grid = document.getElementById('templateGrid');
@@ -401,9 +496,6 @@ function buildTemplateGrid() {
   });
 }
 
-/* ------------------------------------------------------------
-   Form & LocalStorage Data Handling
-   ------------------------------------------------------------ */
 function loadFormData() {
   FIELD_IDS.forEach(id => {
     const el = document.getElementById(id);
@@ -442,9 +534,6 @@ function wireForm() {
   }
 }
 
-/* ------------------------------------------------------------
-   Download Handler
-   ------------------------------------------------------------ */
 function wireDownload() {
   const btn = document.getElementById('downloadBtn');
   if (!btn) return;
@@ -479,9 +568,6 @@ function wireDownload() {
   });
 }
 
-/* ------------------------------------------------------------
-   Prevent Image Drag & Context Menu
-   ------------------------------------------------------------ */
 function blockEvent(e) { e.preventDefault(); }
 function protectTemplateImages() {
   const templateImages = document.querySelectorAll('.template-card img');
@@ -526,7 +612,7 @@ if (bkashPayBtn) {
     setTimeout(() => {
       bkashLoadingView.classList.add("bkash-hidden");
       bkashSuccessView.classList.remove("bkash-hidden");
-      isEecUnlocked = true; // Unlock the template
+      isEecUnlocked = true;
     }, 1500);
   };
 }
@@ -534,10 +620,9 @@ if (bkashPayBtn) {
 if (bkashEnjoyBtn) {
   bkashEnjoyBtn.onclick = () => {
     closeBkashModal();
-    // Re-render template grid to show unlocked state
     buildTemplateGrid();
     protectTemplateImages();
-    selectTemplate('t8'); // Automatically select EEC Lab Report
+    selectTemplate('t8');
   };
 }
 
@@ -582,7 +667,7 @@ function wireCrGptWidget() {
         } else {
           appendMsg("সার্ভারে সমস্যা হয়েছে।", "cr-bot");
         }
-      } catch (e) {
+      } catch {
         loading.remove();
         appendMsg("কানেকশন এরর!", "cr-bot");
       }
