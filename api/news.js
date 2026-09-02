@@ -1,7 +1,3 @@
-/* ============================================================
-   Super DIITian — Live News API Proxy
-   ============================================================ */
-
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,19 +11,22 @@ export default async function handler(req, res) {
 
   const category = req.query.category || "politics";
   const apiKey = "pub_f8e8d9bebd8043288900e37fd51e7f08";
-  const apiUrl = `https://newsdata.io/api/1/latest?apikey=${apiKey}&country=bd&language=bn&category=${category}`;
+  
+  // ফ্রি প্ল্যানে অনেক সময় কান্ট্রি ফিল্টার ছাড়া শুধু ল্যাঙ্গুয়েজ দিলে ডেটা ভালো আসে
+  const apiUrl = `https://newsdata.io/api/1/latest?apikey=${apiKey}&language=bn&category=${category}`;
 
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch news from newsdata.io");
+      console.error("Newsdata API Error Response:", data);
+      return res.status(500).json({ status: "error", message: data.results?.message || "API limit or key error" });
     }
 
     return res.status(200).json(data);
   } catch (error) {
-    console.error("News API Error:", error);
-    return res.status(500).json({ status: "error", message: "নিউজ লোড করতে সমস্যা হচ্ছে। একটু পরে আবার চেষ্টা করুন।" });
+    console.error("Fetch Exception:", error);
+    return res.status(500).json({ status: "error", message: "Internal server error connecting to news" });
   }
 }
