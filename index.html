@@ -28,83 +28,205 @@
 
 <div class="hub-container">
 
-  <!-- Main Dashboard Grid (Clean Professional English UI) -->
+  <!-- Main Dashboard Grid -->
   <section id="hubDashboard" class="hub-dashboard">
     <div class="hub-hero">
-      <h2>Welcome to CSE 26 Portal</h2>
-      <p>Quick access to all essential student utilities and resources</p>
+      <h2>CSE 26th Batch Portal</h2>
+      <p>Student tools &amp; academic resources</p>
     </div>
 
     <div class="hub-grid">
-      <!-- 1. Cover Maker -->
-      <div class="hub-card" onclick="navigateTo('coverMaker')">
-        <div class="hub-card__icon icon-blue">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      <!-- 1. Cover Page Maker -->
+      <div class="hub-card card--blue" onclick="navigateTo('coverMaker')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
         </div>
-        <div class="hub-card__content">
-          <h3>Cover Page Maker</h3>
-          <p>Generate print-ready lab report &amp; assignment covers in seconds</p>
+        <div class="hub-card__info">
+          <h3>Cover Maker</h3>
+          <span>Assignment &amp; Lab</span>
         </div>
-        <span class="hub-card__badge">Popular</span>
       </div>
 
-      <!-- 2. Routine -->
-      <div class="hub-card" onclick="navigateTo('routine')">
-        <div class="hub-card__icon icon-teal">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <!-- 2. Class Routine -->
+      <div class="hub-card card--green" onclick="navigateTo('routine')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
         </div>
-        <div class="hub-card__content">
+        <div class="hub-card__info">
           <h3>Class Routine</h3>
-          <p>Daily class schedules, room allotments &amp; timing guide</p>
+          <span>2nd Sem Schedule</span>
         </div>
       </div>
 
-      <!-- 3. Notes -->
-      <div class="hub-card" onclick="navigateTo('notes')">
-        <div class="hub-card__icon icon-indigo">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <!-- 3. Student List -->
+      <div class="hub-card card--yellow" onclick="navigateTo('students')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
-        <div class="hub-card__content">
+        <div class="hub-card__info">
+          <h3>Student List</h3>
+          <span>Batchmates &amp; Roll</span>
+        </div>
+      </div>
+
+      <!-- 4. Notes & Slides -->
+      <div class="hub-card card--purple" onclick="navigateTo('notes')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </div>
+        <div class="hub-card__info">
           <h3>Notes &amp; Slides</h3>
-          <p>Lecture handnotes, official PPT slides &amp; reference PDFs</p>
-        </div>
-      </div>
-
-      <!-- 4. Students -->
-      <div class="hub-card" onclick="navigateTo('students')">
-        <div class="hub-card__icon icon-purple">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </div>
-        <div class="hub-card__content">
-          <h3>Student Directory</h3>
-          <p>Complete batch directory with Roll, Reg numbers &amp; contacts</p>
+          <span>Drive &amp; Lectures</span>
         </div>
       </div>
 
       <!-- 5. Question Bank -->
-      <div class="hub-card" onclick="navigateTo('questions')">
-        <div class="hub-card__icon icon-amber">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      <div class="hub-card card--cyan" onclick="navigateTo('questions')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         </div>
-        <div class="hub-card__content">
+        <div class="hub-card__info">
           <h3>Question Bank</h3>
-          <p>Previous mid-term &amp; final semester examination papers</p>
+          <span>Mid &amp; Final Archive</span>
         </div>
       </div>
 
       <!-- 6. Lab Codes -->
-      <div class="hub-card" onclick="navigateTo('labCodes')">
-        <div class="hub-card__icon icon-cyan">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+      <div class="hub-card card--dark" onclick="navigateTo('labCodes')">
+        <div class="hub-card__icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
         </div>
-        <div class="hub-card__content">
-          <h3>Lab Solutions</h3>
-          <p>Verified source code snippets, algorithms &amp; logic tasks</p>
+        <div class="hub-card__info">
+          <h3>Lab Codes</h3>
+          <span>C Codes &amp; Manual</span>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Cover Page Maker Section -->
+  <section id="hubCoverMaker" class="hub-view" style="display: none;">
+    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back to Dashboard
+    </button>
+    
+    <main class="layout">
+      <div class="layout__main">
+        <section class="panel" id="detailsPanel">
+          <div class="panel__head">
+            <span class="panel__eyebrow">Step 1</span>
+            <h2>Your details</h2>
+            <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Your Department Name</span>
+              <input type="text" id="deptName" maxlength="120">
+            </label>
+            <label class="field">
+              <span>Your Batch Name</span>
+              <input type="text" id="batchName" maxlength="80">
+            </label>
+            <label class="field">
+              <span>Your Course Code</span>
+              <input type="text" id="courseCode" maxlength="40">
+            </label>
+            <label class="field">
+              <span>Your Course Title</span>
+              <input type="text" id="courseTitle" maxlength="120">
+            </label>
+          </div>
+
+          <p class="fixed-note" id="fixedNote" hidden>
+            This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
+            details are already printed on it. Just fill in <strong>Your Info</strong> below.
+          </p>
+
+          <div class="sub-section" id="teacherSection">
+            <h3>Teacher info <span>Submitted to</span></h3>
+            <div class="field-grid">
+              <label class="field">
+                <span>Teacher Name</span>
+                <input type="text" id="teacherName" maxlength="80">
+              </label>
+              <label class="field">
+                <span>Teacher Title</span>
+                <input type="text" id="teacherTitle" maxlength="80">
+              </label>
+              <label class="field field--wide">
+                <span>Teacher Department</span>
+                <input type="text" id="teacherDept" maxlength="120">
+              </label>
+            </div>
+          </div>
+
+          <div class="sub-section" id="studentSection">
+            <h3>Your info <span>Submitted by</span></h3>
+            <div class="field-grid">
+              <label class="field">
+                <span>Your Name</span>
+                <input type="text" id="studentName" maxlength="80">
+              </label>
+              <label class="field">
+                <span>Your Section</span>
+                <input type="text" id="studentSec" maxlength="30">
+              </label>
+              <label class="field">
+                <span>Your ID No</span>
+                <input type="text" id="studentId" maxlength="40">
+              </label>
+              <label class="field">
+                <span>Your Reg No</span>
+                <input type="text" id="studentReg" maxlength="40">
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="templatesPanel">
+          <div class="panel__head">
+            <span class="panel__eyebrow">Step 2</span>
+            <h2>Choose a cover design</h2>
+          </div>
+          <div class="template-grid" id="templateGrid"></div>
+        </section>
+      </div>
+
+      <div class="layout__side">
+        <section class="panel preview-panel">
+          <div class="panel__head">
+            <span class="panel__eyebrow">Step 3</span>
+            <h2>Preview &amp; download</h2>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
+            <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
+          </div>
+          <button type="button" class="download-btn" id="downloadBtn">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z"/></svg>
+            Download high-quality JPG
+          </button>
+          <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
+        </section>
+      </div>
+    </main>
+  </section>
+
+  <!-- Interactive Dynamic View Section -->
+  <section id="hubDetailView" class="hub-view" style="display: none;">
+    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back to Dashboard
+    </button>
+    <div class="hub-panel">
+      <h2 id="hubViewTitle">Module</h2>
+      <div id="hubViewContent"></div>
+    </div>
+  </section>
+
+</div>
   <!-- কভার পেজ মেকার সেকশন (আগের কোড অক্ষত রাখা হয়েছে) -->
   <section id="hubCoverMaker" class="hub-view" style="display: none;">
     <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">⬅ ড্যাশবোর্ডে ফিরে যান</button>

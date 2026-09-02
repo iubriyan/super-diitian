@@ -99,9 +99,9 @@ const FIELD_IDS = [
 ];
 
 /* ------------------------------------------------------------
-   Hub Navigation & Module Switcher
+   Hub Navigation & Browser History Back Management
    ------------------------------------------------------------ */
-window.navigateTo = function(viewKey) {
+window.navigateTo = function(viewKey, pushToHistory = true) {
   const hubDashboard = document.getElementById("hubDashboard");
   const hubCoverMaker = document.getElementById("hubCoverMaker");
   const hubDetailView = document.getElementById("hubDetailView");
@@ -111,6 +111,10 @@ window.navigateTo = function(viewKey) {
   if (!hubDashboard || !hubCoverMaker || !hubDetailView) return;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (pushToHistory) {
+    history.pushState({ view: viewKey }, "", viewKey === 'dashboard' ? "#" : `#${viewKey}`);
+  }
 
   if (viewKey === 'dashboard') {
     hubDashboard.style.display = "block";
@@ -131,78 +135,284 @@ window.navigateTo = function(viewKey) {
   hubCoverMaker.style.display = "none";
   hubDetailView.style.display = "block";
 
-  // অন্যান্য ৫টি কার্ডের কনটেন্ট
   const modules = {
     routine: {
-      title: "Class Routine — DIIT CSE 26",
+      title: "Class Schedule — CSE 26th Batch (1st Year, 2nd Semester)",
       content: `
-        <div style="text-align: left; line-height: 1.8;">
-          <p><strong>Sunday:</strong> 10:00 AM — Structured Programming Language (Room 402)</p>
-          <p><strong>Monday:</strong> 11:30 AM — Mathematics I (Room 305)</p>
-          <p><strong>Tuesday:</strong> 09:30 AM — Physics / Electrical Lab (Lab 2)</p>
-          <p><strong>Wednesday:</strong> 10:00 AM — English &amp; Professional Communication (Room 402)</p>
-          <p><strong>Thursday:</strong> 11:00 AM — Basic Electrical Engineering (Room 401)</p>
-          <div style="margin-top: 24px; padding: 14px 18px; background: #f0fdfa; border-radius: 12px; color: #0f766e; border: 1px solid #ccfbf1;">
-            💡 <em>Need instant schedule updates? Ask <strong>CR GPT</strong> from the bottom right widget!</em>
+        <div style="overflow-x: auto;">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>DAY</th>
+                <th>SEC</th>
+                <th>ROOM</th>
+                <th>11:40 AM - 12:50 PM</th>
+                <th>12:50 PM - 2:00 PM</th>
+                <th>2:20 PM - 3:30 PM</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><strong>Sunday</strong></td>
+                <td>A</td>
+                <td>704</td>
+                <td>Calculus<br><span class="teacher-badge">MZH</span></td>
+                <td>Structured Prog.<br><span class="teacher-badge">PB</span></td>
+                <td class="routine-lab">Structured Prog. Lab<br><span class="teacher-badge">PB</span></td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>706</td>
+                <td>Physics<br><span class="teacher-badge">PRM</span></td>
+                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">SR</span></td>
+                <td>Calculus<br><span class="teacher-badge">MIH</span></td>
+              </tr>
+
+              <tr>
+                <td rowspan="2"><strong>Monday</strong></td>
+                <td>A</td>
+                <td>704</td>
+                <td>Calculus<br><span class="teacher-badge">MZH</span></td>
+                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">RKD</span></td>
+                <td>English<br><span class="teacher-badge">SQ</span></td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>706</td>
+                <td>English<br><span class="teacher-badge">FP</span></td>
+                <td>Calculus<br><span class="teacher-badge">MIH</span></td>
+                <td class="routine-lab">Electrical &amp; Electronic Cir. Lab<br><span class="teacher-badge">SR</span></td>
+              </tr>
+
+              <tr>
+                <td rowspan="2"><strong>Tuesday</strong></td>
+                <td>A</td>
+                <td>704</td>
+                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">RKD</span></td>
+                <td>Physics<br><span class="teacher-badge">MFO</span></td>
+                <td class="routine-lab">Electrical &amp; Electronic Cir. Lab<br><span class="teacher-badge">SR</span></td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>706</td>
+                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">SR</span></td>
+                <td>Structured Prog.<br><span class="teacher-badge">MMR</span></td>
+                <td>Physics<br><span class="teacher-badge">PRM</span></td>
+              </tr>
+
+              <tr>
+                <td rowspan="2"><strong>Wednesday</strong></td>
+                <td>A</td>
+                <td>704</td>
+                <td>English<br><span class="teacher-badge">SQ</span></td>
+                <td>Structured Prog.<br><span class="teacher-badge">PB</span></td>
+                <td>Physics<br><span class="teacher-badge">MFO</span></td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>706</td>
+                <td>Structured Prog.<br><span class="teacher-badge">MMR</span></td>
+                <td>English<br><span class="teacher-badge">FP</span></td>
+                <td class="routine-lab">Structured Prog. Lab<br><span class="teacher-badge">MMR</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+          <h4 style="margin: 0 0 10px 0; color: #16232F;">Faculty Reference:</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; font-size: 0.8rem; color: #475569;">
+            <div><strong>PB:</strong> Poly Bhoumik</div>
+            <div><strong>MZH:</strong> Md. Zakir Hossain</div>
+            <div><strong>SR:</strong> Saidur Rahman</div>
+            <div><strong>MIH:</strong> Md. Imran Hossain</div>
+            <div><strong>MMR:</strong> Md. Mushfiqur Rahaman</div>
+            <div><strong>RKD:</strong> Ramen Kumar Das</div>
+            <div><strong>PRM:</strong> Md. Parvezur Rahman Mahin</div>
+            <div><strong>MFO:</strong> Bugtasim Fuad Opee</div>
+            <div><strong>SQ:</strong> Sabrina Quadir</div>
+            <div><strong>FP:</strong> Farjana Parvin</div>
           </div>
         </div>
       `
     },
-    notes: {
-      title: "Academic Notes &amp; Course Materials",
-      content: `
-        <div style="text-align: left;">
-          <p style="color: #64748b;">Direct links to official semester folders and lecture drives:</p>
-          <ul style="line-height: 2.2; margin-top: 14px;">
-            <li>📘 <strong>Structured Programming Language:</strong> <a href="#" target="_blank">Access Drive Folder &rarr;</a></li>
-            <li>📘 <strong>Discrete Mathematics:</strong> <a href="#" target="_blank">Download Handnotes &rarr;</a></li>
-            <li>📘 <strong>Electrical Engineering Principles:</strong> <a href="#" target="_blank">Course Slides Archive &rarr;</a></li>
-          </ul>
-        </div>
-      `
-    },
+
     students: {
       title: "CSE 26th Batch Student Directory",
       content: `
-        <div style="text-align: left;">
-          <p style="color: #64748b;">Contact directory of 26th Batch CSE students.</p>
-          <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; margin-top: 16px;">
-            <p style="margin: 0; font-size: 0.9rem; color: #475569;">Directory database is currently being populated.</p>
+        <div>
+          <input type="text" id="studentSearch" class="student-search-box" placeholder="Search by name or roll..." onkeyup="filterStudents()" />
+          <div style="overflow-x: auto; max-height: 480px;">
+            <table class="custom-table" id="studentTable">
+              <thead>
+                <tr>
+                  <th style="width: 100px;">Roll</th>
+                  <th style="text-align: left; padding-left: 20px;">Student Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>260001</td><td style="text-align: left; padding-left: 20px;">FAIAZ HOSSAIN FARHAN</td></tr>
+                <tr><td>260002</td><td style="text-align: left; padding-left: 20px;">FAIYAZ BIN BAKAR</td></tr>
+                <tr><td>260003</td><td style="text-align: left; padding-left: 20px;">MD. JANON</td></tr>
+                <tr><td>260004</td><td style="text-align: left; padding-left: 20px;">FAHAD BIN NUR</td></tr>
+                <tr><td>260005</td><td style="text-align: left; padding-left: 20px;">TANJILUR RAHMAN</td></tr>
+                <tr><td>260006</td><td style="text-align: left; padding-left: 20px;">KHALID BIN SYAM</td></tr>
+                <tr><td>260007</td><td style="text-align: left; padding-left: 20px;">LAMYA AKTER EMO</td></tr>
+                <tr><td>260009</td><td style="text-align: left; padding-left: 20px;">MD. SAKIB MIA</td></tr>
+                <tr><td>260010</td><td style="text-align: left; padding-left: 20px;">MAHENUR RAHMAN</td></tr>
+                <tr><td>260011</td><td style="text-align: left; padding-left: 20px;">NAWRIN HOSSAIN OISHI</td></tr>
+                <tr><td>260012</td><td style="text-align: left; padding-left: 20px;">MD. NAHID HASAN</td></tr>
+                <tr><td>260013</td><td style="text-align: left; padding-left: 20px;">IFTEKHAR UDDIN BHUIYAN</td></tr>
+                <tr><td>260014</td><td style="text-align: left; padding-left: 20px;">MEHEDI HASSAN BAPPI</td></tr>
+                <tr><td>260015</td><td style="text-align: left; padding-left: 20px;">AYSHA AKTER MISHITA</td></tr>
+                <tr><td>260016</td><td style="text-align: left; padding-left: 20px;">TOLI</td></tr>
+                <tr><td>260017</td><td style="text-align: left; padding-left: 20px;">SHAMS MAHMUD WALID</td></tr>
+                <tr><td>260018</td><td style="text-align: left; padding-left: 20px;">NOUSHIN AHMED</td></tr>
+                <tr><td>260019</td><td style="text-align: left; padding-left: 20px;">SAZNIN FERDOUSI OYSHI</td></tr>
+                <tr><td>260020</td><td style="text-align: left; padding-left: 20px;">TASFIM MONJABIN</td></tr>
+                <tr><td>260021</td><td style="text-align: left; padding-left: 20px;">SYED REJOYAN HAQUE</td></tr>
+                <tr><td>260022</td><td style="text-align: left; padding-left: 20px;">NAFISA KHAN</td></tr>
+                <tr><td>260023</td><td style="text-align: left; padding-left: 20px;">MAHI SHAHRIAR APURBO</td></tr>
+                <tr><td>260024</td><td style="text-align: left; padding-left: 20px;">MD. SHAHNAWAZ KOBIR</td></tr>
+                <tr><td>260025</td><td style="text-align: left; padding-left: 20px;">AJIM UDDIN AKASH</td></tr>
+                <tr><td>260026</td><td style="text-align: left; padding-left: 20px;">MD. HASAN HABIB</td></tr>
+                <tr><td>260027</td><td style="text-align: left; padding-left: 20px;">MONIM AHMAD</td></tr>
+                <tr><td>260028</td><td style="text-align: left; padding-left: 20px;">TAHSINUL HAQUE</td></tr>
+                <tr><td>260029</td><td style="text-align: left; padding-left: 20px;">TANIM KHAN</td></tr>
+                <tr><td>260030</td><td style="text-align: left; padding-left: 20px;">ZAYED BIN ABDULLAH</td></tr>
+                <tr><td>260031</td><td style="text-align: left; padding-left: 20px;">PRIONTY SARKER</td></tr>
+                <tr><td>260032</td><td style="text-align: left; padding-left: 20px;">MARIA SULTANA MOONMOON</td></tr>
+                <tr><td>260033</td><td style="text-align: left; padding-left: 20px;">UMAIYA RISTA URBOSHI</td></tr>
+                <tr><td>260034</td><td style="text-align: left; padding-left: 20px;">SAJIDUL ISLAM</td></tr>
+                <tr><td>260035</td><td style="text-align: left; padding-left: 20px;">MALIHA JAMAN</td></tr>
+                <tr><td>260036</td><td style="text-align: left; padding-left: 20px;">ANIKA TASNIM</td></tr>
+                <tr><td>260037</td><td style="text-align: left; padding-left: 20px;">MUSIDUL ISLAM SAYEB</td></tr>
+                <tr><td>260038</td><td style="text-align: left; padding-left: 20px;">MD. JOBAIR UDDIN</td></tr>
+                <tr><td>260039</td><td style="text-align: left; padding-left: 20px;">MAHMODUL HASAN</td></tr>
+                <tr><td>260040</td><td style="text-align: left; padding-left: 20px;">JANNAT TASNIN RAKA</td></tr>
+                <tr><td>260041</td><td style="text-align: left; padding-left: 20px;">FARHANA SADIA</td></tr>
+                <tr><td>260042</td><td style="text-align: left; padding-left: 20px;">SEMEKA BARMAN</td></tr>
+                <tr><td>260043</td><td style="text-align: left; padding-left: 20px;">SAILA SAJIN RINI</td></tr>
+                <tr><td>260044</td><td style="text-align: left; padding-left: 20px;">TAMIM EQBAL</td></tr>
+                <tr><td>260045</td><td style="text-align: left; padding-left: 20px;">NABILA HOSSAIN</td></tr>
+                <tr><td>260046</td><td style="text-align: left; padding-left: 20px;">MD. EYAKUB HOSSIN</td></tr>
+                <tr><td>260047</td><td style="text-align: left; padding-left: 20px;">SK. MD. SADIP</td></tr>
+                <tr><td>260048</td><td style="text-align: left; padding-left: 20px;">SK. TAZIM</td></tr>
+                <tr><td>260049</td><td style="text-align: left; padding-left: 20px;">SAMIRA TABASSUM</td></tr>
+                <tr><td>260050</td><td style="text-align: left; padding-left: 20px;">SOHANUR RAHAMAN NUR</td></tr>
+                <tr><td>260051</td><td style="text-align: left; padding-left: 20px;">ARIAN ABDULLAH</td></tr>
+                <tr><td>260052</td><td style="text-align: left; padding-left: 20px;">MD. SHEFAT ALI</td></tr>
+                <tr><td>260053</td><td style="text-align: left; padding-left: 20px;">RAFIUL ISLAM</td></tr>
+                <tr><td>260054</td><td style="text-align: left; padding-left: 20px;">SK. SADIK SAGAR</td></tr>
+                <tr><td>260055</td><td style="text-align: left; padding-left: 20px;">MD. ALBIR SAMI</td></tr>
+                <tr><td>260056</td><td style="text-align: left; padding-left: 20px;">MOHAMMED JUNAYED HOSSAINFARDIN</td></tr>
+                <tr><td>260057</td><td style="text-align: left; padding-left: 20px;">REDWAN AHMMED</td></tr>
+                <tr><td>260058</td><td style="text-align: left; padding-left: 20px;">MD. HRIDOY MONDOL</td></tr>
+                <tr><td>260059</td><td style="text-align: left; padding-left: 20px;">AMRIN AKTER ALISA</td></tr>
+                <tr><td>260060</td><td style="text-align: left; padding-left: 20px;">ASHRAFUL HOQUE RIMON</td></tr>
+                <tr><td>260061</td><td style="text-align: left; padding-left: 20px;">KAZI MD. ARAFAT HOSSAIN SHANTO</td></tr>
+                <tr><td>260062</td><td style="text-align: left; padding-left: 20px;">MD WHIDUN NABI NION</td></tr>
+                <tr><td>260063</td><td style="text-align: left; padding-left: 20px;">IKON SHEIKH</td></tr>
+                <tr><td>260064</td><td style="text-align: left; padding-left: 20px;">SHARMIN HOSSAIN ANUD</td></tr>
+                <tr><td>260065</td><td style="text-align: left; padding-left: 20px;">TASNIM HASNAT</td></tr>
+                <tr><td>260066</td><td style="text-align: left; padding-left: 20px;">MD. ANISUL HAQUE ANIK</td></tr>
+                <tr><td>260067</td><td style="text-align: left; padding-left: 20px;">IREEN AKTER</td></tr>
+                <tr><td>260068</td><td style="text-align: left; padding-left: 20px;">SIFATUL ISLAM SIFAT</td></tr>
+                <tr><td>260069</td><td style="text-align: left; padding-left: 20px;">HAFSA HOSSAIN TOMA</td></tr>
+                <tr><td>260070</td><td style="text-align: left; padding-left: 20px;">SINHA AKTER SEAN</td></tr>
+                <tr><td>260071</td><td style="text-align: left; padding-left: 20px;">MOHAMMAD TANVIR HOSSEN TAMIM</td></tr>
+                <tr><td>260072</td><td style="text-align: left; padding-left: 20px;">TUSTY ISLAM</td></tr>
+                <tr><td>260073</td><td style="text-align: left; padding-left: 20px;">MD. TAHASANUR KHAN</td></tr>
+                <tr><td>260074</td><td style="text-align: left; padding-left: 20px;">S.N. OMI</td></tr>
+                <tr><td>260075</td><td style="text-align: left; padding-left: 20px;">SALSABILA NAHIN AFNAN</td></tr>
+                <tr><td>260076</td><td style="text-align: left; padding-left: 20px;">MD. EFAZ BHUIYAN</td></tr>
+                <tr><td>260077</td><td style="text-align: left; padding-left: 20px;">MST. LOTA MONY</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       `
     },
-    questions: {
-      title: "Previous Examination Question Bank",
+
+    notes: {
+      title: "Notes &amp; Course Materials",
       content: `
-        <div style="text-align: left;">
-          <p style="color: #64748b;">Mid-term and semester final exam question archive:</p>
-          <ul style="line-height: 2.2; margin-top: 14px;">
-            <li>📄 <strong>Mid-Semester Question Archives:</strong> <a href="#" target="_blank">Browse Archive &rarr;</a></li>
-            <li>📄 <strong>Final Examination Papers:</strong> <a href="#" target="_blank">Browse Archive &rarr;</a></li>
+        <div style="line-height: 2;">
+          <p style="color: #64748b;">Course folder links (Access restricted to batch students):</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;">📂 <strong>Structured Programming:</strong> <a href="#" target="_blank">Google Drive Folder ↗</a></li>
+            <li style="margin-bottom: 8px;">📂 <strong>Physics II &amp; Calculus:</strong> <a href="#" target="_blank">Handnotes &amp; Formula Sheets ↗</a></li>
+            <li style="margin-bottom: 8px;">📂 <strong>Electrical &amp; Electronic Circuit:</strong> <a href="#" target="_blank">Lecture Slides Archive ↗</a></li>
           </ul>
         </div>
       `
     },
-    labCodes: {
-      title: "Lab Experiments &amp; Code Solutions",
+
+    questions: {
+      title: "Question Bank Archives",
       content: `
-        <div style="text-align: left;">
-          <p style="color: #64748b;">Standard C programming lab experiments for lab manuals:</p>
-          <ul style="line-height: 2.2; margin-top: 14px;">
-            <li>💻 <strong>Lab 1:</strong> Variables, Input/Output &amp; Arithmetic Operations</li>
-            <li>💻 <strong>Lab 2:</strong> Branching Logic (if-else, nested condition, switch)</li>
-            <li>💻 <strong>Lab 3:</strong> Loop Controls (for, while, nested loops)</li>
-            <li>💻 <strong>Lab 4:</strong> 1D &amp; 2D Array Traversals &amp; Operations</li>
+        <div style="line-height: 2;">
+          <p style="color: #64748b;">Previous semester question papers for exam preparation:</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;">📄 <strong>Mid-Term Examination:</strong> <a href="#" target="_blank">Download PDF Archive ↗</a></li>
+            <li style="margin-bottom: 8px;">📄 <strong>Semester Final Examination:</strong> <a href="#" target="_blank">Download PDF Archive ↗</a></li>
+          </ul>
+        </div>
+      `
+    },
+
+    labCodes: {
+      title: "Programming Lab Experiments",
+      content: `
+        <div style="line-height: 2;">
+          <p style="color: #64748b;">Structured Programming Language lab code solutions:</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li>💻 <strong>Lab 1:</strong> Data types, basic I/O &amp; arithmetic operators</li>
+            <li>💻 <strong>Lab 2:</strong> Branching control (if-else, nested condition, switch)</li>
+            <li>💻 <strong>Lab 3:</strong> Loop structures (for, while, do-while)</li>
+            <li>💻 <strong>Lab 4:</strong> Array operations, searching &amp; matrix multiplication</li>
           </ul>
         </div>
       `
     }
   };
 
-  const selected = modules[viewKey] || { title: "ফিচার", content: "তথ্য লোড হচ্ছে..." };
+  const selected = modules[viewKey] || { title: "Portal Module", content: "" };
   if (titleEl) titleEl.innerHTML = selected.title;
   if (contentEl) contentEl.innerHTML = selected.content;
+};
+
+// Listen to browser / physical back button
+window.addEventListener("popstate", (e) => {
+  if (e.state && e.state.view) {
+    navigateTo(e.state.view, false);
+  } else {
+    navigateTo("dashboard", false);
+  }
+});
+
+// Student List Instant Search Function
+window.filterStudents = function() {
+  const input = document.getElementById("studentSearch");
+  if (!input) return;
+  const filter = input.value.toUpperCase();
+  const table = document.getElementById("studentTable");
+  if (!table) return;
+  const tr = table.getElementsByTagName("tr");
+
+  for (let i = 1; i < tr.length; i++) {
+    const tdRoll = tr[i].getElementsByTagName("td")[0];
+    const tdName = tr[i].getElementsByTagName("td")[1];
+    if (tdRoll || tdName) {
+      const txtRoll = tdRoll.textContent || tdRoll.innerText;
+      const txtName = tdName.textContent || tdName.innerText;
+      if (txtRoll.toUpperCase().indexOf(filter) > -1 || txtName.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 };
 
 /* ------------------------------------------------------------
@@ -515,8 +725,8 @@ function wireForm() {
     const el = document.getElementById(id);
     if (!el) return;
 
-    el.addEventListener('input', (e) => {
-      localStorage.setItem(STORAGE_PREFIX + id, e.target.value);
+    el.addEventListener('input', () => {
+      localStorage.setItem(STORAGE_PREFIX + id, el.value);
       scheduleRender();
     });
   });

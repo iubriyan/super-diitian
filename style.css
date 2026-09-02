@@ -103,212 +103,241 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Modern SaaS/Fintech Hub Dashboard
+   Super DIITian — Colorful Themed Hub Dashboard
    ============================================================ */
 .hub-container {
-  max-width: 1140px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 10px 20px 40px;
+  padding: 10px 16px 40px;
 }
 
 .hub-hero {
   text-align: center;
-  margin: 24px auto 36px;
+  margin: 20px auto 26px;
 }
 
 .hub-hero h2 {
   font-family: var(--font-body);
-  font-size: 1.85rem;
+  font-size: 1.7rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  color: #0f172a;
-  margin: 0 0 8px 0;
+  color: #16232F;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
 }
 
 .hub-hero p {
-  font-size: 0.95rem;
-  color: #64748b;
+  font-size: 0.88rem;
+  color: var(--muted);
   margin: 0;
 }
 
+/* Grid Layout: Compact, Colorful, Bubble Style */
 .hub-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 16px;
 }
 
-/* Responsive Grid for Tablets and Phones */
-@media (max-width: 960px) {
-  .hub-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-}
-
-@media (max-width: 580px) {
+@media (max-width: 820px) {
   .hub-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  .hub-hero h2 {
-    font-size: 1.4rem;
-  }
-  .hub-hero p {
-    font-size: 0.82rem;
-  }
 }
 
-/* Modern Clean Card */
 .hub-card {
   position: relative;
   background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 18px;
-  padding: 26px 20px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  border-radius: 20px;
+  padding: 20px 16px;
+  border: 1.5px solid transparent;
+  box-shadow: 0 4px 14px rgba(16, 36, 56, 0.05);
   cursor: pointer;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hub-card:hover {
   transform: translateY(-4px);
-  border-color: #cbd5e1;
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 12px 24px rgba(16, 36, 56, 0.1);
 }
 
 .hub-card:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
-/* Icon badges with smooth background tints */
 .hub-card__icon {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-  transition: transform 0.25s ease;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .hub-card:hover .hub-card__icon {
   transform: scale(1.08);
 }
 
-.icon-blue   { background: #eff6ff; color: #2563eb; }
-.icon-teal   { background: #f0fdfa; color: #0d9488; }
-.icon-indigo { background: #eef2ff; color: #4f46e5; }
-.icon-purple { background: #faf5ff; color: #9333ea; }
-.icon-amber  { background: #fffbeb; color: #d97706; }
-.icon-cyan   { background: #ecfeff; color: #0891b2; }
-
-.hub-card__content h3 {
+.hub-card__info h3 {
   font-family: var(--font-body);
-  font-size: 1.12rem;
+  font-size: 1.02rem;
   font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 6px 0;
-  letter-spacing: -0.01em;
+  color: #16232F;
+  margin: 0 0 3px 0;
 }
 
-.hub-card__content p {
-  font-size: 0.82rem;
-  color: #64748b;
-  margin: 0;
-  line-height: 1.45;
+.hub-card__info span {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 
-/* Badge for primary cards */
-.hub-card__badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  background: #f1f5f9;
-  color: #475569;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
+/* Vibrant Brand Colors Matched to Super DIITian */
+.card--blue   { border-color: #dbeafe; background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); }
+.card--blue .hub-card__icon { background: #0284c7; color: #ffffff; }
 
-/* Mobile Adjustments for Card */
-@media (max-width: 580px) {
+.card--green  { border-color: #dcfce7; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); }
+.card--green .hub-card__icon { background: #1E9E4A; color: #ffffff; }
+
+.card--yellow { border-color: #fef08a; background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%); }
+.card--yellow .hub-card__icon { background: #eab308; color: #ffffff; }
+
+.card--purple { border-color: #f3e8ff; background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%); }
+.card--purple .hub-card__icon { background: #8b5cf6; color: #ffffff; }
+
+.card--cyan   { border-color: #cffafe; background: linear-gradient(180deg, #ffffff 0%, #ecfeff 100%); }
+.card--cyan .hub-card__icon { background: #06b6d4; color: #ffffff; }
+
+.card--dark   { border-color: #e2e8f0; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); }
+.card--dark .hub-card__icon { background: #334155; color: #ffffff; }
+
+@media (max-width: 480px) {
   .hub-card {
-    padding: 18px 14px;
-    border-radius: 14px;
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 10px;
+    gap: 10px;
   }
   .hub-card__icon {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 12px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
   }
   .hub-card__icon svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
-  .hub-card__content h3 {
-    font-size: 0.95rem;
+  .hub-card__info h3 {
+    font-size: 0.92rem;
   }
-  .hub-card__content p {
-    font-size: 0.74rem;
-  }
-  .hub-card__badge {
-    display: none;
+  .hub-card__info span {
+    font-size: 0.70rem;
   }
 }
 
-/* View Container Details */
-.hub-view {
-  animation: fadeIn 0.25s ease-out;
-}
-
+/* Back Button */
 .hub-back-btn {
-  background: #0f172a;
+  background: #16232F;
   color: #ffffff;
   border: none;
   padding: 10px 18px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(22, 35, 47, 0.15);
   transition: all 0.2s ease;
 }
 
 .hub-back-btn:hover {
-  background: #1e293b;
-  transform: translateX(-2px);
+  background: #0284c7;
+  transform: translateX(-3px);
 }
 
 .hub-panel {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--line);
   border-radius: 20px;
-  padding: 32px 28px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
-  min-height: 380px;
+  overflow-x: auto;
 }
 
 .hub-panel h2 {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #16232F;
   margin-top: 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1.5px solid var(--paper);
   padding-bottom: 12px;
+}
+
+/* Routine & Student Table Styles */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+.custom-table th {
+  background: #16232F;
+  color: #ffffff;
+  padding: 12px 10px;
+  font-weight: 600;
+}
+
+.custom-table td {
+  padding: 10px 8px;
+  border: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.custom-table tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.routine-lab {
+  background: #ecfdf5 !important;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.teacher-badge {
+  display: inline-block;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.student-search-box {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  margin-bottom: 18px;
+  outline: none;
+  font-size: 0.9rem;
+}
+.student-search-box:focus {
+  border-color: #0284c7;
 }
 /* ============================================================
    Layout
