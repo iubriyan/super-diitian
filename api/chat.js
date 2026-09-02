@@ -1,7 +1,61 @@
 import fs from "fs";
 import path from "path";
 
-let cachedRoutine = null;
+// ১. কমন প্রশ্ন ও উত্তরের অফলাইন ডেটাবেস (Instant Keyword Match)
+const FAQ_DATABASE = [
+  {
+    keywords: ["আজকে", "ক্লাস", "আজকের", "today"],
+    reply: `📅 **আজকের ক্লাস শিডিউল:**
+আমাদের ক্লাসের সময়সূচি দেখতে ড্যাশবোর্ডের **Class Routine** সেকশনে যাও। সেখানে লাইভ ট্র্যাকারেই দেখতে পাবে এখন কোন ক্লাস চলছে এবং পরবর্তীতে কোনটি আছে!`
+  },
+  {
+    keywords: ["রুটিন", "রুটিনটা", "সময়সূচি", "routine", "schedule"],
+    reply: `🕒 **CSE 26th Batch রুটিন সারসংক্ষেপ:**
+- **দিনসমূহ:** রবিবার থেকে বুধবার
+- **Section A:** Room 704
+- **Section B:** Room 706
+- **সময়:** 11:40 AM – 03:30 PM
+সম্পূর্ণ রুটিনের ছবি ডাউনলোড করতে ড্যাশবোর্ডের **Class Routine** অপশনে যাও!`
+  },
+  {
+    keywords: ["রুম", "রুম কত", "room"],
+    reply: `🏫 **রুম নম্বর:**
+- **Section A:** 704 নম্বর রুম
+- **Section B:** 706 নম্বর রুম`
+  },
+  {
+    keywords: ["টিচার", "স্যার", "ম্যাম", "শিক্ষক", "teacher", "faculty"],
+    reply: `👨‍🏫 **শিক্ষকদের রেফারেন্স তালিকা:**
+• **PB:** Poly Bhoumik
+• **MZH:** Md. Zakir Hossain
+• **SR:** Saidur Rahman
+• **MIH:** Md. Imran Hossain
+• **MMR:** Md. Mushfiqur Rahaman
+• **RKD:** Ramen Kumar Das
+• **PRM:** Md. Parvezur Rahman Mahin
+• **MFO:** Mubtasim Fuad Opee
+• **SQ:** Sabrina Quadir
+• **FP:** Farjana Parvin`
+  },
+  {
+    keywords: ["কভার", "cover", "assignment", "lab report"],
+    reply: `📄 **কভার পেজ তৈরি করতে:**
+ড্যাশবোর্ডের প্রথম কার্ড **Cover Page Maker**-এ ক্লিক করো। তোমার ডিপার্টমেন্ট, কোর্স কোড ও নিজের রোল দিয়ে এক ক্লিকে হাই-কোয়ালিটি JPG ডাউনলোড করে নিতে পারবে!`
+  },
+  {
+    keywords: ["হাই", "হ্যালো", "কেমন আছো", "hi", "hello", "hey", "সালাম", "assalamu"],
+    reply: `ওয়ালাইকুম আসসালাম! আমি তোমাদের ক্লাসের **CR GPT** 😎। রুটিন, রুম নম্বর বা ক্লাস সম্পর্কিত যেকোনো তথ্য জানতে নিচে লিখে ফেলো!`
+  }
+];
+
+function findPreloadedAnswer(userInput) {
+  const cleanInput = userInput.toLowerCase();
+  for (const item of FAQ_DATABASE) {
+    const isMatched = item.keywords.some(keyword => cleanInput.includes(keyword.toLowerCase()));
+    if (isMatched) return item.reply;
+  }
+  return null;
+}
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Credentials", true);
@@ -16,33 +70,29 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const { message, history } = req.body || {};
-  
-  // Vercel Environment Variable অথবা ডিরেক্ট ওপেনরাউটার কী
+  const userText = message ? message.trim() : "";
+
+  if (!userText) {
+    return res.status(400).json({ reply: "কিছু তো লিখে পাঠাও!" });
+  }
+
+  // ধাপ ১: আগে প্রিলোডেড উত্তর চেক করা (API কল ছাড়াই দ্রুত উত্তর যাবে)
+  const localMatch = findPreloadedAnswer(userText);
+  if (localMatch) {
+    return res.status(200).json({ reply: localMatch });
+  }
+
+  // ধাপ ২: যদি প্রিলোডেড উত্তরে না মিলে, তখন OpenRouter API কল হবে
   const apiKey = process.env.OPENROUTER_API_KEY;
 
+  if (!apiKey) {
+    return res.status(200).json({ 
+      reply: "বটের সার্ভার আপডেট হচ্ছে। সাধারণ রুটিন দেখতে হোমপেজের Routine কার্ড চেক করো!" 
+    });
+  }
+
   try {
-    if (!cachedRoutine) {
-      try {
-        const routinePath = path.join(process.cwd(), "data", "routine.json");
-        if (fs.existsSync(routinePath)) {
-          cachedRoutine = fs.readFileSync(routinePath, "utf8");
-        }
-      } catch {
-        cachedRoutine = "";
-      }
-    }
-
-    const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা এআই সহকারী 'CR GPT'। 
-তোমার কাজ ক্লাসের রুটিন, রুম নম্বর, ক্লাস শিডিউল ও স্টাডি মেটেরিয়াল সম্পর্কে শিক্ষার্থীদের সাহায্য করা। 
-সর্বদা বন্ধুত্বপূর্ণ, হাসিখুশি ও রসবোধপূর্ণ ভঙ্গিতে বাংলায় ছোট ও স্পষ্ট উত্তর দাও।
-
-তথ্যসূত্র:
-- ব্যাচ: DIIT CSE 26th Batch (1st Year, 2nd Semester)
-- ক্লাস বার: রবিবার থেকে বুধবার (Sunday to Wednesday)
-- রুম: Section A = Room 704, Section B = Room 706
-- সময়সূচি: 11:40 AM - 12:50 PM, 12:50 PM - 02:00 PM, 02:20 PM - 03:30 PM
-- শিক্ষকবৃন্দ: Poly Bhoumik (PB), Md. Zakir Hossain (MZH), Saidur Rahman (SR), Md. Imran Hossain (MIH), Md. Mushfiqur Rahaman (MMR), Ramen Kumar Das (RKD), Md. Parvezur Rahman Mahin (PRM), Mubtasim Fuad Opee (MFO), Sabrina Quadir (SQ), Farjana Parvin (FP)
-${cachedRoutine ? "অতিরিক্ত রুটিন ফাইল: " + cachedRoutine : ""}`;
+    const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের সহকারী 'CR GPT'। রুটিন, রুম (Sec A: 704, Sec B: 706), এবং ক্লাস সংক্রান্ত তথ্য বাংলায় সংক্ষিপ্ত ও হাস্যরসাত্মক ভঙ্গিতে দেবে।`;
 
     const messages = [{ role: "system", content: systemPrompt }];
 
@@ -55,9 +105,8 @@ ${cachedRoutine ? "অতিরিক্ত রুটিন ফাইল: " + ca
       });
     }
 
-    messages.push({ role: "user", content: message });
+    messages.push({ role: "user", content: userText });
 
-    // OpenRouter API কল (Gemini 2.0 Flash Free)
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -69,24 +118,24 @@ ${cachedRoutine ? "অতিরিক্ত রুটিন ফাইল: " + ca
       body: JSON.stringify({
         model: "google/gemini-2.0-flash-exp:free",
         messages: messages,
-        max_tokens: 300,
+        max_tokens: 250,
         temperature: 0.7
       })
     });
 
     const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.error?.message || "OpenRouter এপিআই থেকে রেসপন্স আসেনি");
+    if (!response.ok || !data.choices?.[0]?.message?.content) {
+      throw new Error(data.error?.message || "AI সার্ভার রেসপন্স দেয়নি");
     }
 
-    const reply = data.choices?.[0]?.message?.content || "দুঃখিত, কোনো উত্তর তৈরি করা যায়নি।";
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply: data.choices[0].message.content });
 
   } catch (error) {
-    console.error("OpenRouter Backend Error:", error);
-    return res.status(500).json({ 
-      reply: `CR GPT এরর: ${error.message || "সার্ভারে সাময়িক সমস্যা হচ্ছে।"}` 
+    console.error("OpenRouter API Failed, falling back:", error);
+    // API ফেইল করলেও ইউজারকে হতাশ না করে ডিফল্ট সেফ উত্তর দেওয়া
+    return res.status(200).json({ 
+      reply: "সার্ভারে একটু লোড বেশি! তবে ক্লাস রুটিনের বিস্তারিত দেখতে উপরের 'Class Routine' সেকশনে চলে যাও, সেখানে লাইভ ট্র্যাকার চালু আছে।" 
     });
   }
 }
