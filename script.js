@@ -276,22 +276,22 @@ const STUDENTS_LIST = [
   { roll: "260059", name: "Amrin Akter Alisa" },
   { roll: "260060", name: "Ashraful Hoque Rimon" },
   { roll: "260061", name: "Kazi Md. Arafat Hossain Shanto" },
-  { roll: "260062", name: "Md Whidun Nabi Nion" },
-  { roll: "260063", name: "Ikon Sheikh" },
-  { roll: "260064", name: "Sharmin Hossain Anud" },
-  { roll: "260065", name: "Tasnim Hasnat" },
-  { roll: "260066", name: "Md. Anisul Haque Anik" },
-  { roll: "260067", name: "Ireen Akter" },
-  { roll: "260068", name: "Sifatul Islam Sifat" },
-  { roll: "260069", name: "Hafsa Hossain Toma" },
-  { roll: "260070", name: "Sinha Akter Sean" },
-  { roll: "260071", name: "Mohammad Tanvir Hossen Tamim" },
-  { roll: "260072", name: "Tusty Islam" },
-  { roll: "260073", name: "Md. Tahasanur Khan" },
-  { roll: "260074", name: "S.N. Omi" },
-  { roll: "260075", name: "Salsabila Nahin Afnan" },
-  { roll: "260076", name: "Md. Efaz Bhuiyan" },
-  { roll: "260077", name: "Mst. Lota Mony" }
+  { roll: "260062", name: "Md WHIDUN NABI NION" },
+  { roll: "260063", name: "IKON SHEIKH" },
+  { roll: "260064", name: "SHARMIN HOSSAIN ANUD" },
+  { roll: "260065", name: "TASNIM HASNAT" },
+  { roll: "260066", name: "MD. ANISUL HAQUE ANIK" },
+  { roll: "260067", name: "IREEN AKTER" },
+  { roll: "260068", name: "SIFATUL ISLAM SIFAT" },
+  { roll: "260069", name: "HAFSA HOSSAIN TOMA" },
+  { roll: "260070", name: "SINHA AKTER SEAN" },
+  { roll: "260071", name: "MOHAMMAD TANVIR HOSSEN TAMIM" },
+  { roll: "260072", name: "TUSTY ISLAM" },
+  { roll: "260073", name: "MD. TAHASANUR KHAN" },
+  { roll: "260074", name: "S.N. OMI" },
+  { roll: "260075", name: "SALSABILA NAHIN AFNAN" },
+  { roll: "260076", name: "MD. EFAZ BHUIYAN" },
+  { roll: "260077", name: "MST. LOTA MONY" }
 ];
 
 window.renderStudentCards = function(list = STUDENTS_LIST) {
@@ -707,16 +707,19 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
       `
     },
 
-    notes: {
-      title: "Notes & Course Slides",
+    news: {
+      title: "Bangladesh Live News",
       content: `
-        <div class="coming-soon-box">
-          <div class="coming-soon-icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <div class="news-container">
+          <div class="news-categories-bar">
+            <button class="news-cat-btn is-active" onclick="fetchNews('politics', this)">🏛️ রাজনীতি</button>
+            <button class="news-cat-btn" onclick="fetchNews('technology', this)">💻 টেকনোলজি</button>
+            <button class="news-cat-btn" onclick="fetchNews('science', this)">🔬 বিজ্ঞান</button>
+            <button class="news-cat-btn" onclick="fetchNews('sports', this)">🏏 খেলাধুলা</button>
           </div>
-          <span class="coming-soon-badge">🚧 Under Development</span>
-          <h3 class="coming-soon-title">Lecture Slides & Handnotes Coming Soon</h3>
-          <p class="coming-soon-desc">We are currently gathering and organizing the official semester notes, PPT slides, and formula sheets for CSE 26th Batch.</p>
+          <div class="news-grid" id="newsGridContainer">
+            <div class="news-loading">📰 লাইভ নিউজ লোড হচ্ছে, একটু অপেক্ষা করুন...</div>
+          </div>
         </div>
       `
     },
@@ -760,6 +763,9 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
   if (viewKey === 'students') {
     setTimeout(() => renderStudentCards(), 50);
   }
+  if (viewKey === 'news') {
+    setTimeout(() => fetchNews('politics'), 50);
+  }
 };
 
 window.addEventListener("popstate", (e) => {
@@ -769,6 +775,61 @@ window.addEventListener("popstate", (e) => {
     navigateTo("dashboard", false);
   }
 });
+
+/* ------------------------------------------------------------
+   Live News Portal Engine
+   ------------------------------------------------------------ */
+window.fetchNews = async function(category = 'politics', btnEl = null) {
+  if (btnEl) {
+    document.querySelectorAll('.news-cat-btn').forEach(b => b.classList.remove('is-active'));
+    btnEl.classList.add('is-active');
+  }
+
+  const container = document.getElementById('newsGridContainer');
+  if (!container) return;
+
+  container.innerHTML = `<div class="news-loading">📰 লাইভ নিউজ ফেচ করা হচ্ছে...</div>`;
+
+  try {
+    const res = await fetch(`/api/news?category=${category}`);
+    const data = await res.json();
+
+    if (!data.results || data.results.length === 0) {
+      container.innerHTML = `<div class="news-error">⚠️ এই মুহূর্তে কোনো নিউজ পাওয়া যায়নি।</div>`;
+      return;
+    }
+
+    container.innerHTML = data.results.map(item => {
+      const title = item.title || "শিরোনাম পাওয়া যায়নি";
+      const desc = item.description || item.content || "বিস্তারিত পড়তে লিংকে ক্লিক করুন...";
+      const img = item.image_url || "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60";
+      const source = item.source_id || "Online News";
+      const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleDateString('bn-BD') : "সদ্য প্রকাশিত";
+      const link = item.link || "#";
+
+      return `
+        <a href="${link}" target="_blank" rel="noopener" class="news-card">
+          <div class="news-card__img-wrap">
+            <img src="${img}" alt="News thumbnail" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60'">
+          </div>
+          <div class="news-card__content">
+            <span class="news-card__source">🌐 ${source}</span>
+            <h3 class="news-card__title">${title}</h3>
+            <p class="news-card__desc">${desc}</p>
+            <div class="news-card__footer">
+              <span>📅 ${pubDate}</span>
+              <span style="color:#0284c7; font-weight:700;">বিস্তারিত পড়ুন &rarr;</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+  } catch (err) {
+    console.error("News load failed:", err);
+    container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+  }
+};
 
 /* ------------------------------------------------------------
    Canvas Text Helpers
@@ -1202,7 +1263,6 @@ function getCRGptSmartResponse(rawQuery) {
   if (!rawQuery) return null;
   const q = rawQuery.trim().toLowerCase();
 
-  // ১. ক্রিয়েটর ও আর্কিটেক্ট (Riyan / Iftekhar) সম্পর্কিত প্রশ্ন
   if (
     q.includes("ইফতেখার") || q.includes("iftekhar") || 
     q.includes("রিয়ান") || q.includes("riyan") || 
@@ -1218,7 +1278,6 @@ function getCRGptSmartResponse(rawQuery) {
     return getRandomItem(bossAnswers);
   }
 
-  // ২. CR (প্রিয়ন্তি ও রাফি) সম্পর্কিত মজার খোঁচা
   if (
     q.includes("cr") || q.includes("সিআর") || 
     q.includes("prionty") || q.includes("প্রিয়ন্তি") || 
@@ -1232,7 +1291,6 @@ function getCRGptSmartResponse(rawQuery) {
     return getRandomItem(crAnswers);
   }
 
-  // ৩. হাই / হ্যালো / গ্রিটিংস (বহুমুখী র‍্যান্ডম উত্তর)
   const greetingKeywords = [
     "hi", "hello", "hlw", "hei", "hey", "হাই", "হ্যালো", "হেই", "সালাম", 
     "salam", "assalamu", "kemon aso", "kemon acho", "ki khobor", "ki obstha", "কি অবস্থা"
@@ -1248,7 +1306,6 @@ function getCRGptSmartResponse(rawQuery) {
     return getRandomItem(greetings);
   }
 
-  // ৪. লাইভ ক্লাস স্ট্যাটাস (এখন কি ক্লাস / পরের ক্লাস কি)
   if (
     q.includes("এখন কি") || q.includes("ekhon ki") || 
     q.includes("current class") || q.includes("ongoing") || 
@@ -1283,7 +1340,6 @@ function getCRGptSmartResponse(rawQuery) {
     return `🎉 আজকের সব ক্লাস শেষ! ব্যাগ গুছাও আর বাসায় যাওয়ার প্রস্তুতি নাও।`;
   }
 
-  // ৫. ব্রেক কখন / ব্রেক টাইম
   if (
     q.includes("break") || q.includes("ব্রেক") || 
     q.includes("টিফিন") || q.includes("বিরতি") || q.includes("nasta") || q.includes("lunch")
@@ -1291,7 +1347,6 @@ function getCRGptSmartResponse(rawQuery) {
     return `☕ **ব্রেক টাইম:**\nআমাদের ক্লাসে প্রতিদিন **দুপুর ০২:০০ PM থেকে ০২:২০ PM** পর্যন্ত ২০ মিনিটের ব্রেক থাকে! এরপর আবার ল্যাব/ক্লাস শুরু হয়।`;
   }
 
-  // ৬. আজকের ক্লাস তালিকা
   if (
     q.includes("আজকে কি") || q.includes("ajke ki") || 
     q.includes("aj k ki") || q.includes("today class") || 
@@ -1309,7 +1364,6 @@ function getCRGptSmartResponse(rawQuery) {
     return `📅 **আজকের ক্লাস তালিকা (Section ${currentRoutineSec}, Room ${secData.room}):**\n${list}`;
   }
 
-  // ৭. পূর্ণ রুটিন বা শিডিউল
   if (
     q.includes("routine") || q.includes("রুটিন") || 
     q.includes("schedule") || q.includes("সময়সূচি") || q.includes("somoy suchi")
@@ -1323,7 +1377,6 @@ function getCRGptSmartResponse(rawQuery) {
 পুরো রুটিনের HD JPG ডাউনলোড করতে ড্যাশবোর্ডের **Class Routine** অপশনে চলে যাও!`;
   }
 
-  // ৮. রুম নম্বর
   if (
     q.includes("room") || q.includes("রুম") || 
     q.includes("কয় নম্বর রুম") || q.includes("room koto")
@@ -1333,7 +1386,6 @@ function getCRGptSmartResponse(rawQuery) {
 • **Section B:** Room 706`;
   }
 
-  // ৯. শিক্ষক ও ফ্যাকাল্টি তালিকা
   if (
     q.includes("teacher") || q.includes("faculty") || 
     q.includes("টিচার") || q.includes("শিক্ষক") || q.includes("ম্যাম") || q.includes("স্যার")
@@ -1351,7 +1403,6 @@ function getCRGptSmartResponse(rawQuery) {
 • **FP:** Farjana Parvin`;
   }
 
-  // ১০. কভার পেজ সম্পর্কিত
   if (
     q.includes("cover") || q.includes("কভার") || 
     q.includes("assignment") || q.includes("lab report") || q.includes("প্রচ্ছদ")
@@ -1360,7 +1411,6 @@ function getCRGptSmartResponse(rawQuery) {
 ড্যাশবোর্ডের প্রথম কার্ড **Cover Page Maker** এ ক্লিক করো। তোমার রোল ও বিষয় বসালেই নিখুঁত A4 সাইজের প্রিন্ট-রেডি JPG ডাউনলোড করতে পারবে!`;
   }
 
-  // ১১. স্টুডেন্ট লিস্ট ও রোল নম্বর অনুসন্ধান (Search by Roll or Name)
   const rollMatch = q.match(/\b(2600\d{2})\b/);
   if (rollMatch) {
     const s = STUDENTS_LIST.find(st => st.roll === rollMatch[1]);
@@ -1376,7 +1426,6 @@ function getCRGptSmartResponse(rawQuery) {
     }
   }
 
-  // ১২. বিকৃত/অযৌক্তিক বাংলিশ ডিটেকশন ও পচানি (Bad Banglish Roasting)
   const badBanglishPatterns = [
     /kisu\s*ekta/i, /vaiya/i, /broo+/i, /hobe\s*na/i, /thik\s*ase/i, /kire/i, /bal/i, /hudai/i
   ];
@@ -1389,7 +1438,6 @@ function getCRGptSmartResponse(rawQuery) {
     return getRandomItem(banglishRoasts);
   }
 
-  // ১৩. ক্লাসের বাইরের আজাইরা প্রশ্ন বা অফ-টপিক
   if (
     q.includes("প্রেম") || q.includes("gf") || q.includes("bf") || 
     q.includes("crush") || q.includes("biye") || q.includes("বিয়ে") || 
@@ -1403,7 +1451,6 @@ function getCRGptSmartResponse(rawQuery) {
     return getRandomItem(offtopicReplies);
   }
 
-  // ১৪. আননোন ও অবোধ্য প্রশ্নের জন্য মজার র‍্যান্ডম এক্সকিউজ (Fallbacks)
   const wittyExcuses = [
     `কিরে ভাই! আমাকে কি একটু শান্তিতে থাকতে দিবি না তোরা? সারাদিন প্রশ্ন আর প্রশ্ন! 🥱`,
     `আর ভাল্লাগে না! CR দুইটার একটাও কাজের না, সবাই আমাকে এসে বিরক্ত করে। 🙄`,
@@ -1438,7 +1485,6 @@ function wireCrGptWidget() {
       appendMsg(text, "cr-user");
       chatInput.value = "";
 
-      // ১. স্মার্ট লোকাল রুল ইঞ্জিন থেকে ইনস্ট্যান্ট উত্তর চেক
       const smartAnswer = getCRGptSmartResponse(text);
       if (smartAnswer) {
         setTimeout(() => {
@@ -1447,7 +1493,6 @@ function wireCrGptWidget() {
         return;
       }
 
-      // ২. যদি কোনো রুল ম্যাচ না করে তবেই কেবল সার্ভার/ওপেনরাউটারে যাবে
       const loading = appendMsg("টাইপ করছে...", "cr-bot");
 
       try {
@@ -1490,9 +1535,9 @@ function wireCrGptWidget() {
   }
 }
 
-/* ============================================================
+/* ------------------------------------------------------------
    Smart Weather & Contextual Vibe Engine (Routine & Time Aware)
-   ============================================================ */
+   ------------------------------------------------------------ */
 async function initSmartWeatherVibe() {
   const tempEl = document.getElementById("wTemp");
   const condEl = document.getElementById("wCondition");
@@ -1502,24 +1547,19 @@ async function initSmartWeatherVibe() {
 
   if (!tempEl || !vibeEl) return;
 
-  // ১. বর্তমান সঠিক সময় ও দিন বের করা (বাংলাদেশ সময় GMT+6)
   const now = new Date();
   const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
   const bdDate = new Date(utc + (3600000 * 6));
-  const currentDayIdx = bdDate.getDay(); // 0: Sunday, 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday
+  const currentDayIdx = bdDate.getDay(); 
   const hours = bdDate.getHours();
   const minutes = bdDate.getMinutes();
   const totalMins = hours * 60 + minutes;
 
-  // ২. রুটিন অনুযায়ী আজকে ক্লাস আছে কিনা চেক করা (আমাদের ক্লাস শুধু রবি (0) থেকে বুধ (3))
   const isClassDay = (currentDayIdx >= 0 && currentDayIdx <= 3);
-  
-  // আজকের নির্দিষ্ট সেকশনের রুটিন ডাটা চেক
   const secData = ROUTINE_DATA["A"] || ROUTINE_DATA[Object.keys(ROUTINE_DATA)[0]];
   const todaySchedule = secData ? secData.days.find(d => d.dayIdx === currentDayIdx) : null;
   const hasClassesToday = isClassDay && todaySchedule && todaySchedule.classes && todaySchedule.classes.length > 0;
 
-  // ৩. লাইভ আবহাওয়া ফেচ করা (Open-Meteo API)
   let weatherData = {
     temp: 28,
     humidity: 75,
@@ -1563,94 +1603,84 @@ async function initSmartWeatherVibe() {
     console.log("Weather API fallback used.");
   }
 
-  // UI আপডেট
   tempEl.innerHTML = `${weatherData.icon} ${weatherData.temp}°C`;
   condEl.innerText = weatherData.weatherText;
   humEl.innerText = `Hum: ${weatherData.humidity}%`;
   windEl.innerText = `Wind: ${weatherData.wind} km/h`;
 
-  // ৪. সময়, দিন ও রুটিন মিলিয়ে একদম নিখুঁত ভাইব কমেন্ট সিলেকশন
   let selectedComment = "";
 
-  // ক. রাত (সন্ধ্যা ৬টা থেকে ভোর ৪টা)
   if (hours >= 18 || hours < 4) {
-    // আগামীকাল ক্লাস আছে কি না চেক করা (যেমন আজ বুধবার রাত হলে কাল বৃহস্পতিবার মানে ছুটি)
     const tomorrowIdx = (currentDayIdx + 1) % 7;
     const isTomorrowClassDay = (tomorrowIdx >= 0 && tomorrowIdx <= 3);
 
     if (!isTomorrowClassDay) {
       const nightOffMsgs = [
         "রাত অনেক হইছে। কালকে তো ছুটি, আরামে ঘুমাও! 😴",
-        "আজ রাতে কোনো পড়ার চাপ নাই, চিল করে ঘুমাও। 🌙",
-        "রাত গভীর হয়েছে। কাল ক্লাস নাই মানে এই না যে সারারাত জেগে রিলস দেখবা! ঘুমাও। 😂"
+        "আজ রাতে কোনো পড়ার চাপ নাই, চিল করে ঘুমাও। 🌙",
+        "রাত গভীর হয়েছে। কাল ক্লাস নাই মানে এই না যে সারারাত জেগে রিলস দেখবা! ঘুমাও। 😂"
       ];
       selectedComment = getRandomItem(nightOffMsgs);
     } else {
       const nightMsgs = [
         "রাত অনেক হইছে। কালকে ক্লাস আছে, জলদি ঘুমাও। 😴",
-        "এখন আর পড়াশোনা না, ফোন রেখে ঘুমাও। কালকে আবার attendance-এর যুদ্ধ। 😂",
-        "রাতের আকাশ সুন্দর, কিন্তু কালকের ক্লাস আরও ভয়ংকর। 🌚",
+        "এখন আর পড়াশোনা না, ফোন রেখে ঘুমাও। কালকে আবার attendance-এর যুদ্ধ। 😂",
+        "রাতের আকাশ সুন্দর, কিন্তু কালকের ক্লাস আরও ভয়ংকর। 🌚",
         "এখন Super DIITian বন্ধ করে ঘুমাও। সকালে আবার দেখা হবে। 😴",
         "রাত ২টা বাজে আর তুমি Weather দেখতেছো? ভাই, ঘুমাও! 😂",
-        "এই সময়ে শুধু দুই ধরনের মানুষ জাগে—প্রেমিক আর assignment না করা student। 💀",
-        "ঘুমিয়ে পড়ো। কালকে ‘ভাই আজকে class আছে?’ জিজ্ঞেস করার আগে একটু rest দরকার। 😂"
+        "এই সময়ে শুধু দুই ধরনের মানুষ জাগে—প্রেমিক আর assignment না করা student। 💀",
+        "ঘুমিয়ে পড়ো। কালকে ‘ভাই আজকে class আছে?’ জিজ্ঞেস করার আগে একটু rest দরকার। 😂"
       ];
       selectedComment = getRandomItem(nightMsgs);
     }
-  }
-  // খ. যদি আজ ক্লাস না থাকে (ছুটির দিন / Off-day: বৃহস্পতি, শুক্র, শনি)
-  else if (!hasClassesToday) {
-    if (currentDayIdx === 5) { // শুক্রবার বিশেষ
+  } else if (!hasClassesToday) {
+    if (currentDayIdx === 5) {
       const friMsgs = [
         "আজ শুক্রবার। Class নেই, tension নেই—শুধু শান্তি। ❤️",
         "Friday detected! আজকে alarm-এরও ছুটি। 😴",
         "আজ শুক্রবার—CR-ও আজকে তোমাদের খুঁজবে না। 😂",
-        "শুক্রবারের আবহাওয়া: ঘুমানোর জন্য ১০/১০। 😴"
+        "শুক্রবারের আবহাওয়া: ঘুমানোর জন্য ১০/১০। 😴"
       ];
       selectedComment = getRandomItem(friMsgs);
     } else {
       const offDayMsgs = [
         "আজকে কোনো class নেই! আজ attendance-এর চিন্তা বাদ। 😌",
         "আজ ছুটি! বই-খাতা তোমাকে আজ miss করবে। 😂",
-        "আজ class নেই। এই সুযোগে গত সপ্তাহের পড়াগুলো বুঝে নাও… অথবা না। 😴",
+        "আজ class নেই। এই সুযোগে গত সপ্তাহের পড়াগুলো বুঝে নাও… অথবা না। 😴",
         "আজকে campus না, আজকে bed-ই তোমার classroom। 😂",
-        "আজ ছুটি। তবে কাল থেকে আবার student হওয়ার অভিনয় করতে হবে। 😭",
-        "No class today! আজকের দিনটা officially নষ্ট করার অনুমতি দেওয়া হলো। 😂"
+        "আজ ছুটি। তবে কাল থেকে আবার student হওয়ার অভিনয় করতে হবে। 😭",
+        "No class today! আজকের দিনটা officially নষ্ট করার অনুমতি দেওয়া হলো। 😂"
       ];
       selectedComment = getRandomItem(offDayMsgs);
     }
-  }
-  // গ. ক্লাসের দিন এবং সকালের সময় (সকাল ৪টা থেকে বেলা ১১:৪০ AM - ক্লাস শুরুর আগে)
-  else if (hours >= 4 && totalMins < 700) {
+  } else if (hours >= 4 && totalMins < 700) {
     if (weatherData.isRain) {
-      selectedComment = "সকালে বৃষ্টি! আজ কি ক্লাসে যাওয়া হবে নাকি বিছানায় কাঁথা মুড়ি দিয়ে ঘুমানো হবে? 🌧️😴";
+      selectedComment = "সকালে বৃষ্টি! আজ কি ক্লাসে যাওয়া হবে নাকি বিছানায় কাঁথা মুড়ি দিয়ে ঘুমানো হবে? 🌧️😴";
     } else {
       const morningClassMsgs = [
         "সুপ্রভাত! ঘুম থেকে উঠো, আজ class আছে কিন্তু! ☀️",
-        "সকাল হয়ে গেছে। Alarm বন্ধ করে আবার ঘুমালে কিন্তু CR-এর কাছে নালিশ যাবে। 😂",
+        "সকাল হয়ে গেছে। Alarm বন্ধ করে আবার ঘুমালে কিন্তু CR-এর কাছে নালিশ যাবে। 😂",
         "Good morning! আজকে class আছে—অজুহাত খোঁজা বন্ধ করো। 😌",
         "নতুন দিন, নতুন আশা, আর সকালের ফ্রেশ attendance। 🌤️"
       ];
       selectedComment = getRandomItem(morningClassMsgs);
     }
-  }
-  // ঘ. ক্লাসের সঠিক সময় (১১:৪০ AM থেকে ৩:৩০ PM)
-  else if (totalMins >= 700 && totalMins <= 930) {
-    if (totalMins >= 840 && totalMins < 860) { // ব্রেক টাইম (২:০০ PM - ২:২০ PM)
+  } else if (totalMins >= 700 && totalMins <= 930) {
+    if (totalMins >= 840 && totalMins < 860) {
       const breakMsgs = [
         "ব্রেক চলছে! চা-নাস্তা শেষ করে দ্রুত রুমে ব্যাক করো। ☕",
         "ব্রেক টাইম! মনে রেখো ব্রেকের আনন্দ যত মিষ্টি, পরের ক্লাস ততটাই কঠিন। 😂",
-        "ব্রেক শেষ হওয়ার আগেই ক্লাসে ঢোকো, নইলে স্যারের খাতার খড়গ নেমে আসবে! 🚨"
+        "ব্রেক শেষ হওয়ার আগেই ক্লাসে ঢোকো, নইলে স্যারের খাতার খড়গ নেমে আসবে! 🚨"
       ];
       selectedComment = getRandomItem(breakMsgs);
     } else {
       if (weatherData.isRain) {
         selectedComment = "বাইরে বৃষ্টি আর ভেতরে ক্লাস—এই কম্বিনেশনের শাস্তি শুধু CSE স্টুডেন্টরাই বোঝে! 🌧️😂";
       } else if (weatherData.isHot) {
-        selectedComment = "প্রচণ্ড গরমে ক্লাস করা মানে লাইভ সার্ভারে পচে যাওয়া! ফ্যানের নিচে বসার যুদ্ধ করো। 🥵";
+        selectedComment = "প্রচণ্ড গরমে ক্লাস করা মানে লাইভ সার্ভারে পচে যাওয়া! ফ্যানের নিচে বসার যুদ্ধ করো। 🥵";
       } else {
         const classRunningMsgs = [
-          "ক্লাস চলছে! ফোন পকেটে রাখো এবং মনোযোগ দিয়ে লেকচার শোনো। 📚",
+          "ক্লাস চলছে! ফোন পকেটে রাখো এবং মনোযোগ দিয়ে লেকচার শোনো। 📚",
           "ক্যালকুলাস বা প্রোগ্রামিং ক্লাস চলছে—মনোযোগ দাও, নইলে পরীক্ষার হলে কপালে দুঃখ আছে! 🤓",
           "ক্লাস চলাকালীন এখানে কী করো? স্যারের লেকচারে মন দাও! 😌",
           "আজ class আছে। পালানোর রাস্তা বন্ধ। 🚨😂"
@@ -1658,30 +1688,81 @@ async function initSmartWeatherVibe() {
         selectedComment = getRandomItem(classRunningMsgs);
       }
     }
-  }
-  // ঙ. ক্লাস শেষ হওয়ার পরের সময় (৩:৩০ PM থেকে সন্ধ্যা ৬টা)
-  else if (totalMins > 930 && hours < 18) {
+  } else if (totalMins > 930 && hours < 18) {
     const postClassMsgs = [
       "আজকের class শেষ। অভিনন্দন, আরেকটা দিন বেঁচে গেলে। 😂",
-      "Class over! এখন বাসায় গিয়ে মানুষ হও। 😌",
+      "Class over! এখন বাসায় গিয়ে মানুষ হও। 😌",
       "আজকের attendance সংগ্রহ শেষ। সবাই নিরাপদে ফিরে যাও। 😂",
       "Class শেষ, এখন brain-কে একটু বিশ্রাম দাও। 🧠😴"
     ];
     selectedComment = getRandomItem(postClassMsgs);
-  }
-  // চ. সাধারণ অন্য সময়গুলোতে আবহাওয়া ভিত্তিক কমেন্ট
-  else {
+  } else {
     if (weatherData.isRain) {
       selectedComment = "বাইরে বৃষ্টি হচ্ছে, রিল্যাক্স করো এবং ঘরের ভেতরেই নিরাপদ থাকো। 🌧️😌";
     } else if (weatherData.isHot) {
-      selectedComment = "বাইরে প্রচুর গরম! অযথা রোদে ঘোরাঘুরি না করে ছায়ায় থাকো। 🥵";
+      selectedComment = "বাইরে প্রচুর গরম! অযথা রোদে ঘোরাঘুরি না করে ছায়ায় থাকো। 🥵";
     } else {
-      selectedComment = "আবহাওয়া বেশ চমৎকার! আজকের দিনটা দারুণ কাটুক। ✨";
+      selectedComment = "আবহাওয়া বেশ চমৎকার! আজকের দিনটা দারুণ কাটুক। ✨";
     }
   }
 
   vibeEl.innerText = selectedComment;
 }
+
+/* ------------------------------------------------------------
+   Live News Portal Engine
+   ------------------------------------------------------------ */
+window.fetchNews = async function(category = 'politics', btnEl = null) {
+  if (btnEl) {
+    document.querySelectorAll('.news-cat-btn').forEach(b => b.classList.remove('is-active'));
+    btnEl.classList.add('is-active');
+  }
+
+  const container = document.getElementById('newsGridContainer');
+  if (!container) return;
+
+  container.innerHTML = `<div class="news-loading">📰 লাইভ নিউজ ফেচ করা হচ্ছে...</div>`;
+
+  try {
+    const res = await fetch(`/api/news?category=${category}`);
+    const data = await res.json();
+
+    if (!data.results || data.results.length === 0) {
+      container.innerHTML = `<div class="news-error">⚠️ এই মুহূর্তে কোনো নিউজ পাওয়া যায়নি।</div>`;
+      return;
+    }
+
+    container.innerHTML = data.results.map(item => {
+      const title = item.title || "শিরোনাম পাওয়া যায়নি";
+      const desc = item.description || item.content || "বিস্তারিত পড়তে লিংকে ক্লিক করুন...";
+      const img = item.image_url || "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60";
+      const source = item.source_id || "Online News";
+      const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleDateString('bn-BD') : "সদ্য প্রকাশিত";
+      const link = item.link || "#";
+
+      return `
+        <a href="${link}" target="_blank" rel="noopener" class="news-card">
+          <div class="news-card__img-wrap">
+            <img src="${img}" alt="News thumbnail" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60'">
+          </div>
+          <div class="news-card__content">
+            <span class="news-card__source">🌐 ${source}</span>
+            <h3 class="news-card__title">${title}</h3>
+            <p class="news-card__desc">${desc}</p>
+            <div class="news-card__footer">
+              <span>📅 ${pubDate}</span>
+              <span style="color:#0284c7; font-weight:700;">বিস্তারিত পড়ুন &rarr;</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+  } catch (err) {
+    console.error("News load failed:", err);
+    container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+  }
+};
 
 /* ------------------------------------------------------------
    App Initialization
