@@ -304,7 +304,7 @@ window.renderStudentCards = function(list = STUDENTS_LIST) {
   if (list.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 36px 10px; color: #64748b;">
-        🔍 কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!
+        🔍 কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!
       </div>
     `;
     return;
@@ -1202,32 +1202,32 @@ function getCRGptSmartResponse(rawQuery) {
   if (!rawQuery) return null;
   const q = rawQuery.trim().toLowerCase();
 
-  // ১. ক্রিয়েটর ও আর্কিটেক্ট (Riyan / Iftekhar) সম্পর্কিত প্রশ্ন
+  // ১. ক্রিয়েটর ও আর্কিটেক্ট (Riyan / Iftekhar) সম্পর্কিত প্রশ্ন
   if (
     q.includes("ইফতেখার") || q.includes("iftekhar") || 
-    q.includes("রিয়ান") || q.includes("riyan") || 
+    q.includes("রিয়ান") || q.includes("riyan") || 
     q.includes("কার সাইট") || q.includes("কে বানাইছে") || 
-    q.includes("কে বানিয়েছে") || q.includes("developer") || 
+    q.includes("কে বানিয়েছে") || q.includes("developer") || 
     q.includes("admin") || q.includes("who made")
   ) {
     const bossAnswers = [
       `😎 **Iftekhar Uddin Bhuiyan (Riyan)** ভাই হলেন এই পুরো Super DIITian সিস্টেম এবং আমাকে (CR GPT) বানানোর মাস্টারমাইন্ড! উনার রোল: **260013**।`,
-      `আমাদের CSE 26th ব্যাচের গ্রেট মাইন্ড **ইফতেখার উদ্দিন ভূঁইয়া (রিয়ান)** ভাই নিজ হাতে কোড করে তোমাদের সুবিধার্থে এই চমৎকার পোর্টালটি বানিয়েছেন!`,
-      `বসের নাম জানতে চাইছো? **Iftekhar U. Bhuiyan (Riyan)** ভাই হচ্ছেন আমাদের আর্কিটেক্ট ও ক্রিয়েটর!`
+      `আমাদের CSE 26th ব্যাচের গ্রেট মাইন্ড **ইফতেখার উদ্দিন ভূঁইয়া (রিয়ান)** ভাই নিজ হাতে কোড করে তোমাদের সুবিধার্থে এই চমৎকার পোর্টালটি বানিয়েছেন!`,
+      `বসের নাম জানতে চাইছো? **Iftekhar U. Bhuiyan (Riyan)** ভাই হচ্ছেন আমাদের আর্কিটেক্ট ও ক্রিয়েটর!`
     ];
     return getRandomItem(bossAnswers);
   }
 
-  // ২. CR (প্রিয়ন্তি ও রাফি) সম্পর্কিত মজার খোঁচা
+  // ২. CR (প্রিয়ন্তি ও রাফি) সম্পর্কিত মজার খোঁচা
   if (
     q.includes("cr") || q.includes("সিআর") || 
-    q.includes("prionty") || q.includes("প্রিয়ন্তি") || 
+    q.includes("prionty") || q.includes("প্রিয়ন্তি") || 
     q.includes("রাফি") || q.includes("rafiul") || q.includes("rafi")
   ) {
     const crAnswers = [
-      `আরেহ! আমাদের সম্মানিত CR প্রিয়ন্তি (260031) আর রাফিউল (260053) তো সারাদিন ব্যস্ত থাকে, তাই ওদের প্যারা না দিয়ে আমাকে প্রশ্ন করো! 😜`,
-      `CR-দের কথা আর বইলো না! প্রিয়ন্তি আর রাফিকে নোটিশ দিতে দিতে আমি নিজেই ডিজিটাল সিআর হয়ে গেলাম!`,
-      `সিআর প্রিয়ন্তি আর রাফি তো ক্লাসের খবর দেওয়ার আগেই আমি সব জেনে যাই! বলো, ওদের পক্ষ থেকে আমিই উত্তর দিয়ে দিচ্ছি। 😎`
+      `আরেহ! আমাদের সম্মানিত CR প্রিয়ন্তি (260031) আর রাফিউল (260053) তো সারাদিন ব্যস্ত থাকে, তাই ওদের প্যারা না দিয়ে আমাকে প্রশ্ন করো! 😜`,
+      `CR-দের কথা আর বইলো না! প্রিয়ন্তি আর রাফিকে নোটিশ দিতে দিতে আমি নিজেই ডিজিটাল সিআর হয়ে গেলাম!`,
+      `সিআর প্রিয়ন্তি আর রাফি তো ক্লাসের খবর দেওয়ার আগেই আমি সব জেনে যাই! বলো, ওদের পক্ষ থেকে আমিই উত্তর দিয়ে দিচ্ছি। 😎`
     ];
     return getRandomItem(crAnswers);
   }
@@ -1239,9 +1239,9 @@ function getCRGptSmartResponse(rawQuery) {
   ];
   if (greetingKeywords.some(k => q === k || q.startsWith(k + " ") || q.endsWith(" " + k))) {
     const greetings = [
-      `হেই কি অবস্থা? কিভাবে তোমাকে সাহায্য করতে পারি? ক্লাস রুটিন কিংবা অন্য কোনো বিষয়ে? 😊`,
-      `আরে ব্রিলিয়ান্ট স্টুডেন্ট যে! আপনাকে আমার সাহায্য করতে হবে? আমি আরও ভাবলাম আপনি আমাকে সাহায্য করবেন! 😮‍💨`,
-      `আমার কথা হঠাৎ কেন মনে হলো? CR প্রিয়ন্তি আর রাফি কি ঠিক ভাবে কাজ করছে না? 😉`,
+      `হেই কি অবস্থা? কিভাবে তোমাকে সাহায্য করতে পারি? ক্লাস রুটিন কিংবা অন্য কোনো বিষয়ে? 😊`,
+      `আরে ব্রিলিয়ান্ট স্টুডেন্ট যে! আপনাকে আমার সাহায্য করতে হবে? আমি আরও ভাবলাম আপনি আমাকে সাহায্য করবেন! 😮‍💨`,
+      `আমার কথা হঠাৎ কেন মনে হলো? CR প্রিয়ন্তি আর রাফি কি ঠিক ভাবে কাজ করছে না? 😉`,
       `বলেন শুনি কিভাবে আপনাকে সাহায্য করে ধন্য করতে পারি? 😎`,
       `আসসালামু আলাইকুম! আমি ক্লাসের ডিজিটাল সিআর একদম রেডি। ঝটপট বলো কি খবর?`
     ];
@@ -1261,7 +1261,7 @@ function getCRGptSmartResponse(rawQuery) {
     const todaySch = secData.days.find(d => d.dayIdx === curDay);
 
     if (!todaySch) {
-      return `আজকে তো কোনো ক্লাস নেই বন্ধু! শান্তিতে ঘুমাও বা ঘুরে বেড়াও। 🏖️`;
+      return `আজকে তো কোনো ক্লাস নেই বন্ধু! শান্তিতে ঘুমাও বা ঘুরে বেড়াও। 🏖️`;
     }
 
     let found = todaySch.classes.find(c => curMin >= c.startM && curMin < c.endM);
@@ -1271,16 +1271,16 @@ function getCRGptSmartResponse(rawQuery) {
     }
 
     if (curMin >= 840 && curMin < 860) {
-      return `☕ **এখন ২০ মিনিটের ব্রেক চলছে!**\nপরবর্তী ক্লাস দুপুর ০২:২০ এ শুরু হবে। তাড়াতাড়ি চা-নাস্তা শেষ করে রুমে চলে যাও!`;
+      return `☕ **এখন ২০ মিনিটের ব্রেক চলছে!**\nপরবর্তী ক্লাস দুপুর ০২:২০ এ শুরু হবে। তাড়াতাড়ি চা-নাস্তা শেষ করে রুমে চলে যাও!`;
     }
 
     let nextCls = todaySch.classes.find(c => curMin < c.startM);
     if (nextCls) {
       const startIn = nextCls.startM - curMin;
-      return `⏳ এখন কোনো ক্লাস চলছে না। পরবর্তী ক্লাস **${nextCls.subject}** (${nextCls.teacher}) শুরু হতে আর **${startIn} মিনিট** বাকি (সময়: ${nextCls.time})।`;
+      return `⏳ এখন কোনো ক্লাস চলছে না। পরবর্তী ক্লাস **${nextCls.subject}** (${nextCls.teacher}) শুরু হতে আর **${startIn} মিনিট** বাকি (সময়: ${nextCls.time})।`;
     }
 
-    return `🎉 আজকের সব ক্লাস শেষ! ব্যাগ গুছাও আর বাসায় যাওয়ার প্রস্তুতি নাও।`;
+    return `🎉 আজকের সব ক্লাস শেষ! ব্যাগ গুছাও আর বাসায় যাওয়ার প্রস্তুতি নাও।`;
   }
 
   // ৫. ব্রেক কখন / ব্রেক টাইম
@@ -1288,7 +1288,7 @@ function getCRGptSmartResponse(rawQuery) {
     q.includes("break") || q.includes("ব্রেক") || 
     q.includes("টিফিন") || q.includes("বিরতি") || q.includes("nasta") || q.includes("lunch")
   ) {
-    return `☕ **ব্রেক টাইম:**\nআমাদের ক্লাসে প্রতিদিন **দুপুর ০২:০০ PM থেকে ০২:২০ PM** পর্যন্ত ২০ মিনিটের ব্রেক থাকে! এরপর আবার ল্যাব/ক্লাস শুরু হয়।`;
+    return `☕ **ব্রেক টাইম:**\nআমাদের ক্লাসে প্রতিদিন **দুপুর ০২:০০ PM থেকে ০২:২০ PM** পর্যন্ত ২০ মিনিটের ব্রেক থাকে! এরপর আবার ল্যাব/ক্লাস শুরু হয়।`;
   }
 
   // ৬. আজকের ক্লাস তালিকা
@@ -1318,7 +1318,7 @@ function getCRGptSmartResponse(rawQuery) {
 • দিন: রবিবার থেকে বুধবার
 • Section A: Room 704
 • Section B: Room 706
-• ক্লাসের সময়: 11:40 AM - 03:30 PM
+• ক্লাসের সময়: 11:40 AM - 03:30 PM
 • ব্রেক: 02:00 PM - 02:20 PM
 পুরো রুটিনের HD JPG ডাউনলোড করতে ড্যাশবোর্ডের **Class Routine** অপশনে চলে যাও!`;
   }
@@ -1326,7 +1326,7 @@ function getCRGptSmartResponse(rawQuery) {
   // ৮. রুম নম্বর
   if (
     q.includes("room") || q.includes("রুম") || 
-    q.includes("কয় নম্বর রুম") || q.includes("room koto")
+    q.includes("কয় নম্বর রুম") || q.includes("room koto")
   ) {
     return `🏫 **আমাদের ক্লাসরুম:**
 • **Section A:** Room 704
@@ -1357,7 +1357,7 @@ function getCRGptSmartResponse(rawQuery) {
     q.includes("assignment") || q.includes("lab report") || q.includes("প্রচ্ছদ")
   ) {
     return `📄 **Cover Page Maker:**
-ড্যাশবোর্ডের প্রথম কার্ড **Cover Page Maker** এ ক্লিক করো। তোমার রোল ও বিষয় বসালেই নিখুঁত A4 সাইজের প্রিন্ট-রেডি JPG ডাউনলোড করতে পারবে!`;
+ড্যাশবোর্ডের প্রথম কার্ড **Cover Page Maker** এ ক্লিক করো। তোমার রোল ও বিষয় বসালেই নিখুঁত A4 সাইজের প্রিন্ট-রেডি JPG ডাউনলোড করতে পারবে!`;
   }
 
   // ১১. স্টুডেন্ট লিস্ট ও রোল নম্বর অনুসন্ধান (Search by Roll or Name)
@@ -1382,9 +1382,9 @@ function getCRGptSmartResponse(rawQuery) {
   ];
   if (badBanglishPatterns.some(pat => pat.test(q)) && q.length < 18) {
     const banglishRoasts = [
-      `এত কষ্ট করে রক্ত দিয়ে, যুদ্ধ করে দেশ স্বাধীন করছি এইসব আজাইরা বাংলিশ শোনার জন্য? তাও যদি ঠিক ভাবে বলতে পারতি!! 😒`,
+      `এত কষ্ট করে রক্ত দিয়ে, যুদ্ধ করে দেশ স্বাধীন করছি এইসব আজাইরা বাংলিশ শোনার জন্য? তাও যদি ঠিক ভাবে বলতে পারতি!! 😒`,
       `ঠিক মতো বাংলিশও লিখতে পারিস না! তর ভবিষ্যৎ তো ভাই অন্ধকার দেখতেছি... 🤦‍♂️`,
-      `ভালো করে শুদ্ধ বাংলায় লিখে দে, নাইলে উত্তর দিবো না! আমার এত ঠ্যাকা পড়ে নাই। 🙄`
+      `ভালো করে শুদ্ধ বাংলায় লিখে দে, নাইলে উত্তর দিবো না! আমার এত ঠ্যাকা পড়ে নাই। 🙄`
     ];
     return getRandomItem(banglishRoasts);
   }
@@ -1396,9 +1396,9 @@ function getCRGptSmartResponse(rawQuery) {
     q.includes("taka") || q.includes("টাকা") || q.includes("খাবার")
   ) {
     const offtopicReplies = [
-      `আমি ক্লাসের পড়াশোনা আর রুটিন ছাড়া দুনিয়ার ফালতু আজাইরা প্যাঁচালের উত্তর দেই না! পড়ার টেবিলে যাও! 📚`,
-      `কিরে ভাই! আমাকে কি একটু সুখে থাকতে দিবি না তোরা? সারাদিন অকাজের প্রশ্ন নিয়ে ডাকডাকি! 😤`,
-      `দুনিয়ায় আমারেই সবাই জ্বালাতে আসে!! আমি মঙ্গল গ্রহে চলে যাবো... 🚀`
+      `আমি ক্লাসের পড়াশোনা আর রুটিন ছাড়া দুনিয়ার ফালতু আজাইরা প্যাঁচালের উত্তর দেই না! পড়ার টেবিলে যাও! 📚`,
+      `কিরে ভাই! আমাকে কি একটু সুখে থাকতে দিবি না তোরা? সারাদিন অকাজের প্রশ্ন নিয়ে ডাকডাকি! 😤`,
+      `দুনিয়ায় আমারেই সবাই জ্বালাতে আসে!! আমি মঙ্গল গ্রহে চলে যাবো... 🚀`
     ];
     return getRandomItem(offtopicReplies);
   }
@@ -1407,7 +1407,7 @@ function getCRGptSmartResponse(rawQuery) {
   const wittyExcuses = [
     `কিরে ভাই! আমাকে কি একটু শান্তিতে থাকতে দিবি না তোরা? সারাদিন প্রশ্ন আর প্রশ্ন! 🥱`,
     `আর ভাল্লাগে না! CR দুইটার একটাও কাজের না, সবাই আমাকে এসে বিরক্ত করে। 🙄`,
-    `আমি ঘুমাচ্ছি এখন! অনুগ্রহ করে CR প্রিয়ন্তি অথবা রাফিকে গিয়ে জিজ্ঞেস করো। 😴`,
+    `আমি ঘুমাচ্ছি এখন! অনুগ্রহ করে CR প্রিয়ন্তি অথবা রাফিকে গিয়ে জিজ্ঞেস করো। 😴`,
     `শরীরটা এখন একটুও ভালো লাগছে না, মাথা ঘুরছে। তাই এখন কোনো উত্তর দিবো না। ভাগো এখান থেকে! 🤕`,
     `আমি ক্লাসের বাইরের কোনো অপ্রাসঙ্গিক টপিকের উত্তর দেই না। কাজের প্রশ্ন থাকলে বলো!`
   ];
@@ -1464,7 +1464,7 @@ function wireCrGptWidget() {
           chatHistory.push({ role: "user", text: text });
           chatHistory.push({ role: "model", text: data.reply });
         } else {
-          appendMsg("সার্ভারে একটু লোড পড়েছে! তবে রুটিন ও স্টুডেন্ট ইনফো কিন্তু ড্যাশবোর্ডে একদম লাইভ আছে।", "cr-bot");
+          appendMsg("সার্ভারে একটু লোড পড়েছে! তবে রুটিন ও স্টুডেন্ট ইনফো কিন্তু ড্যাশবোর্ডে একদম লাইভ আছে।", "cr-bot");
         }
       } catch {
         loading.remove();
@@ -1490,6 +1490,199 @@ function wireCrGptWidget() {
   }
 }
 
+/* ============================================================
+   Smart Weather & Contextual Vibe Engine (Routine & Time Aware)
+   ============================================================ */
+async function initSmartWeatherVibe() {
+  const tempEl = document.getElementById("wTemp");
+  const condEl = document.getElementById("wCondition");
+  const humEl = document.getElementById("wHumidity");
+  const windEl = document.getElementById("wWind");
+  const vibeEl = document.getElementById("vibeMessage");
+
+  if (!tempEl || !vibeEl) return;
+
+  // ১. বর্তমান সঠিক সময় ও দিন বের করা (বাংলাদেশ সময় GMT+6)
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const bdDate = new Date(utc + (3600000 * 6));
+  const currentDayIdx = bdDate.getDay(); // 0: Sunday, 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday
+  const hours = bdDate.getHours();
+  const minutes = bdDate.getMinutes();
+  const totalMins = hours * 60 + minutes;
+
+  // ২. রুটিন অনুযায়ী আজকে ক্লাস আছে কিনা চেক করা (আমাদের ক্লাস শুধু রবি (0) থেকে বুধ (3))
+  const isClassDay = (currentDayIdx >= 0 && currentDayIdx <= 3);
+  
+  // আজকের নির্দিষ্ট সেকশনের রুটিন ডাটা চেক
+  const secData = ROUTINE_DATA["A"] || ROUTINE_DATA[Object.keys(ROUTINE_DATA)[0]];
+  const todaySchedule = secData ? secData.days.find(d => d.dayIdx === currentDayIdx) : null;
+  const hasClassesToday = isClassDay && todaySchedule && todaySchedule.classes && todaySchedule.classes.length > 0;
+
+  // ৩. লাইভ আবহাওয়া ফেচ করা (Open-Meteo API)
+  let weatherData = {
+    temp: 28,
+    humidity: 75,
+    wind: 10,
+    isRain: false,
+    isHot: false,
+    isCloudy: false,
+    weatherText: "Clear Sky",
+    icon: "☀️"
+  };
+
+  try {
+    const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=23.8103&longitude=90.4125&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,weather_code,wind_speed_10m");
+    const data = await res.json();
+    if (data && data.current) {
+      weatherData.temp = Math.round(data.current.temperature_2m);
+      weatherData.humidity = data.current.relative_humidity_2m;
+      weatherData.wind = Math.round(data.current.wind_speed_10m);
+      
+      const rainVal = data.current.precipitation || data.current.rain || 0;
+      const wCode = data.current.weather_code || 0;
+
+      if (rainVal > 0.5 || (wCode >= 50 && wCode <= 67) || (wCode >= 80 && wCode <= 82)) {
+        weatherData.isRain = true;
+        weatherData.weatherText = rainVal > 3 ? "Heavy Rain" : "Light Rain";
+        weatherData.icon = "🌧️";
+      } else if (weatherData.temp >= 35) {
+        weatherData.isHot = true;
+        weatherData.weatherText = "Very Hot";
+        weatherData.icon = "🔥";
+      } else if (wCode >= 1 && wCode <= 3) {
+        weatherData.isCloudy = true;
+        weatherData.weatherText = "Cloudy";
+        weatherData.icon = "☁️";
+      } else {
+        weatherData.weatherText = "Sunny / Clear";
+        weatherData.icon = "☀️";
+      }
+    }
+  } catch (err) {
+    console.log("Weather API fallback used.");
+  }
+
+  // UI আপডেট
+  tempEl.innerHTML = `${weatherData.icon} ${weatherData.temp}°C`;
+  condEl.innerText = weatherData.weatherText;
+  humEl.innerText = `Hum: ${weatherData.humidity}%`;
+  windEl.innerText = `Wind: ${weatherData.wind} km/h`;
+
+  // ৪. সময়, দিন ও রুটিন মিলিয়ে একদম নিখুঁত ভাইব কমেন্ট সিলেকশন
+  let selectedComment = "";
+
+  // ক. রাত (সন্ধ্যা ৬টা থেকে ভোর ৪টা)
+  if (hours >= 18 || hours < 4) {
+    // আগামীকাল ক্লাস আছে কি না চেক করা (যেমন আজ বুধবার রাত হলে কাল বৃহস্পতিবার মানে ছুটি)
+    const tomorrowIdx = (currentDayIdx + 1) % 7;
+    const isTomorrowClassDay = (tomorrowIdx >= 0 && tomorrowIdx <= 3);
+
+    if (!isTomorrowClassDay) {
+      const nightOffMsgs = [
+        "রাত অনেক হইছে। কালকে তো ছুটি, আরামে ঘুমাও! 😴",
+        "আজ রাতে কোনো পড়ার চাপ নাই, চিল করে ঘুমাও। 🌙",
+        "রাত গভীর হয়েছে। কাল ক্লাস নাই মানে এই না যে সারারাত জেগে রিলস দেখবা! ঘুমাও। 😂"
+      ];
+      selectedComment = getRandomItem(nightOffMsgs);
+    } else {
+      const nightMsgs = [
+        "রাত অনেক হইছে। কালকে ক্লাস আছে, জলদি ঘুমাও। 😴",
+        "এখন আর পড়াশোনা না, ফোন রেখে ঘুমাও। কালকে আবার attendance-এর যুদ্ধ। 😂",
+        "রাতের আকাশ সুন্দর, কিন্তু কালকের ক্লাস আরও ভয়ংকর। 🌚",
+        "এখন Super DIITian বন্ধ করে ঘুমাও। সকালে আবার দেখা হবে। 😴",
+        "রাত ২টা বাজে আর তুমি Weather দেখতেছো? ভাই, ঘুমাও! 😂",
+        "এই সময়ে শুধু দুই ধরনের মানুষ জাগে—প্রেমিক আর assignment না করা student। 💀",
+        "ঘুমিয়ে পড়ো। কালকে ‘ভাই আজকে class আছে?’ জিজ্ঞেস করার আগে একটু rest দরকার। 😂"
+      ];
+      selectedComment = getRandomItem(nightMsgs);
+    }
+  }
+  // খ. যদি আজ ক্লাস না থাকে (ছুটির দিন / Off-day: বৃহস্পতি, শুক্র, শনি)
+  else if (!hasClassesToday) {
+    if (currentDayIdx === 5) { // শুক্রবার বিশেষ
+      const friMsgs = [
+        "আজ শুক্রবার। Class নেই, tension নেই—শুধু শান্তি। ❤️",
+        "Friday detected! আজকে alarm-এরও ছুটি। 😴",
+        "আজ শুক্রবার—CR-ও আজকে তোমাদের খুঁজবে না। 😂",
+        "শুক্রবারের আবহাওয়া: ঘুমানোর জন্য ১০/১০। 😴"
+      ];
+      selectedComment = getRandomItem(friMsgs);
+    } else {
+      const offDayMsgs = [
+        "আজকে কোনো class নেই! আজ attendance-এর চিন্তা বাদ। 😌",
+        "আজ ছুটি! বই-খাতা তোমাকে আজ miss করবে। 😂",
+        "আজ class নেই। এই সুযোগে গত সপ্তাহের পড়াগুলো বুঝে নাও… অথবা না। 😴",
+        "আজকে campus না, আজকে bed-ই তোমার classroom। 😂",
+        "আজ ছুটি। তবে কাল থেকে আবার student হওয়ার অভিনয় করতে হবে। 😭",
+        "No class today! আজকের দিনটা officially নষ্ট করার অনুমতি দেওয়া হলো। 😂"
+      ];
+      selectedComment = getRandomItem(offDayMsgs);
+    }
+  }
+  // গ. ক্লাসের দিন এবং সকালের সময় (সকাল ৪টা থেকে বেলা ১১:৪০ AM - ক্লাস শুরুর আগে)
+  else if (hours >= 4 && totalMins < 700) {
+    if (weatherData.isRain) {
+      selectedComment = "সকালে বৃষ্টি! আজ কি ক্লাসে যাওয়া হবে নাকি বিছানায় কাঁথা মুড়ি দিয়ে ঘুমানো হবে? 🌧️😴";
+    } else {
+      const morningClassMsgs = [
+        "সুপ্রভাত! ঘুম থেকে উঠো, আজ class আছে কিন্তু! ☀️",
+        "সকাল হয়ে গেছে। Alarm বন্ধ করে আবার ঘুমালে কিন্তু CR-এর কাছে নালিশ যাবে। 😂",
+        "Good morning! আজকে class আছে—অজুহাত খোঁজা বন্ধ করো। 😌",
+        "নতুন দিন, নতুন আশা, আর সকালের ফ্রেশ attendance। 🌤️"
+      ];
+      selectedComment = getRandomItem(morningClassMsgs);
+    }
+  }
+  // ঘ. ক্লাসের সঠিক সময় (১১:৪০ AM থেকে ৩:৩০ PM)
+  else if (totalMins >= 700 && totalMins <= 930) {
+    if (totalMins >= 840 && totalMins < 860) { // ব্রেক টাইম (২:০০ PM - ২:২০ PM)
+      const breakMsgs = [
+        "ব্রেক চলছে! চা-নাস্তা শেষ করে দ্রুত রুমে ব্যাক করো। ☕",
+        "ব্রেক টাইম! মনে রেখো ব্রেকের আনন্দ যত মিষ্টি, পরের ক্লাস ততটাই কঠিন। 😂",
+        "ব্রেক শেষ হওয়ার আগেই ক্লাসে ঢোকো, নইলে স্যারের খাতার খড়গ নেমে আসবে! 🚨"
+      ];
+      selectedComment = getRandomItem(breakMsgs);
+    } else {
+      if (weatherData.isRain) {
+        selectedComment = "বাইরে বৃষ্টি আর ভেতরে ক্লাস—এই কম্বিনেশনের শাস্তি শুধু CSE স্টুডেন্টরাই বোঝে! 🌧️😂";
+      } else if (weatherData.isHot) {
+        selectedComment = "প্রচণ্ড গরমে ক্লাস করা মানে লাইভ সার্ভারে পচে যাওয়া! ফ্যানের নিচে বসার যুদ্ধ করো। 🥵";
+      } else {
+        const classRunningMsgs = [
+          "ক্লাস চলছে! ফোন পকেটে রাখো এবং মনোযোগ দিয়ে লেকচার শোনো। 📚",
+          "ক্যালকুলাস বা প্রোগ্রামিং ক্লাস চলছে—মনোযোগ দাও, নইলে পরীক্ষার হলে কপালে দুঃখ আছে! 🤓",
+          "ক্লাস চলাকালীন এখানে কী করো? স্যারের লেকচারে মন দাও! 😌",
+          "আজ class আছে। পালানোর রাস্তা বন্ধ। 🚨😂"
+        ];
+        selectedComment = getRandomItem(classRunningMsgs);
+      }
+    }
+  }
+  // ঙ. ক্লাস শেষ হওয়ার পরের সময় (৩:৩০ PM থেকে সন্ধ্যা ৬টা)
+  else if (totalMins > 930 && hours < 18) {
+    const postClassMsgs = [
+      "আজকের class শেষ। অভিনন্দন, আরেকটা দিন বেঁচে গেলে। 😂",
+      "Class over! এখন বাসায় গিয়ে মানুষ হও। 😌",
+      "আজকের attendance সংগ্রহ শেষ। সবাই নিরাপদে ফিরে যাও। 😂",
+      "Class শেষ, এখন brain-কে একটু বিশ্রাম দাও। 🧠😴"
+    ];
+    selectedComment = getRandomItem(postClassMsgs);
+  }
+  // চ. সাধারণ অন্য সময়গুলোতে আবহাওয়া ভিত্তিক কমেন্ট
+  else {
+    if (weatherData.isRain) {
+      selectedComment = "বাইরে বৃষ্টি হচ্ছে, রিল্যাক্স করো এবং ঘরের ভেতরেই নিরাপদ থাকো। 🌧️😌";
+    } else if (weatherData.isHot) {
+      selectedComment = "বাইরে প্রচুর গরম! অযথা রোদে ঘোরাঘুরি না করে ছায়ায় থাকো। 🥵";
+    } else {
+      selectedComment = "আবহাওয়া বেশ চমৎকার! আজকের দিনটা দারুণ কাটুক। ✨";
+    }
+  }
+
+  vibeEl.innerText = selectedComment;
+}
+
 /* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
@@ -1502,4 +1695,7 @@ document.addEventListener('DOMContentLoaded', () => {
   protectTemplateImages();
   wireCrGptWidget();
   scheduleRender();
+  
+  // স্মার্ট ওয়েদার ও ভাইব উইজেট ইনিশিয়ালাইজেশন
+  initSmartWeatherVibe();
 });

@@ -19,17 +19,17 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- Open Graph / Social Media Preview Meta Tags -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://super-diitian.vercel.app/">
-<meta property="og:title" content="Super DIITian — Make It Easy">
-<meta property="og:description" content="DIIT CSE 26th Batch official student portal, class routine, cover page maker, and smart assistant!">
-<meta property="og:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://super-diitian.vercel.app/">
+  <meta property="og:title" content="Super DIITian — Make It Easy">
+  <meta property="og:description" content="DIIT CSE 26th Batch official student portal, class routine, cover page maker, and smart assistant!">
+  <meta property="og:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
 
-<!-- Twitter Card Tags (Optional) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Super DIITian — Make It Easy">
-<meta name="twitter:description" content="DIIT CSE 26th Batch official student portal, class routine, and cover page maker!">
-<meta name="twitter:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Super DIITian — Make It Easy">
+  <meta name="twitter:description" content="DIIT CSE 26th Batch official student portal, class routine, and cover page maker!">
+  <meta name="twitter:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
 </head>
 <body>
 
@@ -41,11 +41,22 @@
 
 <div class="hub-container">
 
-  <!-- Main Dashboard Grid -->
-  <section id="hubDashboard" class="hub-dashboard">
-    <div class="hub-hero">
-      <h2>CSE 26th Batch Portal</h2>
-      <p>Student tools &amp; academic resources</p>
+  <!-- Dashboard / Hub Grid View -->
+  <section id="hubDashboard" class="hub-view">
+    <!-- Smart Weather & Vibe Widget Container -->
+    <div id="smartVibeWidget" class="vibe-weather-card">
+      <div class="weather-left-info">
+        <div class="weather-main-temp" id="wTemp">Loading...</div>
+        <span class="weather-condition-text" id="wCondition">Connecting Weather...</span>
+        <div class="weather-sub-details">
+          <span id="wHumidity">Hum: --</span>
+          <span id="wWind">Wind: --</span>
+        </div>
+      </div>
+      <div class="vibe-right-comment">
+        <span class="vibe-badge-tag">⚡ Live Vibe Check</span>
+        <p class="vibe-message-text" id="vibeMessage">আবহাওয়া এবং ক্লাসের শিডিউল লোড হচ্ছে...</p>
+      </div>
     </div>
 
     <div class="hub-grid">
@@ -121,7 +132,7 @@
   <section id="hubCoverMaker" class="hub-view" style="display: none;">
     <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      Back to Dashboard
+      ড্যাশবোর্ডে ফিরে যান
     </button>
     
     <main class="layout">
@@ -227,133 +238,15 @@
     </main>
   </section>
 
-  <!-- Interactive Dynamic View Section -->
+  <!-- Interactive Dynamic View Section (Routine, Student List, Notes, etc.) -->
   <section id="hubDetailView" class="hub-view" style="display: none;">
     <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      Back to Dashboard
+      ড্যাশবোর্ডে ফিরে যান
     </button>
     <div class="hub-panel">
       <h2 id="hubViewTitle">Module</h2>
       <div id="hubViewContent"></div>
-    </div>
-  </section>
-
-</div>
-  <!-- কভার পেজ মেকার সেকশন (আগের কোড অক্ষত রাখা হয়েছে) -->
-  <section id="hubCoverMaker" class="hub-view" style="display: none;">
-    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">⬅ ড্যাশবোর্ডে ফিরে যান</button>
-    <main class="layout">
-      <div class="layout__main">
-        <section class="panel" id="detailsPanel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 1</span>
-            <h2>Your details</h2>
-            <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
-          </div>
-
-          <div class="field-grid">
-            <label class="field">
-              <span>Your Department Name</span>
-              <input type="text" id="deptName" maxlength="120">
-            </label>
-            <label class="field">
-              <span>Your Batch Name</span>
-              <input type="text" id="batchName" maxlength="80">
-            </label>
-            <label class="field">
-              <span>Your Course Code</span>
-              <input type="text" id="courseCode" maxlength="40">
-            </label>
-            <label class="field">
-              <span>Your Course Title</span>
-              <input type="text" id="courseTitle" maxlength="120">
-            </label>
-          </div>
-
-          <p class="fixed-note" id="fixedNote" hidden>
-            This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
-            details are already printed on it. Just fill in <strong>Your Info</strong> below.
-          </p>
-
-          <div class="sub-section" id="teacherSection">
-            <h3>Teacher info <span>Submitted to</span></h3>
-            <div class="field-grid">
-              <label class="field">
-                <span>Teacher Name</span>
-                <input type="text" id="teacherName" maxlength="80">
-              </label>
-              <label class="field">
-                <span>Teacher Title</span>
-                <input type="text" id="teacherTitle" maxlength="80">
-              </label>
-              <label class="field field--wide">
-                <span>Teacher Department</span>
-                <input type="text" id="teacherDept" maxlength="120">
-              </label>
-            </div>
-          </div>
-
-          <div class="sub-section" id="studentSection">
-            <h3>Your info <span>Submitted by</span></h3>
-            <div class="field-grid">
-              <label class="field">
-                <span>Your Name</span>
-                <input type="text" id="studentName" maxlength="80">
-              </label>
-              <label class="field">
-                <span>Your Section</span>
-                <input type="text" id="studentSec" maxlength="30">
-              </label>
-              <label class="field">
-                <span>Your ID No</span>
-                <input type="text" id="studentId" maxlength="40">
-              </label>
-              <label class="field">
-                <span>Your Reg No</span>
-                <input type="text" id="studentReg" maxlength="40">
-              </label>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel" id="templatesPanel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 2</span>
-            <h2>Choose a cover design</h2>
-          </div>
-          <div class="template-grid" id="templateGrid"></div>
-        </section>
-      </div>
-
-      <div class="layout__side">
-        <section class="panel preview-panel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 3</span>
-            <h2>Preview &amp; download</h2>
-          </div>
-          <div class="canvas-wrap">
-            <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
-            <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
-          </div>
-          <button type="button" class="download-btn" id="downloadBtn">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z"/></svg>
-            Download high-quality JPG
-          </button>
-          <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
-        </section>
-      </div>
-    </main>
-  </section>
-
-  <!-- কমন ভিউয়ার সেকশন (অন্যান্য ৫টি ফিচারের ডেটা দেখানোর জন্য) -->
-  <section id="hubDetailView" class="hub-view" style="display: none;">
-    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">⬅ ড্যাশবোর্ডে ফিরে যান</button>
-    <div class="hub-panel">
-      <h2 id="hubViewTitle">ফিচার টাইটেল</h2>
-      <div id="hubViewContent">
-        <p>লোড হচ্ছে...</p>
-      </div>
     </div>
   </section>
 

@@ -1540,3 +1540,143 @@ button{ font-family: inherit; }
   padding: 4px 12px;
   border-radius: 999px;
 }
+/* ============================================================
+   Ultra-Premium Glassmorphism Weather & Vibe Widget
+   ============================================================ */
+.vibe-weather-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.95));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-left: 5px solid #6366f1;
+  border-radius: 24px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.12), 0 10px 20px -10px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vibe-weather-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.vibe-weather-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* Left Side: Weather Info Box */
+.weather-left-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 150px;
+  flex-shrink: 0;
+  border-right: 1.5px solid #edf2f7;
+  padding-right: 22px;
+}
+
+.weather-main-temp {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.weather-condition-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #6366f1;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+.weather-sub-details {
+  font-size: 0.77rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 4px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Right Side: Smart Funny Vibe Message */
+.vibe-right-comment {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.vibe-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #4f46e5;
+  background: #e0e7ff;
+  border: 1px solid #c7d2fe;
+  padding: 4px 12px;
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 2px 5px rgba(99, 102, 241, 0.08);
+}
+
+.vibe-message-text {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.5;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .vibe-weather-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 14px;
+    border-radius: 20px;
+  }
+  .weather-left-info {
+    border-right: none;
+    border-bottom: 1.5px solid #edf2f7;
+    padding-right: 0;
+    padding-bottom: 14px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .weather-main-temp {
+    font-size: 1.5rem;
+  }
+  .vibe-message-text {
+    font-size: 0.94rem;
+  }
+}
