@@ -1710,7 +1710,7 @@ async function initSmartWeatherVibe() {
 }
 
 /* ------------------------------------------------------------
-   Live News Portal Engine
+   Live News Portal Engine (Direct Frontend Fetch)
    ------------------------------------------------------------ */
 window.fetchNews = async function(category = 'politics', btnEl = null) {
   if (btnEl) {
@@ -1723,8 +1723,11 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
 
   container.innerHTML = `<div class="news-loading">📰 লাইভ নিউজ ফেচ করা হচ্ছে...</div>`;
 
+  const apiKey = "pub_f8e8d9bebd8043288900e37fd51e7f08";
+  const apiUrl = `https://newsdata.io/api/1/latest?apikey=${apiKey}&language=bn&category=${category}`;
+
   try {
-    const res = await fetch(`/api/news?category=${category}`);
+    const res = await fetch(apiUrl);
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
@@ -1763,7 +1766,6 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
     container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
   }
 };
-
 /* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
