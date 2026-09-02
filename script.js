@@ -99,6 +99,143 @@ const FIELD_IDS = [
 ];
 
 /* ------------------------------------------------------------
+   Routine Database
+   ------------------------------------------------------------ */
+const ROUTINE_DATA = {
+  A: {
+    room: "704",
+    days: [
+      {
+        name: "Sunday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Calculus", teacher: "MZH", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "PB", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Structured Programming Lab", teacher: "PB", isLab: true }
+        ]
+      },
+      {
+        name: "Monday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Calculus", teacher: "MZH", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Electrical & Electronic Circuit", teacher: "RKD", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "English", teacher: "SQ", isLab: false }
+        ]
+      },
+      {
+        name: "Tuesday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Electrical & Electronic Circuit", teacher: "RKD", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Physics", teacher: "MFO", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Electrical & Electronic Circuit Lab", teacher: "SR", isLab: true }
+        ]
+      },
+      {
+        name: "Wednesday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "English", teacher: "SQ", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "PB", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Physics", teacher: "MFO", isLab: false }
+        ]
+      }
+    ]
+  },
+  B: {
+    room: "706",
+    days: [
+      {
+        name: "Sunday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Physics", teacher: "PRM", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Electrical & Electronic Circuit", teacher: "SR", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Calculus", teacher: "MIH", isLab: false }
+        ]
+      },
+      {
+        name: "Monday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "English", teacher: "FP", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Calculus", teacher: "MIH", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Electrical & Electronic Circuit Lab", teacher: "SR", isLab: true }
+        ]
+      },
+      {
+        name: "Tuesday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Electrical & Electronic Circuit", teacher: "SR", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "MMR", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Physics", teacher: "PRM", isLab: false }
+        ]
+      },
+      {
+        name: "Wednesday",
+        classes: [
+          { time: "11:40 AM - 12:50 PM", subject: "Structured Programming", teacher: "MMR", isLab: false },
+          { time: "12:50 PM - 02:00 PM", subject: "English", teacher: "FP", isLab: false },
+          { time: "02:20 PM - 03:30 PM", subject: "Structured Programming Lab", teacher: "MMR", isLab: true }
+        ]
+      }
+    ]
+  }
+};
+
+let currentRoutineSec = "A";
+
+window.renderRoutineView = function(sec) {
+  currentRoutineSec = sec;
+  const btnA = document.getElementById("secBtnA");
+  const btnB = document.getElementById("secBtnB");
+  if (btnA && btnB) {
+    btnA.classList.toggle("is-active", sec === "A");
+    btnB.classList.toggle("is-active", sec === "B");
+  }
+
+  const container = document.getElementById("routineCardsList");
+  if (!container) return;
+
+  const data = ROUTINE_DATA[sec];
+  container.innerHTML = data.days.map(d => `
+    <div class="day-card">
+      <div class="day-header">
+        <span>${d.name}</span>
+        <span class="day-room-badge">Room ${data.room}</span>
+      </div>
+      <div class="period-list">
+        ${d.classes.map(c => `
+          <div class="period-item ${c.isLab ? 'is-lab' : ''}">
+            <div class="period-time">🕒 ${c.time}</div>
+            <div class="period-info">
+              <span class="period-name">${c.subject}</span>
+              <span class="faculty-tag">${c.teacher}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+};
+
+window.downloadRoutine = function() {
+  const data = ROUTINE_DATA[currentRoutineSec];
+  let text = `DIIT CSE 26th Batch — Section ${currentRoutineSec} Class Schedule\nRoom: ${data.room}\n=========================================\n\n`;
+
+  data.days.forEach(d => {
+    text += `[ ${d.name} ]\n`;
+    d.classes.forEach(c => {
+      text += `  • ${c.time}: ${c.subject} (${c.teacher})\n`;
+    });
+    text += `\n`;
+  });
+
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `Routine_CSE26_Section_${currentRoutineSec}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+};
+
+/* ------------------------------------------------------------
    Hub Navigation & Browser History Back Management
    ------------------------------------------------------------ */
 window.navigateTo = function(viewKey, pushToHistory = true) {
@@ -137,91 +274,24 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
 
   const modules = {
     routine: {
-      title: "Class Schedule — CSE 26th Batch (1st Year, 2nd Semester)",
+      title: "Class Routine — CSE 26th Batch",
       content: `
-        <div style="overflow-x: auto;">
-          <table class="custom-table">
-            <thead>
-              <tr>
-                <th>DAY</th>
-                <th>SEC</th>
-                <th>ROOM</th>
-                <th>11:40 AM - 12:50 PM</th>
-                <th>12:50 PM - 2:00 PM</th>
-                <th>2:20 PM - 3:30 PM</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td rowspan="2"><strong>Sunday</strong></td>
-                <td>A</td>
-                <td>704</td>
-                <td>Calculus<br><span class="teacher-badge">MZH</span></td>
-                <td>Structured Prog.<br><span class="teacher-badge">PB</span></td>
-                <td class="routine-lab">Structured Prog. Lab<br><span class="teacher-badge">PB</span></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>706</td>
-                <td>Physics<br><span class="teacher-badge">PRM</span></td>
-                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">SR</span></td>
-                <td>Calculus<br><span class="teacher-badge">MIH</span></td>
-              </tr>
-
-              <tr>
-                <td rowspan="2"><strong>Monday</strong></td>
-                <td>A</td>
-                <td>704</td>
-                <td>Calculus<br><span class="teacher-badge">MZH</span></td>
-                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">RKD</span></td>
-                <td>English<br><span class="teacher-badge">SQ</span></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>706</td>
-                <td>English<br><span class="teacher-badge">FP</span></td>
-                <td>Calculus<br><span class="teacher-badge">MIH</span></td>
-                <td class="routine-lab">Electrical &amp; Electronic Cir. Lab<br><span class="teacher-badge">SR</span></td>
-              </tr>
-
-              <tr>
-                <td rowspan="2"><strong>Tuesday</strong></td>
-                <td>A</td>
-                <td>704</td>
-                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">RKD</span></td>
-                <td>Physics<br><span class="teacher-badge">MFO</span></td>
-                <td class="routine-lab">Electrical &amp; Electronic Cir. Lab<br><span class="teacher-badge">SR</span></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>706</td>
-                <td>Electrical &amp; Electronic Cir.<br><span class="teacher-badge">SR</span></td>
-                <td>Structured Prog.<br><span class="teacher-badge">MMR</span></td>
-                <td>Physics<br><span class="teacher-badge">PRM</span></td>
-              </tr>
-
-              <tr>
-                <td rowspan="2"><strong>Wednesday</strong></td>
-                <td>A</td>
-                <td>704</td>
-                <td>English<br><span class="teacher-badge">SQ</span></td>
-                <td>Structured Prog.<br><span class="teacher-badge">PB</span></td>
-                <td>Physics<br><span class="teacher-badge">MFO</span></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>706</td>
-                <td>Structured Prog.<br><span class="teacher-badge">MMR</span></td>
-                <td>English<br><span class="teacher-badge">FP</span></td>
-                <td class="routine-lab">Structured Prog. Lab<br><span class="teacher-badge">MMR</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="routine-controls">
+          <div class="section-switch-group">
+            <button id="secBtnA" class="sec-tab-btn is-active" onclick="renderRoutineView('A')">Section A</button>
+            <button id="secBtnB" class="sec-tab-btn" onclick="renderRoutineView('B')">Section B</button>
+          </div>
+          <button class="download-routine-btn" onclick="downloadRoutine()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Save Routine
+          </button>
         </div>
+
+        <div id="routineCardsList"></div>
 
         <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
           <h4 style="margin: 0 0 10px 0; color: #16232F;">Faculty Reference:</h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; font-size: 0.8rem; color: #475569;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; font-size: 0.8rem; color: #475569;">
             <div><strong>PB:</strong> Poly Bhoumik</div>
             <div><strong>MZH:</strong> Md. Zakir Hossain</div>
             <div><strong>SR:</strong> Saidur Rahman</div>
@@ -229,7 +299,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
             <div><strong>MMR:</strong> Md. Mushfiqur Rahaman</div>
             <div><strong>RKD:</strong> Ramen Kumar Das</div>
             <div><strong>PRM:</strong> Md. Parvezur Rahman Mahin</div>
-            <div><strong>MFO:</strong> Bugtasim Fuad Opee</div>
+            <div><strong>MFO:</strong> Mubtasim Fuad Opee</div>
             <div><strong>SQ:</strong> Sabrina Quadir</div>
             <div><strong>FP:</strong> Farjana Parvin</div>
           </div>
@@ -380,9 +450,12 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
   const selected = modules[viewKey] || { title: "Portal Module", content: "" };
   if (titleEl) titleEl.innerHTML = selected.title;
   if (contentEl) contentEl.innerHTML = selected.content;
+
+  if (viewKey === 'routine') {
+    setTimeout(() => renderRoutineView('A'), 50);
+  }
 };
 
-// Listen to browser / physical back button
 window.addEventListener("popstate", (e) => {
   if (e.state && e.state.view) {
     navigateTo(e.state.view, false);
@@ -391,7 +464,6 @@ window.addEventListener("popstate", (e) => {
   }
 });
 
-// Student List Instant Search Function
 window.filterStudents = function() {
   const input = document.getElementById("studentSearch");
   if (!input) return;
@@ -416,9 +488,8 @@ window.filterStudents = function() {
 };
 
 /* ------------------------------------------------------------
-   Canvas text helpers
+   Canvas Text Helpers
    ------------------------------------------------------------ */
-
 function wrapText(ctx, text, maxWidth, font) {
   ctx.font = font;
   const words = String(text).split(/\s+/).filter(Boolean);
@@ -515,7 +586,7 @@ function pctBox(zone) {
 }
 
 /* ------------------------------------------------------------
-   Image cache
+   Image Cache
    ------------------------------------------------------------ */
 const imageCache = {};
 function loadImage(src) {
@@ -790,7 +861,7 @@ function protectTemplateImages() {
 }
 
 /* ------------------------------------------------------------
-   bKash Prank Modal Functions
+   bKash Modal Functions
    ------------------------------------------------------------ */
 const bkashModal = document.getElementById("bkash-modal");
 const bkashCloseBtn = document.getElementById("bkash-close-btn");

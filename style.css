@@ -1122,3 +1122,141 @@ button{ font-family: inherit; }
   margin: 0 0 18px 0;
   line-height: 1.4;
 }
+/* ============================================================
+   Mobile-Friendly Routine & Section Switcher
+   ============================================================ */
+.routine-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-switch-group {
+  display: flex;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.sec-tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sec-tab-btn.is-active {
+  background: #ffffff;
+  color: #0284c7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.download-routine-btn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Day Block & Period Cards */
+.day-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.day-header {
+  background: #16232F;
+  color: #ffffff;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.day-room-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.period-list {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.period-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #f1f5f9;
+}
+
+.period-item.is-lab {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+
+.period-time {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 110px;
+}
+
+.period-info {
+  flex: 1;
+  text-align: right;
+}
+
+.period-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #16232F;
+}
+
+.period-item.is-lab .period-name {
+  color: #065f46;
+}
+
+.faculty-tag {
+  display: inline-block;
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 0.70rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.period-item.is-lab .faculty-tag {
+  background: #bbf7d0;
+  color: #14532d;
+}
