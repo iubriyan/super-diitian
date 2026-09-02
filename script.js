@@ -729,16 +729,15 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
       content: `
         <div class="knowledge-container">
           <div class="knowledge-categories-bar">
-            <button class="k-cat-btn is-active" onclick="fetchKnowledge('অক্টোপাস', this)">🐙 অক্টোপাস</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('মহাকাশ', this)">🌌 মহাকাশ</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('মানবদেহ', this)">🧬 মানবদেহ</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('প্রযুক্তি', this)">💻 প্রযুক্তি</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('ইতিহাস', this)">🏛️ ইতিহাস</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('বিজ্ঞান', this)">🔬 বিজ্ঞান</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('মনস্তত্ত্ব', this)">🧠 Psychology</button>
+            <button class="k-cat-btn is-active" onclick="fetchKnowledge('science', 'বিজ্ঞান', this)">🔬 বিজ্ঞান</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('space', 'মহাকাশ', this)">🌌 মহাকাশ</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('technology', 'প্রযুক্তি', this)">💻 প্রযুক্তি</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('history', 'ইতিহাস', this)">🏛️ ইতিহাস</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('nature', 'প্রকৃতি ও প্রাণী', this)">🌿 প্রকৃতি</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('psychology', 'মনোবিজ্ঞান', this)">🧠 মনোবিজ্ঞান</button>
           </div>
           <div class="knowledge-grid" id="knowledgeCardContainer">
-            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে জ্ঞান আহরণ করা হচ্ছে...</div>
+            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে র্যান্ডম জ্ঞান আহরণ করা হচ্ছে...</div>
           </div>
         </div>
       `
@@ -773,7 +772,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
     setTimeout(() => fetchNews('politics'), 50);
   }
   if (viewKey === 'knowledge') {
-    setTimeout(() => fetchKnowledge('অক্টোপাস'), 50);
+    setTimeout(() => fetchKnowledge('science', 'বিজ্ঞান'), 50);
   }
 };
 
@@ -1722,9 +1721,18 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
 };
 
 /* ------------------------------------------------------------
-   Wikipedia Daily Knowledge Engine
+   Advanced Wikipedia Random & Category Knowledge Engine
    ------------------------------------------------------------ */
-window.fetchKnowledge = async function(topic = 'অক্টোপাস', btnEl = null) {
+const WIKI_TOPICS = {
+  science: ["কোয়ান্টম বলবিদ্যা", "ব্ল্যাক হোল", "আপেক্ষিকতার তত্ত্ব", "ডিএনএ", "মহাবিস্ফোরণ", "সালোকসংশ্লেষণ", "পরমাণু"],
+  space: ["মঙ্গল গ্রহ", "বৃহস্পতি", "আন্তর্জাতিক মহাকাশ স্টেশন", "সৌরজগৎ", "নক্ষত্র", "হাবল মহাশূন্য দূরবীক্ষণ যন্ত্র", "লক্ষণীয় বহির্গ্রহ"],
+  technology: ["কৃত্রিম বুদ্ধিমত্তা", "কোয়ান্টাম কম্পিউটার", "ইন্টারনেট", "রোবট", "ব্লকচেইন", "স্মার্টফোন", "সফটওয়্যার প্রকৌশল"],
+  history: ["মিশরের পিরামিড", "শিল্প বিপ্লব", "রেনেসাঁ", "দ্বিতীয় বিশ্বযুদ্ধ", "বাংলা ভাষা আন্দোলন", "সোনার বাংলা", "প্রাচীন গ্রিস"],
+  nature: ["অক্টোপাস", "নীল তিমি", "রয়েল বেঙ্গল টাইগার", "অ্যামাজন বৃষ্টিঅরণ্য", "প্রবাল প্রাচীর", "মধুমতি নদী", "পেকটিন"],
+  psychology: ["মনোবিজ্ঞান", "স্মৃতি", "স্বপ্ন", "সচেতনতা", "আবেগ", "বুদ্ধিমত্তা", "ব্যক্তিত্ব"]
+};
+
+window.fetchKnowledge = async function(categoryKey = 'science', categoryName = 'বিজ্ঞান', btnEl = null) {
   if (btnEl) {
     document.querySelectorAll('.k-cat-btn').forEach(b => b.classList.remove('is-active'));
     btnEl.classList.add('is-active');
@@ -1733,34 +1741,38 @@ window.fetchKnowledge = async function(topic = 'অক্টোপাস', btnEl
   const container = document.getElementById('knowledgeCardContainer');
   if (!container) return;
 
-  container.innerHTML = `<div class="knowledge-loading">🧠 "${topic}" সম্পর্কে তথ্য লোড হচ্ছে...</div>`;
+  container.innerHTML = `<div class="knowledge-loading">🧠 "${categoryName}" ক্যাটাগরি থেকে আকর্ষণীয় তথ্য খোঁজা হচ্ছে...</div>`;
 
   try {
-    const wikiUrl = `https://bn.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`;
+    // ক্যাটাগরির লিস্ট থেকে র্যান্ডম একটি টপিক সিলেক্ট করা
+    const topicsList = WIKI_TOPICS[categoryKey] || WIKI_TOPICS['science'];
+    const randomTopic = topicsList[Math.floor(Math.random() * topicsList.length)];
+
+    const wikiUrl = `https://bn.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(randomTopic)}`;
     const res = await fetch(wikiUrl);
     const data = await res.json();
 
     if (!data || !data.extract) {
-      container.innerHTML = `<div class="knowledge-loading">⚠️ এই বিষয়ে বিস্তারিত তথ্য পাওয়া যায়নি। অন্য ক্যাটাগরি চেষ্টা করুন।</div>`;
+      container.innerHTML = `<div class="knowledge-loading">⚠️ এই মুহূর্তে তথ্য লোড করা যায়নি। আবার চেষ্টা করুন।</div>`;
       return;
     }
 
-    const title = data.title || topic;
-    const summary = data.extract || "বর্ণনা পাওয়া যায়নি।";
-    const wikiLink = data.content_urls?.desktop?.page || `https://bn.wikipedia.org/wiki/${encodeURIComponent(topic)}`;
+    const title = data.title || randomTopic;
+    const summary = data.extract || "বর্ণনা পাওয়া যায়নি।";
+    const wikiLink = data.content_urls?.desktop?.page || `https://bn.wikipedia.org/wiki/${encodeURIComponent(randomTopic)}`;
     const thumbnail = data.thumbnail?.source || null;
 
     container.innerHTML = `
       <div class="knowledge-card">
         <div class="knowledge-card__header">
-          <span class="knowledge-badge">✨ আজকের নলেজ ফ্যাক্ট</span>
+          <span class="knowledge-badge">✨ ${categoryName} জ্ঞান ক্যাটাগরি</span>
           <span class="knowledge-source">📚 Wikipedia বাংলা</span>
         </div>
         <h2 class="knowledge-card__title">${title}</h2>
         ${thumbnail ? `<div style="max-height:220px; overflow:hidden; border-radius:12px;"><img src="${thumbnail}" alt="${title}" style="width:100%; object-fit:cover;"></div>` : ''}
         <p class="knowledge-card__body">${summary}</p>
         <div class="knowledge-card__footer">
-          <span style="font-size: 0.78rem; color: #64748b; font-weight:600;">প্রতিদিন নতুন তথ্য শিখুন ও ব্রেন শার্প রাখুন! 🚀</span>
+          <span style="font-size: 0.78rem; color: #64748b; font-weight:600;">প্রতিবার নতুন তথ্য জানতে ক্যাটাগরিতে আবার ক্লিক করুন! 🚀</span>
           <a href="${wikiLink}" target="_blank" rel="noopener" class="wiki-read-more-btn">
             উইকিপিডিয়ায় বিস্তারিত পড়ুন &rarr;
           </a>
@@ -1770,10 +1782,9 @@ window.fetchKnowledge = async function(topic = 'অক্টোপাস', btnEl
 
   } catch (err) {
     console.error("Knowledge fetch failed:", err);
-    container.innerHTML = `<div class="knowledge-loading">❌ তথ্য লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+    container.innerHTML = `<div class="knowledge-loading">❌ তথ্য লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
   }
 };
-
 /* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
