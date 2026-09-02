@@ -15,15 +15,12 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { message } = req.body || {};
-  const apiKey = process.env.GEMINI_API_KEY;
-
-  if (!apiKey) {
-    return res.status(500).json({ reply: "API Key পাওয়া যায়নি।" });
-  }
+  const { message, history } = req.body || {};
+  
+  // Vercel Environment Variable অথবা ডিরেক্ট ওপেনরাউটার কী
+  const apiKey = process.env.OPENROUTER_API_KEY;
 
   try {
-    // বারবার ফাইল রিড না করে মেমোরিতে ক্যাশ রাখা
     if (!cachedRoutine) {
       try {
         const routinePath = path.join(process.cwd(), "data", "routine.json");
@@ -31,40 +28,65 @@ export default async function handler(req, res) {
           cachedRoutine = fs.readFileSync(routinePath, "utf8");
         }
       } catch {
-        cachedRoutine = "কোনো রুটিন ডেটা নেই";
+        cachedRoutine = "";
       }
     }
 
-    const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের চ্যাটবট 'CR GPT'। খুব সংক্ষেপে ও পয়েন্ট আকারে বাংলায় দ্রুত উত্তর দাও।
-তথ্যসূত্র: ${cachedRoutine}
-প্রশ্ন: ${message}`;
+    const systemPrompt = `তুমি DIIT CSE 26th Batch-এর শিক্ষার্থীদের জন্য তৈরি করা এআই সহকারী 'CR GPT'। 
+তোমার কাজ ক্লাসের রুটিন, রুম নম্বর, ক্লাস শিডিউল ও স্টাডি মেটেরিয়াল সম্পর্কে শিক্ষার্থীদের সাহায্য করা। 
+সর্বদা বন্ধুত্বপূর্ণ, হাসিখুশি ও রসবোধপূর্ণ ভঙ্গিতে বাংলায় ছোট ও স্পষ্ট উত্তর দাও।
 
-    // সরাসরি সবচেয়ে দ্রুতগতির মডেল এবং টোকেন রেস্ট্রিকশন
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`;
+তথ্যসূত্র:
+- ব্যাচ: DIIT CSE 26th Batch (1st Year, 2nd Semester)
+- ক্লাস বার: রবিবার থেকে বুধবার (Sunday to Wednesday)
+- রুম: Section A = Room 704, Section B = Room 706
+- সময়সূচি: 11:40 AM - 12:50 PM, 12:50 PM - 02:00 PM, 02:20 PM - 03:30 PM
+- শিক্ষকবৃন্দ: Poly Bhoumik (PB), Md. Zakir Hossain (MZH), Saidur Rahman (SR), Md. Imran Hossain (MIH), Md. Mushfiqur Rahaman (MMR), Ramen Kumar Das (RKD), Md. Parvezur Rahman Mahin (PRM), Mubtasim Fuad Opee (MFO), Sabrina Quadir (SQ), Farjana Parvin (FP)
+${cachedRoutine ? "অতিরিক্ত রুটিন ফাইল: " + cachedRoutine : ""}`;
 
-    const response = await fetch(endpoint, {
+    const messages = [{ role: "system", content: systemPrompt }];
+
+    if (Array.isArray(history)) {
+      history.slice(-4).forEach(h => {
+        messages.push({
+          role: h.role === "model" ? "assistant" : "user",
+          content: h.text || h.content || ""
+        });
+      });
+    }
+
+    messages.push({ role: "user", content: message });
+
+    // OpenRouter API কল (Gemini 2.0 Flash Free)
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://super-diitian.vercel.app",
+        "X-Title": "Super DIITian CR GPT",
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: systemPrompt }] }],
-        generationConfig: {
-          maxOutputTokens: 300, // দ্রুত আউটপুটের জন্য সংক্ষেপ করা
-          temperature: 0.7
-        }
+        model: "google/gemini-2.0-flash-exp:free",
+        messages: messages,
+        max_tokens: 300,
+        temperature: 0.7
       })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error?.message || "গুগল এপিআই এরর");
+      throw new Error(data.error?.message || "OpenRouter এপিআই থেকে রেসপন্স আসেনি");
     }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "কোনো উত্তর পাওয়া যায়নি।";
+    const reply = data.choices?.[0]?.message?.content || "দুঃখিত, কোনো উত্তর তৈরি করা যায়নি।";
     return res.status(200).json({ reply });
 
   } catch (error) {
-    console.error("Fast API Error:", error);
-    return res.status(500).json({ reply: "সার্ভারে সাময়িক সমস্যা হচ্ছে।" });
+    console.error("OpenRouter Backend Error:", error);
+    return res.status(500).json({ 
+      reply: `CR GPT এরর: ${error.message || "সার্ভারে সাময়িক সমস্যা হচ্ছে।"}` 
+    });
   }
 }
