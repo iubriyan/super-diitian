@@ -724,16 +724,22 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
       `
     },
 
-    questions: {
-      title: "Previous Question Bank Archive",
+    knowledge: {
+      title: "🧠 Daily Knowledge Hub",
       content: `
-        <div class="coming-soon-box">
-          <div class="coming-soon-icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <div class="knowledge-container">
+          <div class="knowledge-categories-bar">
+            <button class="k-cat-btn is-active" onclick="fetchKnowledge('অক্টোপাস', this)">🐙 অক্টোপাস</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('মহাকাশ', this)">🌌 মহাকাশ</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('মানবদেহ', this)">🧬 মানবদেহ</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('প্রযুক্তি', this)">💻 প্রযুক্তি</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('ইতিহাস', this)">🏛️ ইতিহাস</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('বিজ্ঞান', this)">🔬 বিজ্ঞান</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('মনস্তত্ত্ব', this)">🧠 Psychology</button>
           </div>
-          <span class="coming-soon-badge">⏳ Under Preparation</span>
-          <h3 class="coming-soon-title">Mid & Final Questions Coming Soon</h3>
-          <p class="coming-soon-desc">Our question paper archive is being scanned and curated. Previous mid-term and semester final questions will be available right before exams.</p>
+          <div class="knowledge-grid" id="knowledgeCardContainer">
+            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে জ্ঞান আহরণ করা হচ্ছে...</div>
+          </div>
         </div>
       `
     },
@@ -766,6 +772,9 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
   if (viewKey === 'news') {
     setTimeout(() => fetchNews('politics'), 50);
   }
+  if (viewKey === 'knowledge') {
+    setTimeout(() => fetchKnowledge('অক্টোপাস'), 50);
+  }
 };
 
 window.addEventListener("popstate", (e) => {
@@ -775,61 +784,6 @@ window.addEventListener("popstate", (e) => {
     navigateTo("dashboard", false);
   }
 });
-
-/* ------------------------------------------------------------
-   Live News Portal Engine
-   ------------------------------------------------------------ */
-window.fetchNews = async function(category = 'politics', btnEl = null) {
-  if (btnEl) {
-    document.querySelectorAll('.news-cat-btn').forEach(b => b.classList.remove('is-active'));
-    btnEl.classList.add('is-active');
-  }
-
-  const container = document.getElementById('newsGridContainer');
-  if (!container) return;
-
-  container.innerHTML = `<div class="news-loading">📰 লাইভ নিউজ ফেচ করা হচ্ছে...</div>`;
-
-  try {
-    const res = await fetch(`/api/news?category=${category}`);
-    const data = await res.json();
-
-    if (!data.results || data.results.length === 0) {
-      container.innerHTML = `<div class="news-error">⚠️ এই মুহূর্তে কোনো নিউজ পাওয়া যায়নি।</div>`;
-      return;
-    }
-
-    container.innerHTML = data.results.map(item => {
-      const title = item.title || "শিরোনাম পাওয়া যায়নি";
-      const desc = item.description || item.content || "বিস্তারিত পড়তে লিংকে ক্লিক করুন...";
-      const img = item.image_url || "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60";
-      const source = item.source_id || "Online News";
-      const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleDateString('bn-BD') : "সদ্য প্রকাশিত";
-      const link = item.link || "#";
-
-      return `
-        <a href="${link}" target="_blank" rel="noopener" class="news-card">
-          <div class="news-card__img-wrap">
-            <img src="${img}" alt="News thumbnail" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60'">
-          </div>
-          <div class="news-card__content">
-            <span class="news-card__source">🌐 ${source}</span>
-            <h3 class="news-card__title">${title}</h3>
-            <p class="news-card__desc">${desc}</p>
-            <div class="news-card__footer">
-              <span>📅 ${pubDate}</span>
-              <span style="color:#0284c7; font-weight:700;">বিস্তারিত পড়ুন &rarr;</span>
-            </div>
-          </div>
-        </a>
-      `;
-    }).join('');
-
-  } catch (err) {
-    console.error("News load failed:", err);
-    container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
-  }
-};
 
 /* ------------------------------------------------------------
    Canvas Text Helpers
@@ -1731,13 +1685,13 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      container.innerHTML = `<div class="news-error">⚠️ এই মুহূর্তে কোনো নিউজ পাওয়া যায়নি।</div>`;
+      container.innerHTML = `<div class="news-error">⚠️ এই মুহূর্তে কোনো নিউজ পাওয়া যায়নি।</div>`;
       return;
     }
 
     container.innerHTML = data.results.map(item => {
-      const title = item.title || "শিরোনাম পাওয়া যায়নি";
-      const desc = item.description || item.content || "বিস্তারিত পড়তে লিংকে ক্লিক করুন...";
+      const title = item.title || "শিরোনাম পাওয়া যায়নি";
+      const desc = item.description || item.content || "বিস্তারিত পড়তে লিংকে ক্লিক করুন...";
       const img = item.image_url || "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=60";
       const source = item.source_id || "Online News";
       const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleDateString('bn-BD') : "সদ্য প্রকাশিত";
@@ -1754,7 +1708,7 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
             <p class="news-card__desc">${desc}</p>
             <div class="news-card__footer">
               <span>📅 ${pubDate}</span>
-              <span style="color:#0284c7; font-weight:700;">বিস্তারিত পড়ুন &rarr;</span>
+              <span style="color:#0284c7; font-weight:700;">বিস্তারিত পড়ুন &rarr;</span>
             </div>
           </div>
         </a>
@@ -1763,9 +1717,63 @@ window.fetchNews = async function(category = 'politics', btnEl = null) {
 
   } catch (err) {
     console.error("News load failed:", err);
-    container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+    container.innerHTML = `<div class="news-error">❌ নিউজ লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
   }
 };
+
+/* ------------------------------------------------------------
+   Wikipedia Daily Knowledge Engine
+   ------------------------------------------------------------ */
+window.fetchKnowledge = async function(topic = 'অক্টোপাস', btnEl = null) {
+  if (btnEl) {
+    document.querySelectorAll('.k-cat-btn').forEach(b => b.classList.remove('is-active'));
+    btnEl.classList.add('is-active');
+  }
+
+  const container = document.getElementById('knowledgeCardContainer');
+  if (!container) return;
+
+  container.innerHTML = `<div class="knowledge-loading">🧠 "${topic}" সম্পর্কে তথ্য লোড হচ্ছে...</div>`;
+
+  try {
+    const wikiUrl = `https://bn.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`;
+    const res = await fetch(wikiUrl);
+    const data = await res.json();
+
+    if (!data || !data.extract) {
+      container.innerHTML = `<div class="knowledge-loading">⚠️ এই বিষয়ে বিস্তারিত তথ্য পাওয়া যায়নি। অন্য ক্যাটাগরি চেষ্টা করুন।</div>`;
+      return;
+    }
+
+    const title = data.title || topic;
+    const summary = data.extract || "বর্ণনা পাওয়া যায়নি।";
+    const wikiLink = data.content_urls?.desktop?.page || `https://bn.wikipedia.org/wiki/${encodeURIComponent(topic)}`;
+    const thumbnail = data.thumbnail?.source || null;
+
+    container.innerHTML = `
+      <div class="knowledge-card">
+        <div class="knowledge-card__header">
+          <span class="knowledge-badge">✨ আজকের নলেজ ফ্যাক্ট</span>
+          <span class="knowledge-source">📚 Wikipedia বাংলা</span>
+        </div>
+        <h2 class="knowledge-card__title">${title}</h2>
+        ${thumbnail ? `<div style="max-height:220px; overflow:hidden; border-radius:12px;"><img src="${thumbnail}" alt="${title}" style="width:100%; object-fit:cover;"></div>` : ''}
+        <p class="knowledge-card__body">${summary}</p>
+        <div class="knowledge-card__footer">
+          <span style="font-size: 0.78rem; color: #64748b; font-weight:600;">প্রতিদিন নতুন তথ্য শিখুন ও ব্রেন শার্প রাখুন! 🚀</span>
+          <a href="${wikiLink}" target="_blank" rel="noopener" class="wiki-read-more-btn">
+            উইকিপিডিয়ায় বিস্তারিত পড়ুন &rarr;
+          </a>
+        </div>
+      </div>
+    `;
+
+  } catch (err) {
+    console.error("Knowledge fetch failed:", err);
+    container.innerHTML = `<div class="knowledge-loading">❌ তথ্য লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+  }
+};
+
 /* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
