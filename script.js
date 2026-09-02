@@ -99,42 +99,55 @@ const FIELD_IDS = [
 ];
 
 /* ------------------------------------------------------------
-   Routine Database
+   FACULTY FULL NAMES & ROUTINE CONFIGURATION
    ------------------------------------------------------------ */
+const FACULTY = {
+  PB: "Poly Bhoumik",
+  MZH: "Md. Zakir Hossain",
+  SR: "Saidur Rahman",
+  MIH: "Md. Imran Hossain",
+  MMR: "Md. Mushfiqur Rahaman",
+  RKD: "Ramen Kumar Das",
+  PRM: "Md. Parvezur Rahman Mahin",
+  MFO: "Mubtasim Fuad Opee",
+  SQ: "Sabrina Quadir",
+  FP: "Farjana Parvin"
+};
+
 const ROUTINE_DATA = {
   A: {
     room: "704",
     days: [
       {
-        name: "Sunday",
+        name: "Sunday", dayIdx: 0,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Calculus", teacher: "MZH", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "PB", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Structured Programming Lab", teacher: "PB", isLab: true }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Calculus", teacher: FACULTY.MZH, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.PB, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Structured Programming Lab", teacher: FACULTY.PB, isLab: true }
         ]
       },
       {
-        name: "Monday",
+        name: "Monday", dayIdx: 1,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Calculus", teacher: "MZH", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Electrical & Electronic Circuit", teacher: "RKD", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "English", teacher: "SQ", isLab: false }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Calculus", teacher: FACULTY.MZH, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Electrical & Electronic Circuit", teacher: FACULTY.RKD, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "English", teacher: FACULTY.SQ, isLab: false }
         ]
       },
       {
-        name: "Tuesday",
+        name: "Tuesday", dayIdx: 2,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Electrical & Electronic Circuit", teacher: "RKD", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Physics", teacher: "MFO", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Electrical & Electronic Circuit Lab", teacher: "SR", isLab: true }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Electrical & Electronic Circuit", teacher: FACULTY.RKD, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Physics", teacher: FACULTY.MFO, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Electrical & Electronic Circuit Lab", teacher: FACULTY.SR, isLab: true }
         ]
       },
       {
-        name: "Wednesday",
+        name: "Wednesday", dayIdx: 3,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "English", teacher: "SQ", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "PB", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Physics", teacher: "MFO", isLab: false }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "English", teacher: FACULTY.SQ, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.PB, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Physics", teacher: FACULTY.MFO, isLab: false }
         ]
       }
     ]
@@ -143,35 +156,35 @@ const ROUTINE_DATA = {
     room: "706",
     days: [
       {
-        name: "Sunday",
+        name: "Sunday", dayIdx: 0,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Physics", teacher: "PRM", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Electrical & Electronic Circuit", teacher: "SR", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Calculus", teacher: "MIH", isLab: false }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Physics", teacher: FACULTY.PRM, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Electrical & Electronic Circuit", teacher: FACULTY.SR, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Calculus", teacher: FACULTY.MIH, isLab: false }
         ]
       },
       {
-        name: "Monday",
+        name: "Monday", dayIdx: 1,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "English", teacher: "FP", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Calculus", teacher: "MIH", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Electrical & Electronic Circuit Lab", teacher: "SR", isLab: true }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "English", teacher: FACULTY.FP, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Calculus", teacher: FACULTY.MIH, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Electrical & Electronic Circuit Lab", teacher: FACULTY.SR, isLab: true }
         ]
       },
       {
-        name: "Tuesday",
+        name: "Tuesday", dayIdx: 2,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Electrical & Electronic Circuit", teacher: "SR", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "Structured Programming", teacher: "MMR", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Physics", teacher: "PRM", isLab: false }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Electrical & Electronic Circuit", teacher: FACULTY.SR, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.MMR, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Physics", teacher: FACULTY.PRM, isLab: false }
         ]
       },
       {
-        name: "Wednesday",
+        name: "Wednesday", dayIdx: 3,
         classes: [
-          { time: "11:40 AM - 12:50 PM", subject: "Structured Programming", teacher: "MMR", isLab: false },
-          { time: "12:50 PM - 02:00 PM", subject: "English", teacher: "FP", isLab: false },
-          { time: "02:20 PM - 03:30 PM", subject: "Structured Programming Lab", teacher: "MMR", isLab: true }
+          { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Structured Programming", teacher: FACULTY.MMR, isLab: false },
+          { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "English", teacher: FACULTY.FP, isLab: false },
+          { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Structured Programming Lab", teacher: FACULTY.MMR, isLab: true }
         ]
       }
     ]
@@ -179,7 +192,111 @@ const ROUTINE_DATA = {
 };
 
 let currentRoutineSec = "A";
+let liveTimerInterval = null;
 
+/* ------------------------------------------------------------
+   LIVE CLASS TRACKER & TIMER ENGINE
+   ------------------------------------------------------------ */
+function updateLiveTracker() {
+  const trackerEl = document.getElementById("routineLiveTracker");
+  if (!trackerEl) return;
+
+  const now = new Date();
+  const currentDayIdx = now.getDay(); 
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const secData = ROUTINE_DATA[currentRoutineSec];
+  const todaySchedule = secData.days.find(d => d.dayIdx === currentDayIdx);
+
+  if (!todaySchedule) {
+    trackerEl.innerHTML = `
+      <div class="live-tracker-head">
+        <span class="live-pulse"><span class="pulse-dot" style="background:#94a3b8;"></span> OFF DAY</span>
+        <span style="font-size:0.75rem;color:#94a3b8;">Section ${currentRoutineSec} • Room ${secData.room}</span>
+      </div>
+      <div class="live-timer-text">No Classes Scheduled Today</div>
+      <p class="live-sub-text">Enjoy your break or review previous course modules!</p>
+    `;
+    return;
+  }
+
+  let currentClass = null;
+  let nextClass = null;
+  let isBreak = false;
+
+  const classes = todaySchedule.classes;
+  for (let i = 0; i < classes.length; i++) {
+    const c = classes[i];
+    if (currentMinutes >= c.startM && currentMinutes < c.endM) {
+      currentClass = c;
+      break;
+    }
+  }
+
+  if (!currentClass) {
+    if (currentMinutes >= 840 && currentMinutes < 860) {
+      isBreak = true;
+      nextClass = classes[2];
+    } else if (currentMinutes < classes[0].startM) {
+      nextClass = classes[0];
+    } else {
+      for (let i = 0; i < classes.length - 1; i++) {
+        if (currentMinutes >= classes[i].endM && currentMinutes < classes[i+1].startM) {
+          nextClass = classes[i+1];
+          break;
+        }
+      }
+    }
+  }
+
+  if (currentClass) {
+    const elapsed = currentMinutes - currentClass.startM;
+    const remaining = currentClass.endM - currentMinutes;
+    trackerEl.innerHTML = `
+      <div class="live-tracker-head">
+        <span class="live-pulse"><span class="pulse-dot"></span> HAPPENING NOW</span>
+        <span style="font-size:0.75rem;color:#38bdf8;">Room ${secData.room}</span>
+      </div>
+      <div class="live-timer-text">${currentClass.subject}</div>
+      <p class="live-sub-text">
+        Teacher: <strong>${currentClass.teacher}</strong> • Started <strong>${elapsed}m</strong> ago (Ends in <strong>${remaining}m</strong>)
+      </p>
+    `;
+  } else if (isBreak) {
+    const breakRem = 860 - currentMinutes;
+    trackerEl.innerHTML = `
+      <div class="live-tracker-head">
+        <span class="live-pulse"><span class="pulse-dot" style="background:#f59e0b;"></span> BREAK TIME</span>
+        <span style="font-size:0.75rem;color:#f59e0b;">20 Min Break</span>
+      </div>
+      <div class="live-timer-text">Break in progress</div>
+      <p class="live-sub-text">Next Class: <strong>${nextClass.subject}</strong> with ${nextClass.teacher} in <strong>${breakRem}m</strong></p>
+    `;
+  } else if (nextClass) {
+    const startIn = nextClass.startM - currentMinutes;
+    trackerEl.innerHTML = `
+      <div class="live-tracker-head">
+        <span class="live-pulse"><span class="pulse-dot" style="background:#10b981;"></span> UPCOMING CLASS</span>
+        <span style="font-size:0.75rem;color:#94a3b8;">Room ${secData.room}</span>
+      </div>
+      <div class="live-timer-text">${nextClass.subject}</div>
+      <p class="live-sub-text">Starts in <strong>${startIn}m</strong> (${nextClass.time}) • ${nextClass.teacher}</p>
+    `;
+  } else {
+    trackerEl.innerHTML = `
+      <div class="live-tracker-head">
+        <span class="live-pulse"><span class="pulse-dot" style="background:#94a3b8;"></span> CLASSES COMPLETED</span>
+        <span style="font-size:0.75rem;color:#94a3b8;">Section ${currentRoutineSec}</span>
+      </div>
+      <div class="live-timer-text">All Classes Completed for Today!</div>
+      <p class="live-sub-text">Have a great time! Check the Question Bank or Notes for preparation.</p>
+    `;
+  }
+}
+
+/* ------------------------------------------------------------
+   ROUTINE VIEW RENDERER WITH TODAY HIGHLIGHT FIRST
+   ------------------------------------------------------------ */
 window.renderRoutineView = function(sec) {
   currentRoutineSec = sec;
   const btnA = document.getElementById("secBtnA");
@@ -193,46 +310,162 @@ window.renderRoutineView = function(sec) {
   if (!container) return;
 
   const data = ROUTINE_DATA[sec];
-  container.innerHTML = data.days.map(d => `
-    <div class="day-card">
-      <div class="day-header">
-        <span>${d.name}</span>
-        <span class="day-room-badge">Room ${data.room}</span>
-      </div>
-      <div class="period-list">
-        ${d.classes.map(c => `
-          <div class="period-item ${c.isLab ? 'is-lab' : ''}">
-            <div class="period-time">🕒 ${c.time}</div>
-            <div class="period-info">
-              <span class="period-name">${c.subject}</span>
-              <span class="faculty-tag">${c.teacher}</span>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
-};
+  const todayIdx = new Date().getDay();
 
-window.downloadRoutine = function() {
-  const data = ROUTINE_DATA[currentRoutineSec];
-  let text = `DIIT CSE 26th Batch — Section ${currentRoutineSec} Class Schedule\nRoom: ${data.room}\n=========================================\n\n`;
-
-  data.days.forEach(d => {
-    text += `[ ${d.name} ]\n`;
-    d.classes.forEach(c => {
-      text += `  • ${c.time}: ${c.subject} (${c.teacher})\n`;
-    });
-    text += `\n`;
+  // Reorder: Put Today at the top
+  const sortedDays = [...data.days].sort((a, b) => {
+    if (a.dayIdx === todayIdx) return -1;
+    if (b.dayIdx === todayIdx) return 1;
+    return a.dayIdx - b.dayIdx;
   });
 
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `Routine_CSE26_Section_${currentRoutineSec}.txt`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  container.innerHTML = sortedDays.map(d => {
+    const isToday = d.dayIdx === todayIdx;
+    return `
+      <div class="day-card ${isToday ? 'is-today' : ''}">
+        <div class="day-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>${d.name}</span>
+            ${isToday ? '<span class="today-badge-chip">TODAY</span>' : ''}
+          </div>
+          <span class="day-room-badge">Room ${data.room}</span>
+        </div>
+        <div class="period-list">
+          ${d.classes.map(c => `
+            <div class="period-item ${c.isLab ? 'is-lab' : ''}">
+              <div class="period-time">🕒 ${c.time}</div>
+              <div class="period-info">
+                <span class="period-name">${c.subject}</span>
+                <span class="period-teacher-name">👨‍🏫 ${c.teacher}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateLiveTracker();
+  clearInterval(liveTimerInterval);
+  liveTimerInterval = setInterval(updateLiveTracker, 30000);
+};
+
+/* ------------------------------------------------------------
+   GENERATE BEAUTIFUL HD JPG ROUTINE POSTER
+   ------------------------------------------------------------ */
+window.downloadRoutineJPG = function() {
+  const btn = document.querySelector(".download-routine-btn");
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = "Creating JPG...";
+  }
+
+  const data = ROUTINE_DATA[currentRoutineSec];
+  const c = document.createElement("canvas");
+  c.width = 1200;
+  c.height = 1500;
+  const ctx = c.getContext("2d");
+
+  // Background Gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, 1500);
+  bgGrad.addColorStop(0, "#0f172a");
+  bgGrad.addColorStop(1, "#1e293b");
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, 1200, 1500);
+
+  // Top Color Strip
+  ctx.fillStyle = "#2563eb";
+  ctx.fillRect(0, 0, 1200, 14);
+
+  // Title Headers
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 44px 'Inter', sans-serif";
+  ctx.fillText("DIIT CSE 26TH BATCH", 70, 90);
+
+  ctx.font = "600 24px 'Inter', sans-serif";
+  ctx.fillStyle = "#38bdf8";
+  ctx.fillText(`CLASS SCHEDULE — SECTION ${currentRoutineSec} (ROOM ${data.room})`, 70, 130);
+
+  ctx.strokeStyle = "rgba(255,255,255,0.15)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(70, 160);
+  ctx.lineTo(1130, 160);
+  ctx.stroke();
+
+  let startY = 200;
+  data.days.forEach((day) => {
+    // Card Box
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.roundRect(70, startY, 1060, 245, 16);
+    ctx.fill();
+
+    // Day Bar
+    ctx.fillStyle = "#1e293b";
+    ctx.beginPath();
+    ctx.roundRect(70, startY, 1060, 52, [16, 16, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 20px 'Inter', sans-serif";
+    ctx.fillText(day.name.toUpperCase(), 95, startY + 34);
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "600 16px 'Inter', sans-serif";
+    ctx.fillText(`Room ${data.room}`, 1030, startY + 34);
+
+    // Classes List
+    let itemY = startY + 80;
+    day.classes.forEach(cls => {
+      ctx.fillStyle = cls.isLab ? "#ecfdf5" : "#f8fafc";
+      ctx.beginPath();
+      ctx.roundRect(90, itemY, 1020, 50, 8);
+      ctx.fill();
+
+      ctx.fillStyle = "#64748b";
+      ctx.font = "bold 16px 'Inter', sans-serif";
+      ctx.fillText(`🕒 ${cls.time}`, 110, itemY + 32);
+
+      ctx.fillStyle = cls.isLab ? "#065f46" : "#0f172a";
+      ctx.font = "bold 18px 'Inter', sans-serif";
+      ctx.fillText(cls.subject, 370, itemY + 32);
+
+      ctx.fillStyle = "#475569";
+      ctx.font = "600 15px 'Inter', sans-serif";
+      ctx.fillText(`👨‍🏫 ${cls.teacher}`, 850, itemY + 32);
+
+      itemY += 56;
+    });
+
+    startY += 275;
+  });
+
+  // Footer Tag
+  ctx.fillStyle = "rgba(255,255,255,0.06)";
+  ctx.beginPath();
+  ctx.roundRect(70, 1340, 1060, 90, 14);
+  ctx.fill();
+
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "16px 'Inter', sans-serif";
+  ctx.fillText("Generated from Super DIITian Portal • super-diitian.vercel.app", 100, 1392);
+
+  c.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `DIIT_CSE26_Section_${currentRoutineSec}_Routine.jpg`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Save Routine (JPG)`;
+    }
+  }, "image/jpeg", 0.98);
 };
 
 /* ------------------------------------------------------------
@@ -257,6 +490,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
     hubDashboard.style.display = "block";
     hubCoverMaker.style.display = "none";
     hubDetailView.style.display = "none";
+    clearInterval(liveTimerInterval);
     return;
   }
 
@@ -276,34 +510,20 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
     routine: {
       title: "Class Routine — CSE 26th Batch",
       content: `
+        <div id="routineLiveTracker" class="live-tracker-card"></div>
+
         <div class="routine-controls">
           <div class="section-switch-group">
             <button id="secBtnA" class="sec-tab-btn is-active" onclick="renderRoutineView('A')">Section A</button>
             <button id="secBtnB" class="sec-tab-btn" onclick="renderRoutineView('B')">Section B</button>
           </div>
-          <button class="download-routine-btn" onclick="downloadRoutine()">
+          <button class="download-routine-btn" onclick="downloadRoutineJPG()">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Save Routine
+            Save Routine (JPG)
           </button>
         </div>
 
         <div id="routineCardsList"></div>
-
-        <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-          <h4 style="margin: 0 0 10px 0; color: #16232F;">Faculty Reference:</h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; font-size: 0.8rem; color: #475569;">
-            <div><strong>PB:</strong> Poly Bhoumik</div>
-            <div><strong>MZH:</strong> Md. Zakir Hossain</div>
-            <div><strong>SR:</strong> Saidur Rahman</div>
-            <div><strong>MIH:</strong> Md. Imran Hossain</div>
-            <div><strong>MMR:</strong> Md. Mushfiqur Rahaman</div>
-            <div><strong>RKD:</strong> Ramen Kumar Das</div>
-            <div><strong>PRM:</strong> Md. Parvezur Rahman Mahin</div>
-            <div><strong>MFO:</strong> Mubtasim Fuad Opee</div>
-            <div><strong>SQ:</strong> Sabrina Quadir</div>
-            <div><strong>FP:</strong> Farjana Parvin</div>
-          </div>
-        </div>
       `
     },
 

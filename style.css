@@ -51,7 +51,7 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Centered Header Logo (Perfect alignment for Laptop & Mobile)
+   Centered Header Logo
    ============================================================ */
 .site-header {
   width: 100%;
@@ -83,7 +83,6 @@ button{ font-family: inherit; }
   margin: 0 auto; 
 }
 
-/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
   .site-header {
     padding: 12px 16px;
@@ -131,7 +130,6 @@ button{ font-family: inherit; }
   margin: 0;
 }
 
-/* Grid Layout: Compact, Colorful, Bubble Style */
 .hub-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -199,7 +197,6 @@ button{ font-family: inherit; }
   color: var(--muted);
 }
 
-/* Vibrant Brand Colors Matched to Super DIITian */
 .card--blue   { border-color: #dbeafe; background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%); }
 .card--blue .hub-card__icon { background: #0284c7; color: #ffffff; }
 
@@ -242,7 +239,6 @@ button{ font-family: inherit; }
   }
 }
 
-/* Back Button */
 .hub-back-btn {
   background: #16232F;
   color: #ffffff;
@@ -284,7 +280,226 @@ button{ font-family: inherit; }
   padding-bottom: 12px;
 }
 
-/* Routine & Student Table Styles */
+/* ============================================================
+   Live Tracker & Smart Routine Styles
+   ============================================================ */
+.live-tracker-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 18px;
+  padding: 18px 20px;
+  color: #ffffff;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.live-tracker-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.live-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7);
+  animation: pulseAnim 1.6s infinite;
+}
+
+@keyframes pulseAnim {
+  0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+}
+
+.live-timer-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 4px 0 2px;
+}
+
+.live-sub-text {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.today-badge-chip {
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.day-card.is-today {
+  border: 2px solid #2563eb !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12) !important;
+}
+
+.day-card.is-today .day-header {
+  background: #2563eb !important;
+}
+
+.routine-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-switch-group {
+  display: flex;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.sec-tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sec-tab-btn.is-active {
+  background: #ffffff;
+  color: #0284c7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.download-routine-btn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+  transition: all 0.2s ease;
+}
+
+.download-routine-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+.day-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.day-header {
+  background: #16232F;
+  color: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.day-room-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.period-list {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.period-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.period-item.is-lab {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+
+.period-time {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 110px;
+}
+
+.period-info {
+  flex: 1;
+  text-align: right;
+}
+
+.period-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #16232F;
+}
+
+.period-item.is-lab .period-name {
+  color: #065f46;
+}
+
+.period-teacher-name {
+  font-size: 0.78rem;
+  color: #475569;
+  font-weight: 600;
+  display: block;
+  margin-top: 3px;
+}
+
+.period-item.is-lab .period-teacher-name {
+  color: #065f46;
+}
+
+/* ============================================================
+   Student Directory Table Styles
+   ============================================================ */
 .custom-table {
   width: 100%;
   border-collapse: collapse;
@@ -309,23 +524,6 @@ button{ font-family: inherit; }
   background: #f8fafc;
 }
 
-.routine-lab {
-  background: #ecfdf5 !important;
-  color: #065f46;
-  font-weight: 600;
-}
-
-.teacher-badge {
-  display: inline-block;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  margin-top: 4px;
-}
-
 .student-search-box {
   width: 100%;
   max-width: 320px;
@@ -336,9 +534,11 @@ button{ font-family: inherit; }
   outline: none;
   font-size: 0.9rem;
 }
+
 .student-search-box:focus {
   border-color: #0284c7;
 }
+
 /* ============================================================
    Layout
    ============================================================ */
@@ -393,7 +593,7 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Upgraded Form Fields & Sub-sections
+   Form Fields
    ============================================================ */
 .field-grid {
   display: grid;
@@ -494,7 +694,7 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Template picker
+   Template Picker
    ============================================================ */
 .template-grid{
   display: grid;
@@ -584,7 +784,6 @@ button{ font-family: inherit; }
   z-index: 2;
 }
 
-/* --- Premium Badge on Card --- */
 .template-card.is-premium .template-card__frame {
   outline: 2px solid #e2136e !important;
 }
@@ -605,7 +804,7 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Preview panel
+   Preview Panel
    ============================================================ */
 .preview-panel{ display: flex; flex-direction: column; }
 .canvas-wrap{
@@ -665,7 +864,7 @@ button{ font-family: inherit; }
 }
 
 /* ============================================================
-   Modern Floating Card Footer Design
+   Footer
    ============================================================ */
 .site-footer {
   max-width: 1180px;
@@ -784,9 +983,6 @@ button{ font-family: inherit; }
   }
 }
 
-/* ============================================================
-   Protect Template Images from Direct Download
-   ============================================================ */
 .template-card img {
   pointer-events: none !important;
   -webkit-user-drag: none !important;
@@ -1121,142 +1317,4 @@ button{ font-family: inherit; }
   font-size: 14px;
   margin: 0 0 18px 0;
   line-height: 1.4;
-}
-/* ============================================================
-   Mobile-Friendly Routine & Section Switcher
-   ============================================================ */
-.routine-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.section-switch-group {
-  display: flex;
-  background: #e2e8f0;
-  padding: 4px;
-  border-radius: 12px;
-}
-
-.sec-tab-btn {
-  border: none;
-  background: transparent;
-  padding: 8px 18px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #475569;
-  border-radius: 9px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sec-tab-btn.is-active {
-  background: #ffffff;
-  color: #0284c7;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-.download-routine-btn {
-  background: #10b981;
-  color: #ffffff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Day Block & Period Cards */
-.day-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-}
-
-.day-header {
-  background: #16232F;
-  color: #ffffff;
-  padding: 10px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.day-room-badge {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-}
-
-.period-list {
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.period-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  background: #f8fafc;
-  border-radius: 10px;
-  border: 1px solid #f1f5f9;
-}
-
-.period-item.is-lab {
-  background: #ecfdf5;
-  border-color: #a7f3d0;
-}
-
-.period-time {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #64748b;
-  min-width: 110px;
-}
-
-.period-info {
-  flex: 1;
-  text-align: right;
-}
-
-.period-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #16232F;
-}
-
-.period-item.is-lab .period-name {
-  color: #065f46;
-}
-
-.faculty-tag {
-  display: inline-block;
-  background: #e2e8f0;
-  color: #334155;
-  font-size: 0.70rem;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-}
-
-.period-item.is-lab .faculty-tag {
-  background: #bbf7d0;
-  color: #14532d;
 }
