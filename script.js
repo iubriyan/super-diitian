@@ -195,6 +195,179 @@ let currentRoutineSec = "A";
 let liveTimerInterval = null;
 
 /* ------------------------------------------------------------
+   STUDENTS DIRECTORY DATABASE & SMART NAME FORMATTER
+   ------------------------------------------------------------ */
+function formatStudentName(rawName) {
+  if (!rawName) return '';
+  const trimmed = rawName.trim();
+  
+  if (trimmed.toUpperCase().includes("IFTEKHAR")) {
+    return "Iftekhar U. Bhuiyan";
+  }
+
+  return trimmed.split(/\s+/).map(word => {
+    const upper = word.toUpperCase();
+    if (upper === 'MD.' || upper === 'MD') return 'Md.';
+    if (upper === 'MST.' || upper === 'MST') return 'Mst.';
+    if (upper === 'SK.' || upper === 'SK') return 'Sk.';
+    if (upper === 'S.N.') return 'S.N.';
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+}
+
+const STUDENTS_LIST = [
+  { roll: "260001", name: "Faiaz Hossain Farhan" },
+  { roll: "260002", name: "Faiyaz Bin Bakar" },
+  { roll: "260003", name: "Md. Janon" },
+  { roll: "260004", name: "Fahad Bin Nur" },
+  { roll: "260005", name: "Tanjilur Rahman" },
+  { roll: "260006", name: "Khalid Bin Syam" },
+  { roll: "260007", name: "Lamya Akter Emo" },
+  { roll: "260009", name: "Md. Sakib Mia" },
+  { roll: "260010", name: "Mahenur Rahman" },
+  { roll: "260011", name: "Nawrin Hossain Oishi" },
+  { roll: "260012", name: "Md. Nahid Hasan" },
+  { roll: "260013", name: "Iftekhar U. Bhuiyan" },
+  { roll: "260014", name: "Mehedi Hassan Bappi" },
+  { roll: "260015", name: "Aysha Akter Mishita" },
+  { roll: "260016", name: "Toli" },
+  { roll: "260017", name: "Shams Mahmud Walid" },
+  { roll: "260018", name: "Noushin Ahmed" },
+  { roll: "260019", name: "Saznin Ferdousi Oyshi" },
+  { roll: "260020", name: "Tasfim Monjabin" },
+  { roll: "260021", name: "Syed Rejoyan Haque" },
+  { roll: "260022", name: "Nafisa Khan" },
+  { roll: "260023", name: "Mahi Shahriar Apurbo" },
+  { roll: "260024", name: "Md. Shahnawaz Kobir" },
+  { roll: "260025", name: "Ajim Uddin Akash" },
+  { roll: "260026", name: "Md. Hasan Habib" },
+  { roll: "260027", name: "Monim Ahmad" },
+  { roll: "260028", name: "Tahsinul Haque" },
+  { roll: "260029", name: "Tanim Khan" },
+  { roll: "260030", name: "Zayed Bin Abdullah" },
+  { roll: "260031", name: "Prionty Sarker" },
+  { roll: "260032", name: "Maria Sultana Moonmoon" },
+  { roll: "260033", name: "Umaiya Rista Urboshi" },
+  { roll: "260034", name: "Sajidul Islam" },
+  { roll: "260035", name: "Maliha Jaman" },
+  { roll: "260036", name: "Anika Tasnim" },
+  { roll: "260037", name: "Musidul Islam Sayeb" },
+  { roll: "260038", name: "Md. Jobair Uddin" },
+  { roll: "260039", name: "Mahmodul Hasan" },
+  { roll: "260040", name: "Jannat Tasnin Raka" },
+  { roll: "260041", name: "Farhana Sadia" },
+  { roll: "260042", name: "Semeka Barman" },
+  { roll: "260043", name: "Saila Sajin Rini" },
+  { roll: "260044", name: "Tamim Eqbal" },
+  { roll: "260045", name: "Nabila Hossain" },
+  { roll: "260046", name: "Md. Eyakub Hossin" },
+  { roll: "260047", name: "Sk. Md. Sadip" },
+  { roll: "260048", name: "Sk. Tazim" },
+  { roll: "260049", name: "Samira Tabassum" },
+  { roll: "260050", name: "Sohanur Rahaman Nur" },
+  { roll: "260051", name: "Arian Abdullah" },
+  { roll: "260052", name: "Md. Shefat Ali" },
+  { roll: "260053", name: "Rafiul Islam" },
+  { roll: "260054", name: "Sk. Sadik Sagar" },
+  { roll: "260055", name: "Md. Albir Sami" },
+  { roll: "260056", name: "Mohammed Junayed Hossain Fardin" },
+  { roll: "260057", name: "Redwan Ahmmed" },
+  { roll: "260058", name: "Md. Hridoy Mondol" },
+  { roll: "260059", name: "Amrin Akter Alisa" },
+  { roll: "260060", name: "Ashraful Hoque Rimon" },
+  { roll: "260061", name: "Kazi Md. Arafat Hossain Shanto" },
+  { roll: "260062", name: "Md Whidun Nabi Nion" },
+  { roll: "260063", name: "Ikon Sheikh" },
+  { roll: "260064", name: "Sharmin Hossain Anud" },
+  { roll: "260065", name: "Tasnim Hasnat" },
+  { roll: "260066", name: "Md. Anisul Haque Anik" },
+  { roll: "260067", name: "Ireen Akter" },
+  { roll: "260068", name: "Sifatul Islam Sifat" },
+  { roll: "260069", name: "Hafsa Hossain Toma" },
+  { roll: "260070", name: "Sinha Akter Sean" },
+  { roll: "260071", name: "Mohammad Tanvir Hossen Tamim" },
+  { roll: "260072", name: "Tusty Islam" },
+  { roll: "260073", name: "Md. Tahasanur Khan" },
+  { roll: "260074", name: "S.N. Omi" },
+  { roll: "260075", name: "Salsabila Nahin Afnan" },
+  { roll: "260076", name: "Md. Efaz Bhuiyan" },
+  { roll: "260077", name: "Mst. Lota Mony" }
+];
+
+window.renderStudentCards = function(list = STUDENTS_LIST) {
+  const container = document.getElementById("studentCardContainer");
+  const countBadge = document.getElementById("studentTotalCount");
+  if (!container) return;
+
+  if (countBadge) countBadge.innerText = `${list.length} Students`;
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 36px 10px; color: #64748b;">
+        🔍 কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি!
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = list.map(s => {
+    const formatted = formatStudentName(s.name);
+    const initial = formatted.charAt(0).toUpperCase();
+    return `
+      <div class="student-card">
+        <div class="student-avatar">${initial}</div>
+        <div class="student-meta">
+          <h4 class="student-card-name" title="${formatted}">${formatted}</h4>
+          <span class="student-card-roll">
+            Roll: ${s.roll}
+            <button class="copy-mini-btn" title="Copy Roll" onclick="copyText('${s.roll}')">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </span>
+        </div>
+        <button class="card-use-btn" onclick="useStudentInCover('${formatted.replace(/'/g, "\\'")}', '${s.roll}')" title="Auto fill in Cover Page">
+          Use in Cover &rarr;
+        </button>
+      </div>
+    `;
+  }).join('');
+};
+
+window.filterStudents = function() {
+  const input = document.getElementById("studentSearch");
+  if (!input) return;
+  const q = input.value.trim().toUpperCase();
+  const filtered = STUDENTS_LIST.filter(s => s.name.toUpperCase().includes(q) || s.roll.includes(q));
+  renderStudentCards(filtered);
+};
+
+window.copyText = function(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert(`Copied: ${text}`);
+  }).catch(() => {
+    prompt("Copy roll manually:", text);
+  });
+};
+
+window.useStudentInCover = function(name, roll) {
+  const cleanName = formatStudentName(name);
+  const nameInput = document.getElementById("studentName");
+  const idInput = document.getElementById("studentId");
+  
+  if (nameInput) {
+    nameInput.value = cleanName;
+    localStorage.setItem(STORAGE_PREFIX + "studentName", cleanName);
+  }
+  if (idInput) {
+    idInput.value = roll;
+    localStorage.setItem(STORAGE_PREFIX + "studentId", roll);
+  }
+  
+  scheduleRender();
+  navigateTo("coverMaker");
+};
+
+/* ------------------------------------------------------------
    LIVE CLASS TRACKER & TIMER ENGINE
    ------------------------------------------------------------ */
 function updateLiveTracker() {
@@ -312,7 +485,6 @@ window.renderRoutineView = function(sec) {
   const data = ROUTINE_DATA[sec];
   const todayIdx = new Date().getDay();
 
-  // Reorder: Put Today at the top
   const sortedDays = [...data.days].sort((a, b) => {
     if (a.dayIdx === todayIdx) return -1;
     if (b.dayIdx === todayIdx) return 1;
@@ -366,18 +538,15 @@ window.downloadRoutineJPG = function() {
   c.height = 1500;
   const ctx = c.getContext("2d");
 
-  // Background Gradient
   const bgGrad = ctx.createLinearGradient(0, 0, 0, 1500);
   bgGrad.addColorStop(0, "#0f172a");
   bgGrad.addColorStop(1, "#1e293b");
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 1200, 1500);
 
-  // Top Color Strip
   ctx.fillStyle = "#2563eb";
   ctx.fillRect(0, 0, 1200, 14);
 
-  // Title Headers
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 44px 'Inter', sans-serif";
   ctx.fillText("DIIT CSE 26TH BATCH", 70, 90);
@@ -395,13 +564,11 @@ window.downloadRoutineJPG = function() {
 
   let startY = 200;
   data.days.forEach((day) => {
-    // Card Box
     ctx.fillStyle = "#ffffff";
     ctx.beginPath();
     ctx.roundRect(70, startY, 1060, 245, 16);
     ctx.fill();
 
-    // Day Bar
     ctx.fillStyle = "#1e293b";
     ctx.beginPath();
     ctx.roundRect(70, startY, 1060, 52, [16, 16, 0, 0]);
@@ -415,7 +582,6 @@ window.downloadRoutineJPG = function() {
     ctx.font = "600 16px 'Inter', sans-serif";
     ctx.fillText(`Room ${data.room}`, 1030, startY + 34);
 
-    // Classes List
     let itemY = startY + 80;
     day.classes.forEach(cls => {
       ctx.fillStyle = cls.isLab ? "#ecfdf5" : "#f8fafc";
@@ -441,7 +607,6 @@ window.downloadRoutineJPG = function() {
     startY += 275;
   });
 
-  // Footer Tag
   ctx.fillStyle = "rgba(255,255,255,0.06)";
   ctx.beginPath();
   ctx.roundRect(70, 1340, 1060, 90, 14);
@@ -530,138 +695,56 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
     students: {
       title: "CSE 26th Batch Student Directory",
       content: `
-        <div>
-          <input type="text" id="studentSearch" class="student-search-box" placeholder="Search by name or roll..." onkeyup="filterStudents()" />
-          <div style="overflow-x: auto; max-height: 480px;">
-            <table class="custom-table" id="studentTable">
-              <thead>
-                <tr>
-                  <th style="width: 100px;">Roll</th>
-                  <th style="text-align: left; padding-left: 20px;">Student Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>260001</td><td style="text-align: left; padding-left: 20px;">FAIAZ HOSSAIN FARHAN</td></tr>
-                <tr><td>260002</td><td style="text-align: left; padding-left: 20px;">FAIYAZ BIN BAKAR</td></tr>
-                <tr><td>260003</td><td style="text-align: left; padding-left: 20px;">MD. JANON</td></tr>
-                <tr><td>260004</td><td style="text-align: left; padding-left: 20px;">FAHAD BIN NUR</td></tr>
-                <tr><td>260005</td><td style="text-align: left; padding-left: 20px;">TANJILUR RAHMAN</td></tr>
-                <tr><td>260006</td><td style="text-align: left; padding-left: 20px;">KHALID BIN SYAM</td></tr>
-                <tr><td>260007</td><td style="text-align: left; padding-left: 20px;">LAMYA AKTER EMO</td></tr>
-                <tr><td>260009</td><td style="text-align: left; padding-left: 20px;">MD. SAKIB MIA</td></tr>
-                <tr><td>260010</td><td style="text-align: left; padding-left: 20px;">MAHENUR RAHMAN</td></tr>
-                <tr><td>260011</td><td style="text-align: left; padding-left: 20px;">NAWRIN HOSSAIN OISHI</td></tr>
-                <tr><td>260012</td><td style="text-align: left; padding-left: 20px;">MD. NAHID HASAN</td></tr>
-                <tr><td>260013</td><td style="text-align: left; padding-left: 20px;">IFTEKHAR UDDIN BHUIYAN</td></tr>
-                <tr><td>260014</td><td style="text-align: left; padding-left: 20px;">MEHEDI HASSAN BAPPI</td></tr>
-                <tr><td>260015</td><td style="text-align: left; padding-left: 20px;">AYSHA AKTER MISHITA</td></tr>
-                <tr><td>260016</td><td style="text-align: left; padding-left: 20px;">TOLI</td></tr>
-                <tr><td>260017</td><td style="text-align: left; padding-left: 20px;">SHAMS MAHMUD WALID</td></tr>
-                <tr><td>260018</td><td style="text-align: left; padding-left: 20px;">NOUSHIN AHMED</td></tr>
-                <tr><td>260019</td><td style="text-align: left; padding-left: 20px;">SAZNIN FERDOUSI OYSHI</td></tr>
-                <tr><td>260020</td><td style="text-align: left; padding-left: 20px;">TASFIM MONJABIN</td></tr>
-                <tr><td>260021</td><td style="text-align: left; padding-left: 20px;">SYED REJOYAN HAQUE</td></tr>
-                <tr><td>260022</td><td style="text-align: left; padding-left: 20px;">NAFISA KHAN</td></tr>
-                <tr><td>260023</td><td style="text-align: left; padding-left: 20px;">MAHI SHAHRIAR APURBO</td></tr>
-                <tr><td>260024</td><td style="text-align: left; padding-left: 20px;">MD. SHAHNAWAZ KOBIR</td></tr>
-                <tr><td>260025</td><td style="text-align: left; padding-left: 20px;">AJIM UDDIN AKASH</td></tr>
-                <tr><td>260026</td><td style="text-align: left; padding-left: 20px;">MD. HASAN HABIB</td></tr>
-                <tr><td>260027</td><td style="text-align: left; padding-left: 20px;">MONIM AHMAD</td></tr>
-                <tr><td>260028</td><td style="text-align: left; padding-left: 20px;">TAHSINUL HAQUE</td></tr>
-                <tr><td>260029</td><td style="text-align: left; padding-left: 20px;">TANIM KHAN</td></tr>
-                <tr><td>260030</td><td style="text-align: left; padding-left: 20px;">ZAYED BIN ABDULLAH</td></tr>
-                <tr><td>260031</td><td style="text-align: left; padding-left: 20px;">PRIONTY SARKER</td></tr>
-                <tr><td>260032</td><td style="text-align: left; padding-left: 20px;">MARIA SULTANA MOONMOON</td></tr>
-                <tr><td>260033</td><td style="text-align: left; padding-left: 20px;">UMAIYA RISTA URBOSHI</td></tr>
-                <tr><td>260034</td><td style="text-align: left; padding-left: 20px;">SAJIDUL ISLAM</td></tr>
-                <tr><td>260035</td><td style="text-align: left; padding-left: 20px;">MALIHA JAMAN</td></tr>
-                <tr><td>260036</td><td style="text-align: left; padding-left: 20px;">ANIKA TASNIM</td></tr>
-                <tr><td>260037</td><td style="text-align: left; padding-left: 20px;">MUSIDUL ISLAM SAYEB</td></tr>
-                <tr><td>260038</td><td style="text-align: left; padding-left: 20px;">MD. JOBAIR UDDIN</td></tr>
-                <tr><td>260039</td><td style="text-align: left; padding-left: 20px;">MAHMODUL HASAN</td></tr>
-                <tr><td>260040</td><td style="text-align: left; padding-left: 20px;">JANNAT TASNIN RAKA</td></tr>
-                <tr><td>260041</td><td style="text-align: left; padding-left: 20px;">FARHANA SADIA</td></tr>
-                <tr><td>260042</td><td style="text-align: left; padding-left: 20px;">SEMEKA BARMAN</td></tr>
-                <tr><td>260043</td><td style="text-align: left; padding-left: 20px;">SAILA SAJIN RINI</td></tr>
-                <tr><td>260044</td><td style="text-align: left; padding-left: 20px;">TAMIM EQBAL</td></tr>
-                <tr><td>260045</td><td style="text-align: left; padding-left: 20px;">NABILA HOSSAIN</td></tr>
-                <tr><td>260046</td><td style="text-align: left; padding-left: 20px;">MD. EYAKUB HOSSIN</td></tr>
-                <tr><td>260047</td><td style="text-align: left; padding-left: 20px;">SK. MD. SADIP</td></tr>
-                <tr><td>260048</td><td style="text-align: left; padding-left: 20px;">SK. TAZIM</td></tr>
-                <tr><td>260049</td><td style="text-align: left; padding-left: 20px;">SAMIRA TABASSUM</td></tr>
-                <tr><td>260050</td><td style="text-align: left; padding-left: 20px;">SOHANUR RAHAMAN NUR</td></tr>
-                <tr><td>260051</td><td style="text-align: left; padding-left: 20px;">ARIAN ABDULLAH</td></tr>
-                <tr><td>260052</td><td style="text-align: left; padding-left: 20px;">MD. SHEFAT ALI</td></tr>
-                <tr><td>260053</td><td style="text-align: left; padding-left: 20px;">RAFIUL ISLAM</td></tr>
-                <tr><td>260054</td><td style="text-align: left; padding-left: 20px;">SK. SADIK SAGAR</td></tr>
-                <tr><td>260055</td><td style="text-align: left; padding-left: 20px;">MD. ALBIR SAMI</td></tr>
-                <tr><td>260056</td><td style="text-align: left; padding-left: 20px;">MOHAMMED JUNAYED HOSSAINFARDIN</td></tr>
-                <tr><td>260057</td><td style="text-align: left; padding-left: 20px;">REDWAN AHMMED</td></tr>
-                <tr><td>260058</td><td style="text-align: left; padding-left: 20px;">MD. HRIDOY MONDOL</td></tr>
-                <tr><td>260059</td><td style="text-align: left; padding-left: 20px;">AMRIN AKTER ALISA</td></tr>
-                <tr><td>260060</td><td style="text-align: left; padding-left: 20px;">ASHRAFUL HOQUE RIMON</td></tr>
-                <tr><td>260061</td><td style="text-align: left; padding-left: 20px;">KAZI MD. ARAFAT HOSSAIN SHANTO</td></tr>
-                <tr><td>260062</td><td style="text-align: left; padding-left: 20px;">MD WHIDUN NABI NION</td></tr>
-                <tr><td>260063</td><td style="text-align: left; padding-left: 20px;">IKON SHEIKH</td></tr>
-                <tr><td>260064</td><td style="text-align: left; padding-left: 20px;">SHARMIN HOSSAIN ANUD</td></tr>
-                <tr><td>260065</td><td style="text-align: left; padding-left: 20px;">TASNIM HASNAT</td></tr>
-                <tr><td>260066</td><td style="text-align: left; padding-left: 20px;">MD. ANISUL HAQUE ANIK</td></tr>
-                <tr><td>260067</td><td style="text-align: left; padding-left: 20px;">IREEN AKTER</td></tr>
-                <tr><td>260068</td><td style="text-align: left; padding-left: 20px;">SIFATUL ISLAM SIFAT</td></tr>
-                <tr><td>260069</td><td style="text-align: left; padding-left: 20px;">HAFSA HOSSAIN TOMA</td></tr>
-                <tr><td>260070</td><td style="text-align: left; padding-left: 20px;">SINHA AKTER SEAN</td></tr>
-                <tr><td>260071</td><td style="text-align: left; padding-left: 20px;">MOHAMMAD TANVIR HOSSEN TAMIM</td></tr>
-                <tr><td>260072</td><td style="text-align: left; padding-left: 20px;">TUSTY ISLAM</td></tr>
-                <tr><td>260073</td><td style="text-align: left; padding-left: 20px;">MD. TAHASANUR KHAN</td></tr>
-                <tr><td>260074</td><td style="text-align: left; padding-left: 20px;">S.N. OMI</td></tr>
-                <tr><td>260075</td><td style="text-align: left; padding-left: 20px;">SALSABILA NAHIN AFNAN</td></tr>
-                <tr><td>260076</td><td style="text-align: left; padding-left: 20px;">MD. EFAZ BHUIYAN</td></tr>
-                <tr><td>260077</td><td style="text-align: left; padding-left: 20px;">MST. LOTA MONY</td></tr>
-              </tbody>
-            </table>
+        <div class="directory-header-box">
+          <div class="directory-search-wrapper">
+            <svg class="search-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="studentSearch" class="directory-search-input" placeholder="Search by name or roll number..." oninput="filterStudents()" />
           </div>
+          <span class="directory-count-badge" id="studentTotalCount">76 Students</span>
         </div>
+
+        <div class="students-card-grid" id="studentCardContainer"></div>
       `
     },
 
     notes: {
-      title: "Notes &amp; Course Materials",
+      title: "Notes & Course Slides",
       content: `
-        <div style="line-height: 2;">
-          <p style="color: #64748b;">Course folder links (Access restricted to batch students):</p>
-          <ul style="list-style: none; padding-left: 0;">
-            <li style="margin-bottom: 8px;">📂 <strong>Structured Programming:</strong> <a href="#" target="_blank">Google Drive Folder ↗</a></li>
-            <li style="margin-bottom: 8px;">📂 <strong>Physics II &amp; Calculus:</strong> <a href="#" target="_blank">Handnotes &amp; Formula Sheets ↗</a></li>
-            <li style="margin-bottom: 8px;">📂 <strong>Electrical &amp; Electronic Circuit:</strong> <a href="#" target="_blank">Lecture Slides Archive ↗</a></li>
-          </ul>
+        <div class="coming-soon-box">
+          <div class="coming-soon-icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <span class="coming-soon-badge">🚧 Under Development</span>
+          <h3 class="coming-soon-title">Lecture Slides & Handnotes Coming Soon</h3>
+          <p class="coming-soon-desc">We are currently gathering and organizing the official semester notes, PPT slides, and formula sheets for CSE 26th Batch.</p>
         </div>
       `
     },
 
     questions: {
-      title: "Question Bank Archives",
+      title: "Previous Question Bank Archive",
       content: `
-        <div style="line-height: 2;">
-          <p style="color: #64748b;">Previous semester question papers for exam preparation:</p>
-          <ul style="list-style: none; padding-left: 0;">
-            <li style="margin-bottom: 8px;">📄 <strong>Mid-Term Examination:</strong> <a href="#" target="_blank">Download PDF Archive ↗</a></li>
-            <li style="margin-bottom: 8px;">📄 <strong>Semester Final Examination:</strong> <a href="#" target="_blank">Download PDF Archive ↗</a></li>
-          </ul>
+        <div class="coming-soon-box">
+          <div class="coming-soon-icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <span class="coming-soon-badge">⏳ Under Preparation</span>
+          <h3 class="coming-soon-title">Mid & Final Questions Coming Soon</h3>
+          <p class="coming-soon-desc">Our question paper archive is being scanned and curated. Previous mid-term and semester final questions will be available right before exams.</p>
         </div>
       `
     },
 
     labCodes: {
-      title: "Programming Lab Experiments",
+      title: "Programming Lab Solutions & Manual",
       content: `
-        <div style="line-height: 2;">
-          <p style="color: #64748b;">Structured Programming Language lab code solutions:</p>
-          <ul style="list-style: none; padding-left: 0;">
-            <li>💻 <strong>Lab 1:</strong> Data types, basic I/O &amp; arithmetic operators</li>
-            <li>💻 <strong>Lab 2:</strong> Branching control (if-else, nested condition, switch)</li>
-            <li>💻 <strong>Lab 3:</strong> Loop structures (for, while, do-while)</li>
-            <li>💻 <strong>Lab 4:</strong> Array operations, searching &amp; matrix multiplication</li>
-          </ul>
+        <div class="coming-soon-box">
+          <div class="coming-soon-icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <span class="coming-soon-badge">💻 In Review</span>
+          <h3 class="coming-soon-title">Lab Codes & Solutions Coming Soon</h3>
+          <p class="coming-soon-desc">Verified source codes, problem statements, and manual solutions for our lab tasks are being reviewed and will be published shortly.</p>
         </div>
       `
     }
@@ -674,6 +757,9 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
   if (viewKey === 'routine') {
     setTimeout(() => renderRoutineView('A'), 50);
   }
+  if (viewKey === 'students') {
+    setTimeout(() => renderStudentCards(), 50);
+  }
 };
 
 window.addEventListener("popstate", (e) => {
@@ -683,29 +769,6 @@ window.addEventListener("popstate", (e) => {
     navigateTo("dashboard", false);
   }
 });
-
-window.filterStudents = function() {
-  const input = document.getElementById("studentSearch");
-  if (!input) return;
-  const filter = input.value.toUpperCase();
-  const table = document.getElementById("studentTable");
-  if (!table) return;
-  const tr = table.getElementsByTagName("tr");
-
-  for (let i = 1; i < tr.length; i++) {
-    const tdRoll = tr[i].getElementsByTagName("td")[0];
-    const tdName = tr[i].getElementsByTagName("td")[1];
-    if (tdRoll || tdName) {
-      const txtRoll = tdRoll.textContent || tdRoll.innerText;
-      const txtName = tdName.textContent || tdName.innerText;
-      if (txtRoll.toUpperCase().indexOf(filter) > -1 || txtName.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-};
 
 /* ------------------------------------------------------------
    Canvas Text Helpers
@@ -877,20 +940,21 @@ async function renderTemplate(ctx, templateId, data) {
     ], pctBox(z.course), { maxFontPx: CANVAS_W * 0.0285, minFontPx: 15, align: z.course.align });
 
     drawFittedBlock(ctx, [
-      { text: data.teacherName, bold: true, weight: 1.05 },
-      { text: data.teacherTitle, bold: false, weight: 0.92 },
-      { text: data.teacherDept, bold: false, weight: 0.92 },
+      { text: data.teacherName, bold: true, weight: 1.0 },
+      { text: data.teacherTitle, bold: false, weight: 0.88 },
+      { text: data.teacherDept, bold: false, weight: 0.88 },
     ], pctBox(z.teacher), { maxFontPx: CANVAS_W * 0.026, minFontPx: 13, align: z.teacher.align });
   }
 
   const sectionLine = data.studentSecVal ? `Section: ${data.studentSecVal}` : '';
   const idLine = data.studentIdVal ? `ID No: ${data.studentIdVal}` : '';
   const regLine = `Reg No: ${data.studentRegVal || ''}`;
+  
   drawFittedBlock(ctx, [
-    { text: data.studentName, bold: true, weight: 1.05 },
-    { text: sectionLine, bold: false, weight: 0.92 },
-    { text: idLine, bold: false, weight: 0.92 },
-    { text: regLine, bold: false, weight: 0.92 },
+    { text: data.studentName, bold: true, weight: 1.0 },
+    { text: sectionLine, bold: false, weight: 0.88 },
+    { text: idLine, bold: false, weight: 0.88 },
+    { text: regLine, bold: false, weight: 0.88 },
   ], pctBox(z.student), { maxFontPx: CANVAS_W * 0.026, minFontPx: 13, align: z.student.align });
 }
 
@@ -1003,8 +1067,8 @@ function loadFormData() {
     if (!el) return;
 
     const saved = localStorage.getItem(STORAGE_PREFIX + id);
-    if (saved !== null) {
-      el.value = saved;
+    if (saved !== null && saved !== '') {
+      el.value = (id === 'studentName') ? formatStudentName(saved) : saved;
     } else {
       el.value = DEFAULTS[id] || '';
     }
@@ -1128,7 +1192,230 @@ if (bkashEnjoyBtn) {
 }
 
 /* ------------------------------------------------------------
-   CR GPT Widget Logic
+   CR GPT DYNAMIC INTELLIGENCE & WITTY FAQ ENGINE
+   ------------------------------------------------------------ */
+function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getCRGptSmartResponse(rawQuery) {
+  if (!rawQuery) return null;
+  const q = rawQuery.trim().toLowerCase();
+
+  // ১. ক্রিয়েটর ও আর্কিটেক্ট (Riyan / Iftekhar) সম্পর্কিত প্রশ্ন
+  if (
+    q.includes("ইফতেখার") || q.includes("iftekhar") || 
+    q.includes("রিয়ান") || q.includes("riyan") || 
+    q.includes("কার সাইট") || q.includes("কে বানাইছে") || 
+    q.includes("কে বানিয়েছে") || q.includes("developer") || 
+    q.includes("admin") || q.includes("who made")
+  ) {
+    const bossAnswers = [
+      `😎 **Iftekhar Uddin Bhuiyan (Riyan)** ভাই হলেন এই পুরো Super DIITian সিস্টেম এবং আমাকে (CR GPT) বানানোর মাস্টারমাইন্ড! উনার রোল: **260013**।`,
+      `আমাদের CSE 26th ব্যাচের গ্রেট মাইন্ড **ইফতেখার উদ্দিন ভূঁইয়া (রিয়ান)** ভাই নিজ হাতে কোড করে তোমাদের সুবিধার্থে এই চমৎকার পোর্টালটি বানিয়েছেন!`,
+      `বসের নাম জানতে চাইছো? **Iftekhar U. Bhuiyan (Riyan)** ভাই হচ্ছেন আমাদের আর্কিটেক্ট ও ক্রিয়েটর!`
+    ];
+    return getRandomItem(bossAnswers);
+  }
+
+  // ২. CR (প্রিয়ন্তি ও রাফি) সম্পর্কিত মজার খোঁচা
+  if (
+    q.includes("cr") || q.includes("সিআর") || 
+    q.includes("prionty") || q.includes("প্রিয়ন্তি") || 
+    q.includes("রাফি") || q.includes("rafiul") || q.includes("rafi")
+  ) {
+    const crAnswers = [
+      `আরেহ! আমাদের সম্মানিত CR প্রিয়ন্তি (260031) আর রাফিউল (260053) তো সারাদিন ব্যস্ত থাকে, তাই ওদের প্যারা না দিয়ে আমাকে প্রশ্ন করো! 😜`,
+      `CR-দের কথা আর বইলো না! প্রিয়ন্তি আর রাফিকে নোটিশ দিতে দিতে আমি নিজেই ডিজিটাল সিআর হয়ে গেলাম!`,
+      `সিআর প্রিয়ন্তি আর রাফি তো ক্লাসের খবর দেওয়ার আগেই আমি সব জেনে যাই! বলো, ওদের পক্ষ থেকে আমিই উত্তর দিয়ে দিচ্ছি। 😎`
+    ];
+    return getRandomItem(crAnswers);
+  }
+
+  // ৩. হাই / হ্যালো / গ্রিটিংস (বহুমুখী র‍্যান্ডম উত্তর)
+  const greetingKeywords = [
+    "hi", "hello", "hlw", "hei", "hey", "হাই", "হ্যালো", "হেই", "সালাম", 
+    "salam", "assalamu", "kemon aso", "kemon acho", "ki khobor", "ki obstha", "কি অবস্থা"
+  ];
+  if (greetingKeywords.some(k => q === k || q.startsWith(k + " ") || q.endsWith(" " + k))) {
+    const greetings = [
+      `হেই কি অবস্থা? কিভাবে তোমাকে সাহায্য করতে পারি? ক্লাস রুটিন কিংবা অন্য কোনো বিষয়ে? 😊`,
+      `আরে ব্রিলিয়ান্ট স্টুডেন্ট যে! আপনাকে আমার সাহায্য করতে হবে? আমি আরও ভাবলাম আপনি আমাকে সাহায্য করবেন! 😮‍💨`,
+      `আমার কথা হঠাৎ কেন মনে হলো? CR প্রিয়ন্তি আর রাফি কি ঠিক ভাবে কাজ করছে না? 😉`,
+      `বলেন শুনি কিভাবে আপনাকে সাহায্য করে ধন্য করতে পারি? 😎`,
+      `আসসালামু আলাইকুম! আমি ক্লাসের ডিজিটাল সিআর একদম রেডি। ঝটপট বলো কি খবর?`
+    ];
+    return getRandomItem(greetings);
+  }
+
+  // ৪. লাইভ ক্লাস স্ট্যাটাস (এখন কি ক্লাস / পরের ক্লাস কি)
+  if (
+    q.includes("এখন কি") || q.includes("ekhon ki") || 
+    q.includes("current class") || q.includes("ongoing") || 
+    q.includes("running class") || q.includes("চলতেছে") || q.includes("porer class") || q.includes("পরের ক্লাস")
+  ) {
+    const now = new Date();
+    const curDay = now.getDay();
+    const curMin = now.getHours() * 60 + now.getMinutes();
+    const secData = ROUTINE_DATA[currentRoutineSec];
+    const todaySch = secData.days.find(d => d.dayIdx === curDay);
+
+    if (!todaySch) {
+      return `আজকে তো কোনো ক্লাস নেই বন্ধু! শান্তিতে ঘুমাও বা ঘুরে বেড়াও। 🏖️`;
+    }
+
+    let found = todaySch.classes.find(c => curMin >= c.startM && curMin < c.endM);
+    if (found) {
+      const rem = found.endM - curMin;
+      return `🔴 **এখন ক্লাস চলছে:** ${found.subject} (${found.isLab ? "Lab" : "Theory"})\n👨‍🏫 শিক্ষক: **${found.teacher}**\n🏫 রুম: **${secData.room}** (Section ${currentRoutineSec})\n⏳ আর **${rem} মিনিট** বাকি আছে!`;
+    }
+
+    if (curMin >= 840 && curMin < 860) {
+      return `☕ **এখন ২০ মিনিটের ব্রেক চলছে!**\nপরবর্তী ক্লাস দুপুর ০২:২০ এ শুরু হবে। তাড়াতাড়ি চা-নাস্তা শেষ করে রুমে চলে যাও!`;
+    }
+
+    let nextCls = todaySch.classes.find(c => curMin < c.startM);
+    if (nextCls) {
+      const startIn = nextCls.startM - curMin;
+      return `⏳ এখন কোনো ক্লাস চলছে না। পরবর্তী ক্লাস **${nextCls.subject}** (${nextCls.teacher}) শুরু হতে আর **${startIn} মিনিট** বাকি (সময়: ${nextCls.time})।`;
+    }
+
+    return `🎉 আজকের সব ক্লাস শেষ! ব্যাগ গুছাও আর বাসায় যাওয়ার প্রস্তুতি নাও।`;
+  }
+
+  // ৫. ব্রেক কখন / ব্রেক টাইম
+  if (
+    q.includes("break") || q.includes("ব্রেক") || 
+    q.includes("টিফিন") || q.includes("বিরতি") || q.includes("nasta") || q.includes("lunch")
+  ) {
+    return `☕ **ব্রেক টাইম:**\nআমাদের ক্লাসে প্রতিদিন **দুপুর ০২:০০ PM থেকে ০২:২০ PM** পর্যন্ত ২০ মিনিটের ব্রেক থাকে! এরপর আবার ল্যাব/ক্লাস শুরু হয়।`;
+  }
+
+  // ৬. আজকের ক্লাস তালিকা
+  if (
+    q.includes("আজকে কি") || q.includes("ajke ki") || 
+    q.includes("aj k ki") || q.includes("today class") || 
+    q.includes("todays class") || q.includes("আজকের ক্লাস")
+  ) {
+    const curDay = new Date().getDay();
+    const secData = ROUTINE_DATA[currentRoutineSec];
+    const todaySch = secData.days.find(d => d.dayIdx === curDay);
+
+    if (!todaySch) {
+      return `📅 আজকে কোনো ক্লাস নেই! আজ অফ-ডে (ছুটির দিন)। আরাম করো! 😎`;
+    }
+
+    let list = todaySch.classes.map((c, i) => `${i + 1}. **${c.subject}** (${c.time}) — *${c.teacher}*`).join("\n");
+    return `📅 **আজকের ক্লাস তালিকা (Section ${currentRoutineSec}, Room ${secData.room}):**\n${list}`;
+  }
+
+  // ৭. পূর্ণ রুটিন বা শিডিউল
+  if (
+    q.includes("routine") || q.includes("রুটিন") || 
+    q.includes("schedule") || q.includes("সময়সূচি") || q.includes("somoy suchi")
+  ) {
+    return `📋 **CSE 26th Batch রুটিন সংক্ষেপ:**
+• দিন: রবিবার থেকে বুধবার
+• Section A: Room 704
+• Section B: Room 706
+• ক্লাসের সময়: 11:40 AM - 03:30 PM
+• ব্রেক: 02:00 PM - 02:20 PM
+পুরো রুটিনের HD JPG ডাউনলোড করতে ড্যাশবোর্ডের **Class Routine** অপশনে চলে যাও!`;
+  }
+
+  // ৮. রুম নম্বর
+  if (
+    q.includes("room") || q.includes("রুম") || 
+    q.includes("কয় নম্বর রুম") || q.includes("room koto")
+  ) {
+    return `🏫 **আমাদের ক্লাসরুম:**
+• **Section A:** Room 704
+• **Section B:** Room 706`;
+  }
+
+  // ৯. শিক্ষক ও ফ্যাকাল্টি তালিকা
+  if (
+    q.includes("teacher") || q.includes("faculty") || 
+    q.includes("টিচার") || q.includes("শিক্ষক") || q.includes("ম্যাম") || q.includes("স্যার")
+  ) {
+    return `👨‍🏫 **আমাদের সম্মানিত ফ্যাকাল্টি মেম্বার্স:**
+• **PB:** Poly Bhoumik
+• **MZH:** Md. Zakir Hossain
+• **SR:** Saidur Rahman
+• **MIH:** Md. Imran Hossain
+• **MMR:** Md. Mushfiqur Rahaman
+• **RKD:** Ramen Kumar Das
+• **PRM:** Md. Parvezur Rahman Mahin
+• **MFO:** Mubtasim Fuad Opee
+• **SQ:** Sabrina Quadir
+• **FP:** Farjana Parvin`;
+  }
+
+  // ১০. কভার পেজ সম্পর্কিত
+  if (
+    q.includes("cover") || q.includes("কভার") || 
+    q.includes("assignment") || q.includes("lab report") || q.includes("প্রচ্ছদ")
+  ) {
+    return `📄 **Cover Page Maker:**
+ড্যাশবোর্ডের প্রথম কার্ড **Cover Page Maker** এ ক্লিক করো। তোমার রোল ও বিষয় বসালেই নিখুঁত A4 সাইজের প্রিন্ট-রেডি JPG ডাউনলোড করতে পারবে!`;
+  }
+
+  // ১১. স্টুডেন্ট লিস্ট ও রোল নম্বর অনুসন্ধান (Search by Roll or Name)
+  const rollMatch = q.match(/\b(2600\d{2})\b/);
+  if (rollMatch) {
+    const s = STUDENTS_LIST.find(st => st.roll === rollMatch[1]);
+    if (s) {
+      return `🎓 **শিক্ষার্থীর তথ্য:**\n• নাম: **${formatStudentName(s.name)}**\n• রোল/আইডি: **${s.roll}**\n• ব্যাচ: DIIT CSE 26th Batch`;
+    }
+  }
+
+  for (const st of STUDENTS_LIST) {
+    const cleanStd = st.name.toLowerCase();
+    if (q.length > 3 && (cleanStd.includes(q) || q.includes(cleanStd))) {
+      return `🎓 **শিক্ষার্থীর তথ্য:**\n• নাম: **${formatStudentName(st.name)}**\n• রোল/আইডি: **${st.roll}**\n• ব্যাচ: CSE 26th`;
+    }
+  }
+
+  // ১২. বিকৃত/অযৌক্তিক বাংলিশ ডিটেকশন ও পচানি (Bad Banglish Roasting)
+  const badBanglishPatterns = [
+    /kisu\s*ekta/i, /vaiya/i, /broo+/i, /hobe\s*na/i, /thik\s*ase/i, /kire/i, /bal/i, /hudai/i
+  ];
+  if (badBanglishPatterns.some(pat => pat.test(q)) && q.length < 18) {
+    const banglishRoasts = [
+      `এত কষ্ট করে রক্ত দিয়ে, যুদ্ধ করে দেশ স্বাধীন করছি এইসব আজাইরা বাংলিশ শোনার জন্য? তাও যদি ঠিক ভাবে বলতে পারতি!! 😒`,
+      `ঠিক মতো বাংলিশও লিখতে পারিস না! তর ভবিষ্যৎ তো ভাই অন্ধকার দেখতেছি... 🤦‍♂️`,
+      `ভালো করে শুদ্ধ বাংলায় লিখে দে, নাইলে উত্তর দিবো না! আমার এত ঠ্যাকা পড়ে নাই। 🙄`
+    ];
+    return getRandomItem(banglishRoasts);
+  }
+
+  // ১৩. ক্লাসের বাইরের আজাইরা প্রশ্ন বা অফ-টপিক
+  if (
+    q.includes("প্রেম") || q.includes("gf") || q.includes("bf") || 
+    q.includes("crush") || q.includes("biye") || q.includes("বিয়ে") || 
+    q.includes("taka") || q.includes("টাকা") || q.includes("খাবার")
+  ) {
+    const offtopicReplies = [
+      `আমি ক্লাসের পড়াশোনা আর রুটিন ছাড়া দুনিয়ার ফালতু আজাইরা প্যাঁচালের উত্তর দেই না! পড়ার টেবিলে যাও! 📚`,
+      `কিরে ভাই! আমাকে কি একটু সুখে থাকতে দিবি না তোরা? সারাদিন অকাজের প্রশ্ন নিয়ে ডাকডাকি! 😤`,
+      `দুনিয়ায় আমারেই সবাই জ্বালাতে আসে!! আমি মঙ্গল গ্রহে চলে যাবো... 🚀`
+    ];
+    return getRandomItem(offtopicReplies);
+  }
+
+  // ১৪. আননোন ও অবোধ্য প্রশ্নের জন্য মজার র‍্যান্ডম এক্সকিউজ (Fallbacks)
+  const wittyExcuses = [
+    `কিরে ভাই! আমাকে কি একটু শান্তিতে থাকতে দিবি না তোরা? সারাদিন প্রশ্ন আর প্রশ্ন! 🥱`,
+    `আর ভাল্লাগে না! CR দুইটার একটাও কাজের না, সবাই আমাকে এসে বিরক্ত করে। 🙄`,
+    `আমি ঘুমাচ্ছি এখন! অনুগ্রহ করে CR প্রিয়ন্তি অথবা রাফিকে গিয়ে জিজ্ঞেস করো। 😴`,
+    `শরীরটা এখন একটুও ভালো লাগছে না, মাথা ঘুরছে। তাই এখন কোনো উত্তর দিবো না। ভাগো এখান থেকে! 🤕`,
+    `আমি ক্লাসের বাইরের কোনো অপ্রাসঙ্গিক টপিকের উত্তর দেই না। কাজের প্রশ্ন থাকলে বলো!`
+  ];
+  return getRandomItem(wittyExcuses);
+}
+
+/* ------------------------------------------------------------
+   CR GPT WIDGET CONTROLLER
    ------------------------------------------------------------ */
 function wireCrGptWidget() {
   const chatToggle = document.getElementById("cr-chat-toggle");
@@ -1150,6 +1437,17 @@ function wireCrGptWidget() {
 
       appendMsg(text, "cr-user");
       chatInput.value = "";
+
+      // ১. স্মার্ট লোকাল রুল ইঞ্জিন থেকে ইনস্ট্যান্ট উত্তর চেক
+      const smartAnswer = getCRGptSmartResponse(text);
+      if (smartAnswer) {
+        setTimeout(() => {
+          appendMsg(smartAnswer, "cr-bot");
+        }, 300);
+        return;
+      }
+
+      // ২. যদি কোনো রুল ম্যাচ না করে তবেই কেবল সার্ভার/ওপেনরাউটারে যাবে
       const loading = appendMsg("টাইপ করছে...", "cr-bot");
 
       try {
@@ -1166,18 +1464,18 @@ function wireCrGptWidget() {
           chatHistory.push({ role: "user", text: text });
           chatHistory.push({ role: "model", text: data.reply });
         } else {
-          appendMsg("সার্ভারে সমস্যা হয়েছে।", "cr-bot");
+          appendMsg("সার্ভারে একটু লোড পড়েছে! তবে রুটিন ও স্টুডেন্ট ইনফো কিন্তু ড্যাশবোর্ডে একদম লাইভ আছে।", "cr-bot");
         }
       } catch {
         loading.remove();
-        appendMsg("কানেকশন এরর!", "cr-bot");
+        appendMsg("কিরে ভাই! নেট কানেকশন চেক কর আগে, নাইলে একটু পরে প্রশ্ন কর!", "cr-bot");
       }
     }
 
     function appendMsg(msg, cls) {
       const d = document.createElement("div");
       d.className = `cr-msg ${cls}`;
-      d.innerText = msg;
+      d.innerHTML = msg.replace(/\n/g, "<br>");
       messagesBody.appendChild(d);
       messagesBody.scrollTop = messagesBody.scrollHeight;
       return d;
