@@ -755,7 +755,6 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
               <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="SPL Book" class="book-shelf-cover">
               <div class="book-shelf-meta">
                 <h4 class="book-shelf-title">Structured Programming Language (SPL)</h4>
-                <p class="book-shelf-sub">DIIT CSE 1st Sem</p>
               </div>
             </div>
           </div>
@@ -2052,7 +2051,6 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
               <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="SPL Book" class="book-shelf-cover">
               <div class="book-shelf-meta">
                 <h4 class="book-shelf-title">Structured Programming Language (SPL)</h4>
-                <p class="book-shelf-sub">DIIT CSE 1st Sem</p>
               </div>
             </div>
           </div>
