@@ -717,7 +717,7 @@ button{ font-family: inherit; }
   padding: 0;
   cursor: pointer;
   border-radius: var(--radius-md);
-  text-align: center;     
+  text-align: center;      
   transform: rotate(var(--tilt, 0deg));
   transition: transform .18s ease, filter .18s ease;
 }
@@ -1641,7 +1641,7 @@ button{ font-family: inherit; }
   z-index: 1;
 }
 
-/* আরও ছোট, স্লিক এবং প্রিমিয়াম ব্যাজ */
+/* আরও ছোট, স্লিক এবং প্রিমিয়াম ব্যাজ */
 .vibe-badge-tag {
   display: inline-flex;
   align-items: center;
@@ -1658,7 +1658,7 @@ button{ font-family: inherit; }
   letter-spacing: 0.08em;
 }
 
-/* কমেন্ট টেক্সট বড়, স্পষ্ট ও প্রিমিয়াম ফন্ট */
+/* কমেন্ট টেক্সট বড়, স্পষ্ট ও প্রিমিয়াম ফন্ট */
 .vibe-message-text {
   font-size: 1.15rem;
   font-weight: 800;
@@ -1983,4 +1983,667 @@ button{ font-family: inherit; }
   background: #f8fafc;
   border-radius: 16px;
   border: 1.5px dashed #cbd5e1;
+}
+
+/* ============================================================
+   E-Library Portal Styles
+   ============================================================ */
+.elibrary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.elib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.elib-book-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.elib-book-card:hover {
+  transform: translateY(-3px);
+  border-color: #38bdf8;
+  box-shadow: 0 12px 28px -6px rgba(2, 132, 199, 0.15);
+}
+
+.elib-book-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.elib-book-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 3px 10px;
+  border-radius: 999px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.elib-book-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.elib-book-author {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+.elib-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.elib-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.elib-btn--read {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+}
+
+.elib-btn--read:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.elib-btn--download {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.elib-btn--download:hover {
+  background: #0369a1;
+}
+/* ============================================================
+   Advanced Secure E-Library & PDF Viewer Styles
+   ============================================================ */
+.elib-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+.elib-hero-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 20px;
+  padding: 24px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+  border: 1.5px solid rgba(56, 189, 248, 0.3);
+}
+
+.elib-cover-img {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 2px solid #ffffff;
+  flex-shrink: 0;
+}
+
+.elib-hero-info h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  color: #f8fafc;
+}
+
+.elib-hero-info p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.elib-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 10px 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.chapter-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.chapter-card:hover {
+  transform: translateY(-2px);
+  border-color: #0284c7;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+  background: #f0fdf4;
+}
+
+.chapter-card.coming-soon {
+  opacity: 0.75;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.chapter-card.coming-soon:hover {
+  transform: none;
+  border-color: #e2e8f0;
+  box-shadow: none;
+}
+
+.chapter-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.chapter-info span {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.read-btn {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.chapter-card:hover .read-btn {
+  background: #0369a1;
+}
+
+.coming-badge {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #fde68a;
+  text-transform: uppercase;
+}
+
+/* Premium NU Question Card */
+.nu-question-card {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  border-radius: 18px;
+  padding: 20px 24px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  margin-top: 10px;
+}
+
+.nu-question-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.35);
+}
+
+.nu-q-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nu-q-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  backdrop-filter: blur(5px);
+}
+
+.nu-q-info h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.nu-q-info p {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.nu-read-btn {
+  background: #ffffff;
+  color: #7c3aed;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+
+.nu-question-card:hover .nu-read-btn {
+  background: #f8fafc;
+  transform: scale(1.05);
+}
+
+/* Secure PDF Reader Modal */
+.pdf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  padding: 20px;
+}
+
+.pdf-modal-card {
+  width: 100%;
+  max-width: 900px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.pdf-modal-header {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pdf-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #f8fafc;
+}
+
+.pdf-close-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.pdf-close-btn:hover {
+  background: #ef4444;
+}
+
+.pdf-modal-body {
+  flex: 1;
+  background: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pdf-modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: auto;
+}
+
+/* Security Overlay to block right click / download inside iframe area */
+.pdf-security-layer {
+  position: absolute;
+  top: 0; right: 0; left: 0; height: 50px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .elib-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px;
+  }
+  .nu-question-card {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+  .nu-q-left {
+    flex-direction: column;
+  }
+  .pdf-modal-card {
+    height: 95vh;
+  }
+}
+/* ============================================================
+   Professional E-Library Book Shelf & Reader Styles
+   ============================================================ */
+.elibrary-shelf {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .elibrary-shelf {
+    grid-template-columns: repeat(2, 1fr); /* মোবাইলে প্রতি সারিতে ২টি বই */
+    gap: 12px;
+  }
+}
+
+.book-shelf-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-shelf-card:hover {
+  transform: translateY(-4px);
+  border-color: #0284c7;
+  box-shadow: 0 12px 24px rgba(2, 132, 199, 0.12);
+}
+
+.book-shelf-cover {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.book-shelf-meta {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.book-shelf-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-shelf-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Book Details View Style */
+.book-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 22px;
+  border-radius: 20px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+.book-detail-cover {
+  width: 80px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+
+.book-detail-info h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  color: #f8fafc;
+}
+
+.book-detail-info p {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.elib-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.chapter-box {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.chapter-box:hover {
+  border-color: #0284c7;
+  transform: translateY(-2px);
+  background: #f0fdf4;
+}
+
+.chapter-box.coming-soon {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.chapter-box.coming-soon:hover {
+  transform: none;
+  border-color: #e2e8f0;
+}
+
+.chapter-meta h5 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.chapter-meta span {
+  font-size: 0.74rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Premium NU Question Box */
+.nu-archive-box {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  border-radius: 18px;
+  padding: 20px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
+}
+
+.nu-archive-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(124, 58, 237, 0.3);
+}
+
+/* Secure PDF Modal */
+.pdf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  padding: 15px;
+}
+
+.pdf-modal-card {
+  width: 100%;
+  max-width: 850px;
+  height: 88vh;
+  background: #ffffff;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.pdf-modal-header {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pdf-modal-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin: 0;
+  color: #f8fafc;
+}
+
+.pdf-close-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-close-btn:hover {
+  background: #ef4444;
+}
+
+.pdf-modal-body {
+  flex: 1;
+  background: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pdf-modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }

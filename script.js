@@ -737,22 +737,115 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
             <button class="k-cat-btn" onclick="fetchKnowledge('psychology', 'মনোবিজ্ঞান', this)">🧠 মনোবিজ্ঞান</button>
           </div>
           <div class="knowledge-grid" id="knowledgeCardContainer">
-            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে র্যান্ডম জ্ঞান আহরণ করা হচ্ছে...</div>
+            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে র্যান্ডম জ্ঞান আহরণ করা হচ্ছে...</div>
           </div>
         </div>
       `
     },
 
-    labCodes: {
-      title: "Programming Lab Solutions & Manual",
+    elibrary: {
+      title: "📚 CSE E-Library & PDF Archive",
       content: `
-        <div class="coming-soon-box">
-          <div class="coming-soon-icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <div class="elibrary-container" id="elibMainView" oncontextmenu="return false;">
+          <p style="font-size:0.9rem; color:#64748b; margin:0 0 16px 0;">সেমিস্টার ও প্রোগ্রামিংয়ের প্রয়োজনীয় বইগুলো নিচে দেওয়া হলো। পড়তে বইয়ের ওপর ক্লিক করো।</p>
+          
+          <!-- Book Shelf Grid (Mobile 2 Columns) -->
+          <div class="elibrary-shelf">
+            <div class="book-shelf-card" onclick="openBookDetails('spl')">
+              <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="SPL Book" class="book-shelf-cover">
+              <div class="book-shelf-meta">
+                <h4 class="book-shelf-title">Structured Programming Language (SPL)</h4>
+                <p class="book-shelf-sub">DIIT CSE 1st Sem</p>
+              </div>
+            </div>
           </div>
-          <span class="coming-soon-badge">💻 In Review</span>
-          <h3 class="coming-soon-title">Lab Codes & Solutions Coming Soon</h3>
-          <p class="coming-soon-desc">Verified source codes, problem statements, and manual solutions for our lab tasks are being reviewed and will be published shortly.</p>
+        </div>
+
+        <!-- Book Details View Container -->
+        <div id="elibDetailContainer" style="display: none;" oncontextmenu="return false;">
+          <button type="button" class="hub-back-btn" onclick="backToBookShelf()" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            সকল বই
+          </button>
+
+          <div class="book-detail-header">
+            <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="Cover" class="book-detail-cover">
+            <div class="book-detail-info">
+              <h3>Structured Programming Language (SPL)</h3>
+              <p>Chapter-wise notes, index, and National University question banks. Read directly on site securely.</p>
+            </div>
+          </div>
+
+          <h3 class="elib-section-title">📖 Book Chapters & Index</h3>
+          <div class="elib-chapters-grid">
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1V1SHZ-BulvDdDbMU02UzwXccZ0Vijhpf/view', 'Book Index')">
+              <div class="chapter-meta">
+                <h5>📁 Index / সূচিপত্র</h5>
+                <span>Overview & Contents</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1ECsQQn2SWBvqXo3_R20UScd0w48x08aD/view', 'Chapter 1: Fundamentals')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 01</h5>
+                <span>Basic C Concepts</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1MraPGEOvWntxV2tMj-EVqmt_rgBOWQs8/view', 'Chapter 2: Control Statements')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 02</h5>
+                <span>Control Flow & Loops</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1_a_SwZVtL7fcaNbiaJvUMyBS_d5tmlUX/view', 'Chapter 3: Arrays & Functions')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 03</h5>
+                <span>Arrays & Functions</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box coming-soon">
+              <div class="chapter-meta">
+                <h5>🔒 Chapter 04</h5>
+                <span>Pointers & Structures</span>
+              </div>
+              <span class="coming-badge">Coming Soon</span>
+            </div>
+            <div class="chapter-box coming-soon">
+              <div class="chapter-meta">
+                <h5>🔒 Chapter 05</h5>
+                <span>File Management</span>
+              </div>
+              <span class="coming-badge">Coming Soon</span>
+            </div>
+          </div>
+
+          <h3 class="elib-section-title" style="margin-top: 20px;">🌟 National University Archive</h3>
+          <div class="nu-archive-box" onclick="openSecurePdf('https://drive.google.com/file/d/1xgtwLvT9Cd5r0K9Nm1oNQX_ouWEio5ZE/view', 'NU Question Bank')">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 24px;">🎯</span>
+              <div>
+                <h4 style="margin:0 0 2px 0; font-size: 1rem; font-weight:800;">NU Question Bank & Suggestions</h4>
+                <p style="margin:0; font-size: 0.78rem; opacity: 0.9;">Previous years National University exam questions.</p>
+              </div>
+            </div>
+            <span style="background:#ffffff; color:#7c3aed; padding: 6px 14px; border-radius: 10px; font-weight:800; font-size:0.78rem;">View ✨</span>
+          </div>
+        </div>
+
+        <!-- Secure PDF Reader Modal -->
+        <div id="pdfModal" class="pdf-modal-overlay" style="display: none;" onclick="closeSecurePdf(event)">
+          <div class="pdf-modal-card" onclick="event.stopPropagation()">
+            <div class="pdf-modal-header">
+              <h4 id="pdfModalTitle" class="pdf-modal-title">Document Viewer</h4>
+              <button class="pdf-close-btn" onclick="closeSecurePdf()">&times;</button>
+            </div>
+            <div class="pdf-modal-body">
+              <iframe id="pdfFrame" src=""></iframe>
+            </div>
+          </div>
         </div>
       `
     }
@@ -1653,7 +1746,7 @@ async function initSmartWeatherVibe() {
     if (weatherData.isRain) {
       selectedComment = "বাইরে বৃষ্টি হচ্ছে, রিল্যাক্স করো এবং ঘরের ভেতরেই নিরাপদ থাকো। 🌧️😌";
     } else if (weatherData.isHot) {
-      selectedComment = "বাইরে প্রচুর গরম! অযথা রোদে ঘোরাঘুরি না করে ছায়ায় থাকো। 🥵";
+      selectedComment = "বাইরে প্রচুর গরম! অযথা ঘোরাঘুরি না করে ছায়ায় থাকো। 🥵";
     } else {
       selectedComment = "আবহাওয়া বেশ চমৎকার! আজকের দিনটা দারুণ কাটুক। ✨";
     }
@@ -1727,7 +1820,7 @@ const WIKI_TOPICS = {
   science: ["কোয়ান্টম বলবিদ্যা", "ব্ল্যাক হোল", "আপেক্ষিকতার তত্ত্ব", "ডিএনএ", "মহাবিস্ফোরণ", "সালোকসংশ্লেষণ", "পরমাণু"],
   space: ["মঙ্গল গ্রহ", "বৃহস্পতি", "আন্তর্জাতিক মহাকাশ স্টেশন", "সৌরজগৎ", "নক্ষত্র", "হাবল মহাশূন্য দূরবীক্ষণ যন্ত্র", "লক্ষণীয় বহির্গ্রহ"],
   technology: ["কৃত্রিম বুদ্ধিমত্তা", "কোয়ান্টাম কম্পিউটার", "ইন্টারনেট", "রোবট", "ব্লকচেইন", "স্মার্টফোন", "সফটওয়্যার প্রকৌশল"],
-  history: ["মিশরের পিরামিড", "শিল্প বিপ্লব", "রেনেসাঁ", "দ্বিতীয় বিশ্বযুদ্ধ", "বাংলা ভাষা আন্দোলন", "সোনার বাংলা", "প্রাচীন গ্রিস"],
+  history: ["মিশরের পিরামিড", "শিল্প বিপ্লব", "রেনেসাঁ", "দ্বিতীয় বিশ্বযুদ্ধ", "বাংলা ভাষা আন্দোলন", "সোনার বাংলা", "প্রাচীন গ্রিস"],
   nature: ["অক্টোপাস", "নীল তিমি", "রয়েল বেঙ্গল টাইগার", "অ্যামাজন বৃষ্টিঅরণ্য", "প্রবাল প্রাচীর", "মধুমতি নদী", "পেকটিন"],
   psychology: ["মনোবিজ্ঞান", "স্মৃতি", "স্বপ্ন", "সচেতনতা", "আবেগ", "বুদ্ধিমত্তা", "ব্যক্তিত্ব"]
 };
@@ -1741,10 +1834,9 @@ window.fetchKnowledge = async function(categoryKey = 'science', categoryName = '
   const container = document.getElementById('knowledgeCardContainer');
   if (!container) return;
 
-  container.innerHTML = `<div class="knowledge-loading">🧠 "${categoryName}" ক্যাটাগরি থেকে আকর্ষণীয় তথ্য খোঁজা হচ্ছে...</div>`;
+  container.innerHTML = `<div class="knowledge-loading">🧠 "${categoryName}" ক্যাটাগরি থেকে আকর্ষণীয় তথ্য খোঁজা হচ্ছে...</div>`;
 
   try {
-    // ক্যাটাগরির লিস্ট থেকে র্যান্ডম একটি টপিক সিলেক্ট করা
     const topicsList = WIKI_TOPICS[categoryKey] || WIKI_TOPICS['science'];
     const randomTopic = topicsList[Math.floor(Math.random() * topicsList.length)];
 
@@ -1753,12 +1845,12 @@ window.fetchKnowledge = async function(categoryKey = 'science', categoryName = '
     const data = await res.json();
 
     if (!data || !data.extract) {
-      container.innerHTML = `<div class="knowledge-loading">⚠️ এই মুহূর্তে তথ্য লোড করা যায়নি। আবার চেষ্টা করুন।</div>`;
+      container.innerHTML = `<div class="knowledge-loading">⚠️ এই মুহূর্তে তথ্য লোড করা যায়নি। আবার চেষ্টা করুন।</div>`;
       return;
     }
 
     const title = data.title || randomTopic;
-    const summary = data.extract || "বর্ণনা পাওয়া যায়নি।";
+    const summary = data.extract || "বর্ণনা পাওয়া যায়নি।";
     const wikiLink = data.content_urls?.desktop?.page || `https://bn.wikipedia.org/wiki/${encodeURIComponent(randomTopic)}`;
     const thumbnail = data.thumbnail?.source || null;
 
@@ -1782,9 +1874,306 @@ window.fetchKnowledge = async function(categoryKey = 'science', categoryName = '
 
   } catch (err) {
     console.error("Knowledge fetch failed:", err);
-    container.innerHTML = `<div class="knowledge-loading">❌ তথ্য লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
+    container.innerHTML = `<div class="knowledge-loading">❌ তথ্য লোড করতে গিয়ে নেটওয়ার্ক এরর হয়েছে!</div>`;
   }
 };
+
+/* ------------------------------------------------------------
+   E-Library Shelf & Secure PDF Reader Handlers
+   ------------------------------------------------------------ */
+window.openBookDetails = function(bookKey) {
+  const mainView = document.getElementById('elibMainView');
+  const detailView = document.getElementById('elibDetailContainer');
+  if (mainView && detailView) {
+    mainView.style.display = 'none';
+    detailView.style.display = 'block';
+  }
+};
+
+window.backToBookShelf = function() {
+  const mainView = document.getElementById('elibMainView');
+  const detailView = document.getElementById('elibDetailContainer');
+  if (mainView && detailView) {
+    detailView.style.display = 'none';
+    mainView.style.display = 'block';
+  }
+};
+
+window.openSecurePdf = function(pdfUrl, titleText) {
+  const modal = document.getElementById('pdfModal');
+  const frame = document.getElementById('pdfFrame');
+  const titleEl = document.getElementById('pdfModalTitle');
+  
+  if (modal && frame) {
+    titleEl.innerText = titleText || "Document Viewer";
+    let embedUrl = pdfUrl;
+    if (pdfUrl.includes('drive.google.com')) {
+      embedUrl = pdfUrl.replace('/view?usp=sharing', '/preview').replace('/view', '/preview');
+    }
+    frame.src = embedUrl;
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+};
+
+window.closeSecurePdf = function(e) {
+  if (e && e.target && e.target.id !== 'pdfModal' && !e.target.classList.contains('pdf-close-btn')) {
+    return;
+  }
+  const modal = document.getElementById('pdfModal');
+  const frame = document.getElementById('pdfFrame');
+  
+  if (modal && frame) {
+    modal.style.display = "none";
+    frame.src = "";
+    document.body.style.overflow = "auto";
+  }
+};
+
+/* ------------------------------------------------------------
+   Hub Navigation & Browser History Back Management
+   ------------------------------------------------------------ */
+window.navigateTo = function(viewKey, pushToHistory = true) {
+  const hubDashboard = document.getElementById("hubDashboard");
+  const hubCoverMaker = document.getElementById("hubCoverMaker");
+  const hubDetailView = document.getElementById("hubDetailView");
+  const titleEl = document.getElementById("hubViewTitle");
+  const contentEl = document.getElementById("hubViewContent");
+
+  if (!hubDashboard || !hubCoverMaker || !hubDetailView) return;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (pushToHistory) {
+    history.pushState({ view: viewKey }, "", viewKey === 'dashboard' ? "#" : `#${viewKey}`);
+  }
+
+  if (viewKey === 'dashboard') {
+    hubDashboard.style.display = "block";
+    hubCoverMaker.style.display = "none";
+    hubDetailView.style.display = "none";
+    clearInterval(liveTimerInterval);
+    return;
+  }
+
+  hubDashboard.style.display = "none";
+
+  if (viewKey === 'coverMaker') {
+    hubCoverMaker.style.display = "block";
+    hubDetailView.style.display = "none";
+    scheduleRender();
+    return;
+  }
+
+  hubCoverMaker.style.display = "none";
+  hubDetailView.style.display = "block";
+
+  const modules = {
+    routine: {
+      title: "Class Routine — CSE 26th Batch",
+      content: `
+        <div id="routineLiveTracker" class="live-tracker-card"></div>
+
+        <div class="routine-controls">
+          <div class="section-switch-group">
+            <button id="secBtnA" class="sec-tab-btn is-active" onclick="renderRoutineView('A')">Section A</button>
+            <button id="secBtnB" class="sec-tab-btn" onclick="renderRoutineView('B')">Section B</button>
+          </div>
+          <button class="download-routine-btn" onclick="downloadRoutineJPG()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Save Routine (JPG)
+          </button>
+        </div>
+
+        <div id="routineCardsList"></div>
+      `
+    },
+
+    students: {
+      title: "CSE 26th Batch Student Directory",
+      content: `
+        <div class="directory-header-box">
+          <div class="directory-search-wrapper">
+            <svg class="search-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="studentSearch" class="directory-search-input" placeholder="Search by name or roll number..." oninput="filterStudents()" />
+          </div>
+          <span class="directory-count-badge" id="studentTotalCount">76 Students</span>
+        </div>
+
+        <div class="students-card-grid" id="studentCardContainer"></div>
+      `
+    },
+
+    news: {
+      title: "Bangladesh Live News",
+      content: `
+        <div class="news-container">
+          <div class="news-categories-bar">
+            <button class="news-cat-btn is-active" onclick="fetchNews('politics', this)">🏛️ রাজনীতি</button>
+            <button class="news-cat-btn" onclick="fetchNews('technology', this)">💻 টেকনোলজি</button>
+            <button class="news-cat-btn" onclick="fetchNews('science', this)">🔬 বিজ্ঞান</button>
+            <button class="news-cat-btn" onclick="fetchNews('sports', this)">🏏 খেলাধুলা</button>
+          </div>
+          <div class="news-grid" id="newsGridContainer">
+            <div class="news-loading">📰 লাইভ নিউজ লোড হচ্ছে, একটু অপেক্ষা করুন...</div>
+          </div>
+        </div>
+      `
+    },
+
+    knowledge: {
+      title: "🧠 Daily Knowledge Hub",
+      content: `
+        <div class="knowledge-container">
+          <div class="knowledge-categories-bar">
+            <button class="k-cat-btn is-active" onclick="fetchKnowledge('science', 'বিজ্ঞান', this)">🔬 বিজ্ঞান</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('space', 'মহাকাশ', this)">🌌 মহাকাশ</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('technology', 'প্রযুক্তি', this)">💻 প্রযুক্তি</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('history', 'ইতিহাস', this)">🏛️ ইতিহাস</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('nature', 'প্রকৃতি ও প্রাণী', this)">🌿 প্রকৃতি</button>
+            <button class="k-cat-btn" onclick="fetchKnowledge('psychology', 'মনোবিজ্ঞান', this)">🧠 মনোবিজ্ঞান</button>
+          </div>
+          <div class="knowledge-grid" id="knowledgeCardContainer">
+            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে র্যান্ডম জ্ঞান আহরণ করা হচ্ছে...</div>
+          </div>
+        </div>
+      `
+    },
+
+    elibrary: {
+      title: "📚 CSE E-Library & PDF Archive",
+      content: `
+        <div class="elibrary-container" id="elibMainView" oncontextmenu="return false;">
+          <p style="font-size:0.9rem; color:#64748b; margin:0 0 16px 0;">সেমিস্টার ও প্রোগ্রামিংয়ের প্রয়োজনীয় বইগুলো নিচে দেওয়া হলো। পড়তে বইয়ের ওপর ক্লিক করো।</p>
+          
+          <!-- Book Shelf Grid (Mobile 2 Columns) -->
+          <div class="elibrary-shelf">
+            <div class="book-shelf-card" onclick="openBookDetails('spl')">
+              <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="SPL Book" class="book-shelf-cover">
+              <div class="book-shelf-meta">
+                <h4 class="book-shelf-title">Structured Programming Language (SPL)</h4>
+                <p class="book-shelf-sub">DIIT CSE 1st Sem</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Book Details View Container -->
+        <div id="elibDetailContainer" style="display: none;" oncontextmenu="return false;">
+          <button type="button" class="hub-back-btn" onclick="backToBookShelf()" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            সকল বই
+          </button>
+
+          <div class="book-detail-header">
+            <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="Cover" class="book-detail-cover">
+            <div class="book-detail-info">
+              <h3>Structured Programming Language (SPL)</h3>
+              <p>Chapter-wise notes, index, and National University question banks. Read directly on site securely.</p>
+            </div>
+          </div>
+
+          <h3 class="elib-section-title">📖 Book Chapters & Index</h3>
+          <div class="elib-chapters-grid">
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1V1SHZ-BulvDdDbMU02UzwXccZ0Vijhpf/view', 'Book Index')">
+              <div class="chapter-meta">
+                <h5>📁 Index / সূচিপত্র</h5>
+                <span>Overview & Contents</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1ECsQQn2SWBvqXo3_R20UScd0w48x08aD/view', 'Chapter 1: Fundamentals')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 01</h5>
+                <span>Basic C Concepts</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1MraPGEOvWntxV2tMj-EVqmt_rgBOWQs8/view', 'Chapter 2: Control Statements')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 02</h5>
+                <span>Control Flow & Loops</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1_a_SwZVtL7fcaNbiaJvUMyBS_d5tmlUX/view', 'Chapter 3: Arrays & Functions')">
+              <div class="chapter-meta">
+                <h5>📄 Chapter 03</h5>
+                <span>Arrays & Functions</span>
+              </div>
+              <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
+            </div>
+            <div class="chapter-box coming-soon">
+              <div class="chapter-meta">
+                <h5>🔒 Chapter 04</h5>
+                <span>Pointers & Structures</span>
+              </div>
+              <span class="coming-badge">Coming Soon</span>
+            </div>
+            <div class="chapter-box coming-soon">
+              <div class="chapter-meta">
+                <h5>🔒 Chapter 05</h5>
+                <span>File Management</span>
+              </div>
+              <span class="coming-badge">Coming Soon</span>
+            </div>
+          </div>
+
+          <h3 class="elib-section-title" style="margin-top: 20px;">🌟 National University Archive</h3>
+          <div class="nu-archive-box" onclick="openSecurePdf('https://drive.google.com/file/d/1xgtwLvT9Cd5r0K9Nm1oNQX_ouWEio5ZE/view', 'NU Question Bank')">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 24px;">🎯</span>
+              <div>
+                <h4 style="margin:0 0 2px 0; font-size: 1rem; font-weight:800;">NU Question Bank & Suggestions</h4>
+                <p style="margin:0; font-size: 0.78rem; opacity: 0.9;">Previous years National University exam questions.</p>
+              </div>
+            </div>
+            <span style="background:#ffffff; color:#7c3aed; padding: 6px 14px; border-radius: 10px; font-weight:800; font-size:0.78rem;">View ✨</span>
+          </div>
+        </div>
+
+        <!-- Secure PDF Reader Modal -->
+        <div id="pdfModal" class="pdf-modal-overlay" style="display: none;" onclick="closeSecurePdf(event)">
+          <div class="pdf-modal-card" onclick="event.stopPropagation()">
+            <div class="pdf-modal-header">
+              <h4 id="pdfModalTitle" class="pdf-modal-title">Document Viewer</h4>
+              <button class="pdf-close-btn" onclick="closeSecurePdf()">&times;</button>
+            </div>
+            <div class="pdf-modal-body">
+              <iframe id="pdfFrame" src=""></iframe>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  };
+
+  const selected = modules[viewKey] || { title: "Portal Module", content: "" };
+  if (titleEl) titleEl.innerHTML = selected.title;
+  if (contentEl) contentEl.innerHTML = selected.content;
+
+  if (viewKey === 'routine') {
+    setTimeout(() => renderRoutineView('A'), 50);
+  }
+  if (viewKey === 'students') {
+    setTimeout(() => renderStudentCards(), 50);
+  }
+  if (viewKey === 'news') {
+    setTimeout(() => fetchNews('politics'), 50);
+  }
+  if (viewKey === 'knowledge') {
+    setTimeout(() => fetchKnowledge('science', 'বিজ্ঞান'), 50);
+  }
+};
+
+window.addEventListener("popstate", (e) => {
+  if (e.state && e.state.view) {
+    navigateTo(e.state.view, false);
+  } else {
+    navigateTo("dashboard", false);
+  }
+});
+
 /* ------------------------------------------------------------
    App Initialization
    ------------------------------------------------------------ */
