@@ -772,7 +772,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
             <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="Cover" class="book-detail-cover">
             <div class="book-detail-info">
               <h3>Structured Programming Language (SPL)</h3>
-              <p>Chapter-wise notes, index, and National University question banks. Read directly on site securely.</p>
+              
             </div>
           </div>
 
@@ -2069,7 +2069,6 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
             <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="Cover" class="book-detail-cover">
             <div class="book-detail-info">
               <h3>Structured Programming Language (SPL)</h3>
-              <p>Chapter-wise notes, index, and National University question banks. Read directly on site securely.</p>
             </div>
           </div>
 
