@@ -1312,6 +1312,7 @@ function getCRGptSmartResponse(rawQuery) {
     q.includes("ইফতেখার") || q.includes("iftekhar") || 
     q.includes("রিয়ান") || q.includes("riyan") || 
     q.includes("কার সাইট") || q.includes("কে বানাইছে") || 
+    q.includes("কার সাইট?") || q.includes("কে বানাইছে?") || 
     q.includes("কে বানিয়েছে") || q.includes("developer") || 
     q.includes("admin") || q.includes("who made")
   ) {
