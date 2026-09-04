@@ -2055,13 +2055,9 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
             </div>
           </div>
         </div>
-
         <!-- Book Details View Container -->
         <div id="elibDetailContainer" style="display: none;" oncontextmenu="return false;">
-          <button type="button" class="hub-back-btn" onclick="backToBookShelf()" style="margin-bottom: 16px;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            সকল বই
-          </button>
+          
 
           <div class="book-detail-header">
             <img src="https://i.postimg.cc/3NL7g9ND/spl-book-cover.png" alt="Cover" class="book-detail-cover">
