@@ -2043,7 +2043,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
       title: "📚 CSE E-Library & PDF Archive",
       content: `
         <div class="elibrary-container" id="elibMainView" oncontextmenu="return false;">
-          <p style="font-size:0.9rem; color:#64748b; margin:0 0 16px 0;">সেমিস্টার ও প্রোগ্রামিংয়ের প্রয়োজনীয় বইগুলো নিচে দেওয়া হলো। পড়তে বইয়ের ওপর ক্লিক করো।</p>
+         
           
           <!-- Book Shelf Grid (Mobile 2 Columns) -->
           <div class="elibrary-shelf">
