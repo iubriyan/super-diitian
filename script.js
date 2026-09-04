@@ -2070,7 +2070,7 @@ window.navigateTo = function(viewKey, pushToHistory = true) {
           <div class="elib-chapters-grid">
             <div class="chapter-box" onclick="openSecurePdf('https://drive.google.com/file/d/1V1SHZ-BulvDdDbMU02UzwXccZ0Vijhpf/view', 'Book Index')">
               <div class="chapter-meta">
-                <h5>📁 Index / সূচিপত্র</h5>
+                <h5>📁 Index </h5>
                 <span>Overview & Contents</span>
               </div>
               <span style="color:#0284c7; font-weight:700; font-size:0.8rem;">Read &rarr;</span>
