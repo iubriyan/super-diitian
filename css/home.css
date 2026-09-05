@@ -27,11 +27,11 @@
 }
 
 .site-header__logo {
-  max-height: 65px; /* লোগোর উচ্চতা ফিক্স করে দেওয়া হলো যাতে বিশাল না হয় */
-  width: auto;
+  height: 85px !important; 
+  max-height: none !important;
+  width: auto !important;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
+ 
 }
 
 @media (max-width: 768px) {
