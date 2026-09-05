@@ -74,8 +74,8 @@
         </div>
       </div>
 
-    <div class="hub-grid">
-       <!-- 1. Cover Page Maker -->
+      <div class="hub-grid">
+        <!-- 1. Cover Page Maker -->
         <a href="pages/covermaker.html" class="hub-card card--blue" style="text-decoration: none; color: inherit;">
           <div class="hub-card__icon">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -127,7 +127,9 @@
         <a href="pages/news.html" class="hub-card card--purple" style="text-decoration: none; color: inherit;">
           <div class="hub-card__icon">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+              <path
+                d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+              </path>
             </svg>
           </div>
           <div class="hub-card__info">
@@ -151,8 +153,8 @@
           </div>
         </a>
 
-        <!-- 6. E-Library -->
-        <a href="pages/elibrary.html" class="hub-card card--dark" style="text-decoration: none; color: inherit;">
+        <!-- 6. E-Library (Secure Verified Popup Trigger) -->
+        <div class="hub-card card--dark" onclick="checkElibAccess()" style="cursor: pointer;">
           <div class="hub-card__icon">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -163,134 +165,8 @@
             <h3>E-Library</h3>
             <span>Books &amp; PDFs</span>
           </div>
-        </a>
-      </div>
-    <!-- Cover Page Maker Section -->
-    <section id="hubCoverMaker" class="hub-view" style="display: none;">
-      <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        Back
-      </button>
-
-      <main class="layout">
-        <div class="layout__main">
-          <section class="panel" id="detailsPanel">
-            <div class="panel__head">
-              <span class="panel__eyebrow">Step 1</span>
-              <h2>Your details</h2>
-              <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
-            </div>
-
-            <div class="field-grid">
-              <label class="field">
-                <span>Your Department Name</span>
-                <input type="text" id="deptName" maxlength="120">
-              </label>
-              <label class="field">
-                <span>Your Batch Name</span>
-                <input type="text" id="batchName" maxlength="80">
-              </label>
-              <label class="field">
-                <span>Your Course Code</span>
-                <input type="text" id="courseCode" maxlength="40">
-              </label>
-              <label class="field">
-                <span>Your Course Title</span>
-                <input type="text" id="courseTitle" maxlength="120">
-              </label>
-            </div>
-
-            <p class="fixed-note" id="fixedNote" hidden>
-              This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
-              details are already printed on it. Just fill in <strong>Your Info</strong> below.
-            </p>
-
-            <div class="sub-section" id="teacherSection">
-              <h3>Teacher info <span>Submitted to</span></h3>
-              <div class="field-grid">
-                <label class="field">
-                  <span>Teacher Name</span>
-                  <input type="text" id="teacherName" maxlength="80">
-                </label>
-                <label class="field">
-                  <span>Teacher Title</span>
-                  <input type="text" id="teacherTitle" maxlength="80">
-                </label>
-                <label class="field field--wide">
-                  <span>Teacher Department</span>
-                  <input type="text" id="teacherDept" maxlength="120">
-                </label>
-              </div>
-            </div>
-
-            <div class="sub-section" id="studentSection">
-              <h3>Your info <span>Submitted by</span></h3>
-              <div class="field-grid">
-                <label class="field">
-                  <span>Your Name</span>
-                  <input type="text" id="studentName" maxlength="80">
-                </label>
-                <label class="field">
-                  <span>Your Section</span>
-                  <input type="text" id="studentSec" maxlength="30">
-                </label>
-                <label class="field">
-                  <span>Your ID No</span>
-                  <input type="text" id="studentId" maxlength="40">
-                </label>
-                <label class="field">
-                  <span>Your Reg No</span>
-                  <input type="text" id="studentReg" maxlength="40">
-                </label>
-              </div>
-            </div>
-          </section>
-
-          <section class="panel" id="templatesPanel">
-            <div class="panel__head">
-              <span class="panel__eyebrow">Step 2</span>
-              <h2>Choose a cover design</h2>
-            </div>
-            <div class="template-grid" id="templateGrid"></div>
-          </section>
         </div>
 
-        <div class="layout__side">
-          <section class="panel preview-panel">
-            <div class="panel__head">
-              <span class="panel__eyebrow">Step 3</span>
-              <h2>Preview &amp; download</h2>
-            </div>
-            <div class="canvas-wrap">
-              <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
-              <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
-            </div>
-            <button type="button" class="download-btn" id="downloadBtn">
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                <path fill="currentColor"
-                  d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z" />
-              </svg>
-              Download high-quality JPG
-            </button>
-            <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
-          </section>
-        </div>
-      </main>
-    </section>
-
-    <!-- Interactive Dynamic View Section -->
-    <section id="hubDetailView" class="hub-view" style="display: none;">
-      <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        Back
-      </button>
-      <div class="hub-panel">
-        <h2 id="hubViewTitle">Module</h2>
-        <div id="hubViewContent"></div>
       </div>
     </section>
 
@@ -303,8 +179,7 @@
           <span class="footer-badge">🚀 Built for DIITians</span>
         </div>
         <div class="footer-links">
-          <a href="https://www.facebook.com/share/1C4VXsD7J7/" target="_blank" rel="noopener"><strong>Say Hello
-              👋</strong></a>
+          <a href="https://www.facebook.com/share/1C4VXsD7J7/" target="_blank" rel="noopener"><strong>Say Hello 👋</strong></a>
           <span class="link-divider">•</span>
           <a href="https://diit.edu.bd" target="_blank" rel="noopener">DIIT Official Website</a>
         </div>
@@ -323,6 +198,7 @@
     </div>
   </footer>
 
+  <!-- CR Chatbot Widget -->
   <div id="cr-widget-container">
     <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
     <div id="cr-chat-box" class="cr-hidden">
@@ -345,45 +221,46 @@
     </div>
   </div>
 
-  <div id="bkash-modal" class="bkash-overlay bkash-hidden">
-    <div class="bkash-card">
-      <div class="bkash-header">
-        <div class="bkash-logo-text">bKash <span>Payment</span></div>
-        <button id="bkash-close-btn">&times;</button>
+  <!-- E-Library Verification Popup Modal -->
+  <div id="elibAuthModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 36px; margin-bottom: 8px;">🔒</div>
+        <h3 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a;">E-Library Secure Access</h3>
+        <p style="margin: 0; font-size: 0.82rem; color: #64748b;">Verify your Student ID &amp; Edu Mail to access.</p>
       </div>
 
-      <div class="bkash-body" id="bkash-main-view">
-        <div class="bkash-merchant">
-          <p class="merchant-name">Super DIITian Premium</p>
-          <p class="merchant-inv">Invoice: EEC-2026</p>
+      <form id="elibAuthForm" onsubmit="verifyAndAccessLibrary(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Full Name</label>
+          <input type="text" id="authName" placeholder="e.g. Iftekhar Uddin Bhuiyan" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
         </div>
 
-        <div class="bkash-amount-box">
-          <span>Amount to Pay</span>
-          <h3>৳ 99.00</h3>
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Student ID / Roll</label>
+          <input type="text" id="authId" placeholder="e.g. 260013" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
         </div>
 
-        <div class="bkash-input-group">
-          <label>Your bKash Account Number</label>
-          <input type="tel" id="bkash-phone-input" placeholder="e.g 017XXXXXXXX" value="017" maxlength="11" />
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Edu Mail</label>
+          <input type="email" id="authEmail" placeholder="e.g. iftekhar260013@diit.edu.bd" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
         </div>
 
-        <p class="bkash-terms">By clicking Pay, you agree to terms & conditions.</p>
+        <div id="authErrorMsg" style="color: #ef4444; font-size: 0.78rem; font-weight: 600; text-align: center; display: none;"></div>
 
-        <button id="bkash-pay-btn" class="bkash-confirm-btn">Pay ৳ 99.00</button>
+        <button type="submit" id="authSubmitBtn" style="background: #0284c7; color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; margin-top: 4px;">
+          Verify &amp; Enter Library 🚀
+        </button>
+      </form>
+
+      <div style="margin-top: 18px; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
+        <a href="https://wa.me/8801882192070?text=Hi,%20I%20am%20facing%20issues%20accessing%20the%20E-Library.%20Please%20help." target="_blank" style="font-size: 0.8rem; font-weight: 700; color: #25d366; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          💬 Need Help? Click Here (WhatsApp)
+        </a>
       </div>
 
-      <div class="bkash-loading-view bkash-hidden" id="bkash-loading-view">
-        <div class="bkash-spinner"></div>
-        <p>Processing Payment...</p>
-      </div>
-
-      <div class="bkash-success-view bkash-hidden" id="bkash-success-view">
-        <div class="fun-emoji">😁🎉</div>
-        <h3 class="fun-title">আচ্ছা থাক টাকা লাগবে না!</h3>
-        <p class="fun-desc">ফ্রিতেই আনলক করে দিয়ে দিলাম, এনজয় করো!</p>
-        <button id="bkash-enjoy-btn" class="bkash-confirm-btn">থ্যাংক ইউ! 🚀</button>
-      </div>
+      <button type="button" onclick="closeAuthModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #64748b;">&times;</button>
     </div>
   </div>
 
@@ -392,7 +269,149 @@
   <script src="js/students.js"></script>
   <script src="js/notice.js"></script>
   <script src="js/chatbot.js"></script>
-  
+
+  <!-- E-Library Verification & Google Sheet Logger Script -->
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyP6Grb60AXckQ0tw9sLn2u0ljRD-mQrB_5ynMTOQMr_KhzyrUjqKDdBBKCHJHq3inn/exec";
+
+    const AUTHORIZED_STUDENTS = [
+      { roll: "260001", name: "FAIAZ HOSSAIN FARHAN", email: "faiazz260001@diit.edu.bd" },
+      { roll: "260002", name: "FAIYAZ BIN BAKAR", email: "faiyaz260002@diit.edu.bd" },
+      { roll: "260003", name: "MD. JANON", email: "janon260003@diit.edu.bd" },
+      { roll: "260004", name: "FAHAD BIN NUR", email: "fahad260004@diit.edu.bd" },
+      { roll: "260005", name: "TANJILUR RAHMAN", email: "tanjilur260005@diit.edu.bd" },
+      { roll: "260006", name: "KHALID BIN SYAM", email: "khaled260006@diit.edu.bd" },
+      { roll: "260007", name: "LAMYA AKTER EMO", email: "lamya260007@diit.edu.bd" },
+      { roll: "260009", name: "MD. SAKIB MIA", email: "sakib260009@diit.edu.bd" },
+      { roll: "260010", name: "MAHENUR RAHMAN", email: "mahenur260010@diit.edu.bd" },
+      { roll: "260011", name: "NAWRIN HOSSAIN OISHI", email: "nawrin260011@diit.edu.bd" },
+      { roll: "260012", name: "MD. NAHID HASAN", email: "nahid260012@diit.edu.bd" },
+      { roll: "260013", name: "IFTEKHAR UDDIN BHUIYAN", email: "iftekhar260013@diit.edu.bd" },
+      { roll: "260014", name: "MEHEDI HASSAN BAPPI", email: "mehedi260014@diit.edu.bd" },
+      { roll: "260015", name: "AYSHA AKTER MISHITA", email: "aysha260015@diit.edu.bd" },
+      { roll: "260016", name: "TOLI", email: "toli260016@diit.edu.bd" },
+      { roll: "260017", name: "SHAMS MAHMUD WALID", email: "shams260017@diit.edu.bd" },
+      { roll: "260018", name: "NOUSHIN AHMED", email: "noushin260018@diit.edu.bd" },
+      { roll: "260019", name: "SAZNIN FERDOUSI OYSHI", email: "saznin260019@diit.edu.bd" },
+      { roll: "260020", name: "TASFIM MONJABIN", email: "tasfim260020@diit.edu.bd" },
+      { roll: "260021", name: "SYED REJOYAN HAQUE", email: "syed260021@diit.edu.bd" },
+      { roll: "260022", name: "NAFISA KHAN", email: "nafisa260022@diit.edu.bd" },
+      { roll: "260023", name: "MAHI SHAHRIAR APURBO", email: "mahi260023@diit.edu.bd" },
+      { roll: "260024", name: "MD. SHAHNAWAZ KOBIR", email: "md260024@diit.edu.bd" },
+      { roll: "260025", name: "AJIM UDDIN AKASH", email: "ajim260025@diit.edu.bd" },
+      { roll: "260026", name: "MD. HASAN HABIB", email: "md260026@diit.edu.bd" },
+      { roll: "260027", name: "MONIM AHMAD", email: "monim260027@diit.edu.bd" },
+      { roll: "260028", name: "TAHSINUL HAQUE", email: "tahsinul260028@diit.edu.bd" },
+      { roll: "260029", name: "TANIM KHAN", email: "tanim260029@diit.edu.bd" },
+      { roll: "260030", name: "ZAYED BIN ABDULLAH", email: "zayed260030@diit.edu.bd" },
+      { roll: "260031", name: "PRIONTY SARKER", email: "prionty260031@diit.edu.bd" },
+      { roll: "260032", name: "MARIA SULTANA MOONMOON", email: "maria260032@diit.edu.bd" },
+      { roll: "260033", name: "UMAIYA RISTA URBOSHI", email: "umaiya260033@diit.edu.bd" },
+      { roll: "260034", name: "SAJIDUL ISLAM", email: "sajidul260034@diit.edu.bd" },
+      { roll: "260035", name: "MALIHA JAMAN", email: "maliha260035@diit.edu.bd" },
+      { roll: "260036", name: "ANIKA TASNIM", email: "anika260036@diit.edu.bd" },
+      { roll: "260037", name: "MUSIDUL ISLAM SAYEB", email: "musidul260037@diit.edu.bd" },
+      { roll: "260038", name: "MD. JOBAIR UDDIN", email: "md260038@diit.edu.bd" },
+      { roll: "260039", name: "MAHMODUL HASAN", email: "mahmodul260039@diit.edu.bd" },
+      { roll: "260040", name: "JANNAT TASNIN RAKA", email: "jannat260040@diit.edu.bd" },
+      { roll: "260041", name: "FARHANA SADIA", email: "farhana260041@diit.edu.bd" },
+      { roll: "260042", name: "SEMEKA BARMAN", email: "semeka260042@diit.edu.bd" },
+      { roll: "260043", name: "SAILA SAJIN RINI", email: "saila260043@diit.edu.bd" },
+      { roll: "260044", name: "TAMIM EQBAL", email: "tamim260044@diit.edu.bd" },
+      { roll: "260045", name: "NABILA HOSSAIN", email: "nabila260045@diit.edu.bd" },
+      { roll: "260046", name: "MD. EYAKUB HOSSIN", email: "md260046@diit.edu.bd" },
+      { roll: "260047", name: "SK. MD. SADIP", email: "sk260047@diit.edu.bd" },
+      { roll: "260048", name: "SK. TAZIM", email: "sk260048@diit.edu.bd" },
+      { roll: "260049", name: "SAMIRA TABASSUM", email: "samira260049@diit.edu.bd" },
+      { roll: "260050", name: "SOHANUR RAHAMAN NUR", email: "sohanur260050@diit.edu.bd" },
+      { roll: "260051", name: "ARIAN ABDULLAH", email: "arian260051@diit.edu.bd" },
+      { roll: "260052", name: "MD. SHEFAT ALI", email: "md260052@diit.edu.bd" },
+      { roll: "260053", name: "RAFIUL ISLAM", email: "rafiul260053@diit.edu.bd" },
+      { roll: "260054", name: "SK. SADIK SAGAR", email: "sk260054@diit.edu.bd" },
+      { roll: "260055", name: "MD. ALBIR SAMI", email: "md260055@diit.edu.bd" },
+      { roll: "260056", name: "MOHAMMED JUNAYED HOSSAINFARDIN", email: "mohammed260056@diit.edu.bd" },
+      { roll: "260057", name: "REDWAN AHMMED", email: "redwan260057@diit.edu.bd" },
+      { roll: "260058", name: "MD. HRIDOY MONDOL", email: "md260058@diit.edu.bd" },
+      { roll: "260059", name: "AMRIN AKTER ALISA", email: "amrin260059@diit.edu.bd" },
+      { roll: "260060", name: "ASHRAFUL HOQUE RIMON", email: "ashraful260060@diit.edu.bd" },
+      { roll: "260061", name: "KAZI MD. ARAFAT HOSSAIN SHANTO", email: "kazi260061@diit.edu.bd" },
+      { roll: "260062", name: "MD WHIDUN NABI NION", email: "md260062@diit.edu.bd" },
+      { roll: "260063", name: "IKON SHEIKH", email: "ikon260063@diit.edu.bd" },
+      { roll: "260064", name: "SHARMIN HOSSAIN ANUD", email: "sharmin260064@diit.edu.bd" },
+      { roll: "260065", name: "TASNIM HASNAT", email: "tasnim260065@diit.edu.bd" },
+      { roll: "260066", name: "MD. ANISUL HAQUE ANIK", email: "md260066@diit.edu.bd" },
+      { roll: "260067", name: "IREEN AKTER", email: "ireen260067@diit.edu.bd" },
+      { roll: "260068", name: "SIFATUL ISLAM SIFAT", email: "sifatul260068@diit.edu.bd" },
+      { roll: "260069", name: "HAFSA HOSSAIN TOMA", email: "hafsa260069@diit.edu.bd" },
+      { roll: "260070", name: "SINHA AKTER SEAN", email: "sinha260070@diit.edu.bd" },
+      { roll: "260071", name: "MOHAMMAD TANVIR HOSSEN TAMIM", email: "mohammad260071@diit.edu.bd" },
+      { roll: "260072", name: "TUSTY ISLAM", email: "tusty260072@diit.edu.bd" },
+      { roll: "260073", name: "MD. TAHASANUR KHAN", email: "md260073@diit.edu.bd" },
+      { roll: "260074", name: "S.N. OMI", email: "s260074@diit.edu.bd" },
+      { roll: "260075", name: "SALSABILA NAHIN AFNAN", email: "salsabila260075@diit.edu.bd" },
+      { roll: "260076", name: "MD. EFAZ BHUIYAN", email: "md260076@diit.edu.bd" },
+      { roll: "260077", name: "MST. LOTA MONY", email: "mst260077@diit.edu.bd" }
+    ];
+
+    function checkElibAccess() {
+      const isVerified = localStorage.getItem('super_diitian_elib_verified');
+      if (isVerified === 'true') {
+        window.location.href = 'pages/elibrary.html';
+      } else {
+        const modal = document.getElementById('elibAuthModal');
+        if (modal) modal.style.display = 'flex';
+      }
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('elibAuthModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function verifyAndAccessLibrary(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('authName').value.trim();
+      const id = document.getElementById('authId').value.trim();
+      const email = document.getElementById('authEmail').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('authErrorMsg');
+      const submitBtn = document.getElementById('authSubmitBtn');
+
+      // আইডি এবং এডো মেইল উভয়ই ডাটাবেজের সাথে ম্যাচ করছে কি না চেক করা
+      const matchedStudent = AUTHORIZED_STUDENTS.find(s => s.roll === id && s.email.toLowerCase() === email);
+
+      if (!matchedStudent) {
+        errorMsg.innerText = "Error: Invalid Student ID or Edu Mail! Please check your credentials.";
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      submitBtn.innerText = "Verifying...";
+      submitBtn.disabled = true;
+
+      // গুগল শিটে ডেটা পাঠানো
+      const formData = new URLSearchParams();
+      formData.append('name', name);
+      formData.append('id', id);
+      formData.append('email', email);
+      formData.append('timestamp', new Date().toLocaleString());
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        localStorage.setItem('super_diitian_elib_verified', 'true');
+        window.location.href = 'pages/elibrary.html';
+      })
+      .catch(err => {
+        localStorage.setItem('super_diitian_elib_verified', 'true');
+        window.location.href = 'pages/elibrary.html';
+      });
+    }
+  </script>
+
 </body>
 
 </html>

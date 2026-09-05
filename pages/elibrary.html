@@ -249,6 +249,56 @@
     </div>
   </div>
 
+<!-- E-Library Verification Popup Modal -->
+<div id="elibAuthModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+  <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; animation: popupSlideUp 0.3s ease;">
+    
+    <div style="text-align: center; margin-bottom: 20px;">
+      <div style="font-size: 36px; margin-bottom: 8px;">🔒</div>
+      <h3 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a;">E-Library Secure Access</h3>
+      <p style="margin: 0; font-size: 0.82rem; color: #64748b;">Verify your Student ID &amp; Edu Mail to unlock notes &amp; books.</p>
+    </div>
+
+    <form id="elibAuthForm" onsubmit="verifyAndAccessLibrary(event)" style="display: flex; flex-direction: column; gap: 14px;">
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Full Name</label>
+        <input type="text" id="authName" placeholder="e.g. Iftekhar U. Bhuiyan" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Student ID / Roll</label>
+        <input type="text" id="authId" placeholder="e.g. 260013" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Institutional / Edu Mail</label>
+        <input type="email" id="authEmail" placeholder="e.g. student@diit.edu.bd" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
+      </div>
+
+      <div id="authErrorMsg" style="color: #ef4444; font-size: 0.78rem; font-weight: 600; text-align: center; display: none;"></div>
+
+      <button type="submit" id="authSubmitBtn" style="background: #0284c7; color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.25); margin-top: 4px;">
+        Verify &amp; Enter Library 🚀
+      </button>
+    </form>
+
+    <div style="margin-top: 18px; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
+      <a href="https://wa.me/8801882192070?text=Hi,%20I%20am%20facing%20issues%20accessing%20the%20E-Library.%20Please%20help." target="_blank" style="font-size: 0.8rem; font-weight: 700; color: #25d366; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+        💬 Need Help? Click Here (WhatsApp)
+      </a>
+    </div>
+
+    <button type="button" onclick="closeAuthModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #64748b;">&times;</button>
+  </div>
+</div>
+
+<style>
+  @keyframes popupSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+
   <script src="../js/elibrary.js"></script>
 </body>
 </html>
