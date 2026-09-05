@@ -153,7 +153,7 @@
           </div>
         </a>
 
-        <!-- 6. E-Library (Secure Verified Popup Trigger) -->
+        <!-- 6. E-Library (Secure Verified Popup Trigger with 10-Min Auto-Lock) -->
         <div class="hub-card card--dark" onclick="checkElibAccess()" style="cursor: pointer;">
           <div class="hub-card__icon">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -221,48 +221,62 @@
     </div>
   </div>
 
-  <!-- E-Library Verification Popup Modal -->
-  <div id="elibAuthModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
-    <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
+  <!-- E-Library Verification Popup Modal (Redesigned & Premium) -->
+  <div id="elibAuthModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 99999; align-items: center; justify-content: center; padding: 16px; animation: fadeInModal 0.3s ease;">
+    <div style="background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%); width: 100%; max-width: 440px; border-radius: 28px; padding: 32px 28px; box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3); position: relative; border: 1.5px solid rgba(226, 232, 240, 0.9); box-sizing: border-box;">
       
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div style="font-size: 36px; margin-bottom: 8px;">🔒</div>
-        <h3 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a;">E-Library Secure Access</h3>
-        <p style="margin: 0; font-size: 0.82rem; color: #64748b;">Verify your Student ID &amp; Edu Mail to access.</p>
+      <!-- Close Button -->
+      <button type="button" onclick="closeAuthModal()" style="position: absolute; top: 18px; right: 18px; background: #f1f5f9; border: none; width: 34px; height: 34px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0';this.style.color='#0f172a'" onmouseout="this.style.background='#f1f5f9';this.style.color='#475569'">&times;</button>
+
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.15);">
+          🔐
+        </div>
+        <h3 style="margin: 0 0 6px 0; font-size: 1.3rem; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">E-Library Secure Access</h3>
+        <p style="margin: 0; font-size: 0.84rem; color: #64748b; font-weight: 500;">Verify your Student ID &amp; Edu Mail to access.</p>
       </div>
 
+      <!-- Form -->
       <form id="elibAuthForm" onsubmit="verifyAndAccessLibrary(event)" style="display: flex; flex-direction: column; gap: 14px;">
         <div>
-          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Full Name</label>
-          <input type="text" id="authName" placeholder="Enter Your Full Name" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 5px; letter-spacing: 0.01em;">Full Name</label>
+          <input type="text" id="authName" placeholder="Enter Your Full Name" required style="width: 100%; padding: 12px 16px; border: 1.5px solid #cbd5e1; border-radius: 14px; font-size: 0.92rem; outline: none; background: #ffffff; color: #0f172a; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#0284c7';this.style.boxShadow='0 0 0 4px rgba(2, 132, 199, 0.12)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
         </div>
 
         <div>
-          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Student ID / Roll</label>
-          <input type="text" id="authId" placeholder="Enter Your Student ID" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 5px; letter-spacing: 0.01em;">Student ID / Roll</label>
+          <input type="text" id="authId" placeholder="Enter Your Student ID" required style="width: 100%; padding: 12px 16px; border: 1.5px solid #cbd5e1; border-radius: 14px; font-size: 0.92rem; outline: none; background: #ffffff; color: #0f172a; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#0284c7';this.style.boxShadow='0 0 0 4px rgba(2, 132, 199, 0.12)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
         </div>
 
         <div>
-          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Edu Mail</label>
-          <input type="email" id="authEmail" placeholder="Enter Your Edu Email" required style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; box-sizing: border-box;">
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 5px; letter-spacing: 0.01em;">Edu Mail</label>
+          <input type="email" id="authEmail" placeholder="Enter Your Edu Email" required style="width: 100%; padding: 12px 16px; border: 1.5px solid #cbd5e1; border-radius: 14px; font-size: 0.92rem; outline: none; background: #ffffff; color: #0f172a; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#0284c7';this.style.boxShadow='0 0 0 4px rgba(2, 132, 199, 0.12)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
         </div>
 
-        <div id="authErrorMsg" style="color: #ef4444; font-size: 0.78rem; font-weight: 600; text-align: center; display: none;"></div>
+        <div id="authErrorMsg" style="color: #ef4444; font-size: 0.8rem; font-weight: 600; text-align: center; display: none; background: #fef2f2; border: 1px solid #fca5a5; padding: 10px; border-radius: 10px;"></div>
 
-        <button type="submit" id="authSubmitBtn" style="background: #0284c7; color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; margin-top: 4px;">
+        <button type="submit" id="authSubmitBtn" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; border: none; padding: 13px; border-radius: 14px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 6px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 10px 25px rgba(2, 132, 199, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 20px rgba(2, 132, 199, 0.3)'">
           Verify &amp; Enter Library 🚀
         </button>
       </form>
 
-      <div style="margin-top: 18px; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
-        <a href="https://wa.me/8801882192070?text=Hi,%20I%20am%20facing%20issues%20accessing%20the%20E-Library.%20Please%20help." target="_blank" style="font-size: 0.8rem; font-weight: 700; color: #25d366; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+      <!-- Help Link -->
+      <div style="margin-top: 20px; text-align: center; border-top: 1px dashed #e2e8f0; padding-top: 16px;">
+        <a href="https://wa.me/8801882192070?text=Hi,%20I%20am%20facing%20issues%20accessing%20the%20E-Library.%20Please%20help." target="_blank" style="font-size: 0.82rem; font-weight: 700; color: #16a34a; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
           💬 Need Help? Click Here (WhatsApp)
         </a>
       </div>
 
-      <button type="button" onclick="closeAuthModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #64748b;">&times;</button>
     </div>
   </div>
+
+  <style>
+    @keyframes fadeInModal {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 
   <!-- মডার্ন ফোল্ডার স্ট্রাকচারের JS ফাইলসমূহ -->
   <script src="js/routine.js"></script>
@@ -270,7 +284,7 @@
   <script src="js/notice.js"></script>
   <script src="js/chatbot.js"></script>
 
-  <!-- E-Library Verification & Google Sheet Logger Script -->
+  <!-- E-Library Verification & 10-Min Auto-Lock Script -->
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyP6Grb60AXckQ0tw9sLn2u0ljRD-mQrB_5ynMTOQMr_KhzyrUjqKDdBBKCHJHq3inn/exec";
 
@@ -353,11 +367,19 @@
       { roll: "260077", name: "MST. LOTA MONY", email: "mst260077@diit.edu.bd" }
     ];
 
+    const EXPIRY_TIME_MS = 10 * 60 * 1000; // ১০ মিনিট সময়সীমা
+
     function checkElibAccess() {
-      const isVerified = localStorage.getItem('super_diitian_elib_verified');
-      if (isVerified === 'true') {
+      const verifiedTime = localStorage.getItem('super_diitian_elib_time');
+      const currentTime = new Date().getTime();
+
+      if (verifiedTime && (currentTime - parseInt(verifiedTime)) < EXPIRY_TIME_MS) {
+        // ১০ মিনিটের মধ্যে থাকলে নতুন সময় আপডেট করে ই-লাইব্রেরিতে প্রবেশ করাবে
+        localStorage.setItem('super_diitian_elib_time', currentTime.toString());
         window.location.href = 'pages/elibrary.html';
       } else {
+        // সময় শেষ হয়ে গেলে বা প্রথমবার হলে লগইন পপআপ দেখাবে
+        localStorage.removeItem('super_diitian_elib_time');
         const modal = document.getElementById('elibAuthModal');
         if (modal) modal.style.display = 'flex';
       }
@@ -377,7 +399,6 @@
       const errorMsg = document.getElementById('authErrorMsg');
       const submitBtn = document.getElementById('authSubmitBtn');
 
-      // আইডি এবং এডো মেইল উভয়ই ডাটাবেজের সাথে ম্যাচ করছে কি না চেক করা
       const matchedStudent = AUTHORIZED_STUDENTS.find(s => s.roll === id && s.email.toLowerCase() === email);
 
       if (!matchedStudent) {
@@ -389,7 +410,6 @@
       submitBtn.innerText = "Verifying...";
       submitBtn.disabled = true;
 
-      // গুগল শিটে ডেটা পাঠানো
       const formData = new URLSearchParams();
       formData.append('name', name);
       formData.append('id', id);
@@ -402,11 +422,12 @@
       })
       .then(res => res.text())
       .then(data => {
-        localStorage.setItem('super_diitian_elib_verified', 'true');
+        // সফল ভেরিফিকেশনের পর বর্তমান সময় সেভ করে ই-লাইব্রেরিতে রিডাইরেক্ট করবে
+        localStorage.setItem('super_diitian_elib_time', new Date().getTime().toString());
         window.location.href = 'pages/elibrary.html';
       })
       .catch(err => {
-        localStorage.setItem('super_diitian_elib_verified', 'true');
+        localStorage.setItem('super_diitian_elib_time', new Date().getTime().toString());
         window.location.href = 'pages/elibrary.html';
       });
     }

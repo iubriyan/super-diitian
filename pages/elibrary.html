@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,10 +94,9 @@
         <div class="elibrary-shelf">
           <div class="book-shelf-card" onclick="openBookDetails('spl')">
             <img src="../templates/spl-book-cover.jpeg" alt="SPL Book" class="book-shelf-cover" loading="lazy"
-              decoding="async" onerror="this.src='https:https://i.postimg.cc/3w8NJJts/spl-book-cover.jpg'">
+              decoding="async" onerror="this.src='https://i.postimg.cc/3w8NJJts/spl-book-cover.jpg'">
             <div class="book-shelf-meta">
               <h4 class="book-shelf-title">Structured Programming Language (SPL)</h4>
-
             </div>
           </div>
         </div>
@@ -111,7 +109,6 @@
             onerror="this.src='https://i.postimg.cc/3NL7g9ND/spl-book-cover.png'">
           <div class="book-detail-info">
             <h3>Structured Programming Language (SPL)</h3>
-
           </div>
         </div>
 
@@ -339,7 +336,7 @@
         </div>
       </div>
 
-      <!-- Full-Screen Immersive Native PDF Reader View (Expanded Full Width & Height for Mobile/PC) -->
+      <!-- Full-Screen Immersive Native PDF Reader View -->
       <div id="nativePdfReader" style="display: none;">
         <div
           style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: #0f172a; padding: 12px 18px; border-radius: 14px; color: #ffffff;">
@@ -358,80 +355,14 @@
     </div>
   </div>
 
-  <!-- E-Library Verification Popup Modal -->
-  <div id="elibAuthModal"
-    style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
-    <div
-      style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 24px; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; animation: popupSlideUp 0.3s ease;">
-
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div style="font-size: 36px; margin-bottom: 8px;">🔒</div>
-        <h3 style="margin: 0 0 6px 0; font-size: 1.25rem; font-weight: 800; color: #0f172a;">E-Library Secure Access
-        </h3>
-        <p style="margin: 0; font-size: 0.82rem; color: #64748b;">Verify your Student ID &amp; Edu Mail to unlock notes
-          &amp; books.</p>
-      </div>
-
-      <form id="elibAuthForm" onsubmit="verifyAndAccessLibrary(event)"
-        style="display: flex; flex-direction: column; gap: 14px;">
-        <div>
-          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Full
-            Name</label>
-          <input type="text" id="authName" placeholder="Enter Your Full Name" required
-            style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
-        </div>
-
-        <div>
-          <label
-            style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Student ID
-            / Roll</label>
-          <input type="text" id="authId" placeholder="Enter Your Student ID" required
-            style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
-        </div>
-
-        <div>
-          <label
-            style="display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 5px;">Institutional
-            / Edu Mail</label>
-          <input type="email" id="authEmail" placeholder="Enter Your Edu Email" required
-            style="width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.2s;">
-        </div>
-
-        <div id="authErrorMsg"
-          style="color: #ef4444; font-size: 0.78rem; font-weight: 600; text-align: center; display: none;"></div>
-
-        <button type="submit" id="authSubmitBtn"
-          style="background: #0284c7; color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.25); margin-top: 4px;">
-          Verify &amp; Enter Library 🚀
-        </button>
-      </form>
-
-      <div style="margin-top: 18px; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
-        <a href="https://wa.me/8801882192070?text=Hi,%20I%20am%20facing%20issues%20accessing%20the%20E-Library.%20Please%20help."
-          target="_blank"
-          style="font-size: 0.8rem; font-weight: 700; color: #25d366; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-          💬 Need Help? Click Here (WhatsApp)
-        </a>
-      </div>
-
-      <button type="button" onclick="closeAuthModal()"
-        style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #64748b;">&times;</button>
-    </div>
-  </div>
-
-  <style>
-    @keyframes popupSlideUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
+  <!-- Auto-Refresh Timestamp Script for 10-Min Auto-Lock Feature -->
+  <script>
+    setInterval(() => {
+      if (localStorage.getItem('super_diitian_elib_verified') === 'true' || localStorage.getItem('super_diitian_elib_time')) {
+        localStorage.setItem('super_diitian_elib_time', new Date().getTime().toString());
       }
-
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-  </style>
+    }, 30000); // প্রতি ৩০ সেকেন্ড পর পর সময় সতেজ রাখবে যাতে সাইটে থাকাকালীন লক না হয়
+  </script>
 
   <script src="../js/elibrary.js"></script>
 </body>
