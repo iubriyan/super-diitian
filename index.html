@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3S1BPW4HG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-G3S1BPW4HG');
@@ -12,336 +13,386 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Super DIITian — Make It Easy</title>
-  <meta name="description" content="DIIT CSE 26th Batch Student Portal: Cover Page Maker, Routines, Notes, and AI CR Assistant.">
+  <meta name="description"
+    content="DIIT CSE 26th Batch Student Portal: Cover Page Maker, Routines, Notes, and AI CR Assistant.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- ফোল্ডার স্ট্রাকচারের সঠিক CSS লিংকসমূহ -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/students.css">
+  <link rel="stylesheet" href="css/elibrary.css">
+  <link rel="stylesheet" href="css/chatbot.css">
 
   <!-- Open Graph / Social Media Preview Meta Tags -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://super-diitian.vercel.app/">
   <meta property="og:title" content="Super DIITian — Make It Easy">
-  <meta property="og:description" content="DIIT CSE 26th Batch official student portal, class routine, cover page maker, and smart assistant!">
+  <meta property="og:description"
+    content="DIIT CSE 26th Batch official student portal, class routine, cover page maker, and smart assistant!">
   <meta property="og:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
 
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Super DIITian — Make It Easy">
-  <meta name="twitter:description" content="DIIT CSE 26th Batch official student portal, class routine, and cover page maker!">
+  <meta name="twitter:description"
+    content="DIIT CSE 26th Batch official student portal, class routine, and cover page maker!">
   <meta name="twitter:image" content="https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg">
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="site-header__inner" onclick="navigateTo('dashboard')" style="cursor: pointer;" title="হোমপেজে ফিরে যান">
-    <img class="site-header__logo" src="./templates/diititan-logo.PNG" alt="Super DIITian logo">
-  </div>
-</header>
+  <header class="site-header">
+    <div class="site-header__inner" onclick="navigateTo('dashboard')" style="cursor: pointer;" title="হোমপেজে ফিরে যান">
+      <img class="site-header__logo" src="templates/diititan-logo.PNG" alt="Super DIITian logo">
+    </div>
+  </header>
 
-<div class="hub-container">
+  <div class="hub-container">
 
-  <!-- Dashboard / Hub Grid View -->
-  <section id="hubDashboard" class="hub-view">
-    <!-- Smart Weather & Vibe Widget Container -->
-    <div id="smartVibeWidget" class="vibe-weather-card">
-      <div class="weather-left-info">
-        <div class="weather-main-temp" id="wTemp">Loading...</div>
-        <span class="weather-condition-text" id="wCondition">Connecting Weather...</span>
-        <div class="weather-sub-details">
-          <span id="wHumidity">Hum: --</span>
-          <span id="wWind">Wind: --</span>
+    <!-- Dashboard / Hub Grid View -->
+    <section id="hubDashboard" class="hub-view">
+      <!-- Smart Weather & Vibe Widget Container -->
+      <div id="smartVibeWidget" class="vibe-weather-card">
+        <div class="weather-top-row">
+          <div class="weather-left-info">
+            <div class="weather-main-temp" id="wTemp">Loading...</div>
+            <span class="weather-condition-text" id="wCondition">Connecting Weather...</span>
+          </div>
+          <div class="weather-sub-details">
+            <span id="wHumidity">Hum: --</span>
+            <span id="wWind">Wind: --</span>
+          </div>
+        </div>
+        <div class="vibe-bottom-row">
+          <span class="vibe-badge-tag">⚡ Live Vibe Check</span>
+          <p class="vibe-message-text" id="vibeMessage">আবহাওয়া এবং ক্লাসের শিডিউল লোড হচ্ছে...</p>
         </div>
       </div>
-      <div class="vibe-right-comment">
-        <span class="vibe-badge-tag">⚡ Live Vibe Check</span>
-        <p class="vibe-message-text" id="vibeMessage">আবহাওয়া এবং ক্লাসের শিডিউল লোড হচ্ছে...</p>
-      </div>
-    </div>
 
     <div class="hub-grid">
-      <!-- 1. Cover Page Maker -->
-      <div class="hub-card card--blue" onclick="navigateTo('coverMaker')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>Cover Maker</h3>
-          <span>Assignment &amp; Lab</span>
-        </div>
-      </div>
-
-      <!-- 2. Class Routine -->
-      <div class="hub-card card--green" onclick="navigateTo('routine')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>Class Routine</h3>
-          <span>1st Sem Schedule</span>
-        </div>
-      </div>
-
-      <!-- 3. Student List -->
-      <div class="hub-card card--yellow" onclick="navigateTo('students')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>Student List</h3>
-          <span>Batchmates &amp; Roll</span>
-        </div>
-      </div>
-
-      <!-- 4. News Portal -->
-      <div class="hub-card card--purple" onclick="navigateTo('news')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>Bangladesh News</h3>
-          <span>Live Categories</span>
-        </div>
-      </div>
-
-      <!-- 5. Knowledge Hub -->
-      <div class="hub-card card--cyan" onclick="navigateTo('knowledge')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>Daily Knowledge</h3>
-          <span>Wikipedia & Facts</span>
-        </div>
-      </div>
-
-      <!-- 6. E-Library (Updated from Lab Codes) -->
-      <div class="hub-card card--dark" onclick="navigateTo('elibrary')">
-        <div class="hub-card__icon">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        </div>
-        <div class="hub-card__info">
-          <h3>E-Library</h3>
-          <span>Books &amp; PDFs</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cover Page Maker Section -->
-  <section id="hubCoverMaker" class="hub-view" style="display: none;">
-    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      Back
-    </button>
-    
-    <main class="layout">
-      <div class="layout__main">
-        <section class="panel" id="detailsPanel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 1</span>
-            <h2>Your details</h2>
-            <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
+       <!-- 1. Cover Page Maker -->
+        <a href="pages/covermaker.html" class="hub-card card--blue" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
           </div>
-
-          <div class="field-grid">
-            <label class="field">
-              <span>Your Department Name</span>
-              <input type="text" id="deptName" maxlength="120">
-            </label>
-            <label class="field">
-              <span>Your Batch Name</span>
-              <input type="text" id="batchName" maxlength="80">
-            </label>
-            <label class="field">
-              <span>Your Course Code</span>
-              <input type="text" id="courseCode" maxlength="40">
-            </label>
-            <label class="field">
-              <span>Your Course Title</span>
-              <input type="text" id="courseTitle" maxlength="120">
-            </label>
+          <div class="hub-card__info">
+            <h3>Cover Maker</h3>
+            <span>Assignment &amp; Lab</span>
           </div>
+        </a>
 
-          <p class="fixed-note" id="fixedNote" hidden>
-            This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
-            details are already printed on it. Just fill in <strong>Your Info</strong> below.
-          </p>
+        <!-- 2. Class Routine -->
+        <a href="pages/routine.html" class="hub-card card--green" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="hub-card__info">
+            <h3>Class Routine</h3>
+            <span>1st Sem Schedule</span>
+          </div>
+        </a>
 
-          <div class="sub-section" id="teacherSection">
-            <h3>Teacher info <span>Submitted to</span></h3>
+        <!-- 3. Student List -->
+        <a href="pages/students.html" class="hub-card card--yellow" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="hub-card__info">
+            <h3>Student List</h3>
+            <span>Batchmates &amp; Roll</span>
+          </div>
+        </a>
+
+        <!-- 4. News Portal -->
+        <a href="pages/news.html" class="hub-card card--purple" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+            </svg>
+          </div>
+          <div class="hub-card__info">
+            <h3>Bangladesh News</h3>
+            <span>Live Categories</span>
+          </div>
+        </a>
+
+        <!-- 5. Knowledge Hub -->
+        <a href="pages/knowledge.html" class="hub-card card--cyan" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </div>
+          <div class="hub-card__info">
+            <h3>Daily Knowledge</h3>
+            <span>Wikipedia & Facts</span>
+          </div>
+        </a>
+
+        <!-- 6. E-Library -->
+        <a href="pages/elibrary.html" class="hub-card card--dark" style="text-decoration: none; color: inherit;">
+          <div class="hub-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div class="hub-card__info">
+            <h3>E-Library</h3>
+            <span>Books &amp; PDFs</span>
+          </div>
+        </a>
+      </div>
+    <!-- Cover Page Maker Section -->
+    <section id="hubCoverMaker" class="hub-view" style="display: none;">
+      <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+
+      <main class="layout">
+        <div class="layout__main">
+          <section class="panel" id="detailsPanel">
+            <div class="panel__head">
+              <span class="panel__eyebrow">Step 1</span>
+              <h2>Your details</h2>
+              <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
+            </div>
+
             <div class="field-grid">
               <label class="field">
-                <span>Teacher Name</span>
-                <input type="text" id="teacherName" maxlength="80">
+                <span>Your Department Name</span>
+                <input type="text" id="deptName" maxlength="120">
               </label>
               <label class="field">
-                <span>Teacher Title</span>
-                <input type="text" id="teacherTitle" maxlength="80">
+                <span>Your Batch Name</span>
+                <input type="text" id="batchName" maxlength="80">
               </label>
-              <label class="field field--wide">
-                <span>Teacher Department</span>
-                <input type="text" id="teacherDept" maxlength="120">
+              <label class="field">
+                <span>Your Course Code</span>
+                <input type="text" id="courseCode" maxlength="40">
+              </label>
+              <label class="field">
+                <span>Your Course Title</span>
+                <input type="text" id="courseTitle" maxlength="120">
               </label>
             </div>
-          </div>
 
-          <div class="sub-section" id="studentSection">
-            <h3>Your info <span>Submitted by</span></h3>
-            <div class="field-grid">
-              <label class="field">
-                <span>Your Name</span>
-                <input type="text" id="studentName" maxlength="80">
-              </label>
-              <label class="field">
-                <span>Your Section</span>
-                <input type="text" id="studentSec" maxlength="30">
-              </label>
-              <label class="field">
-                <span>Your ID No</span>
-                <input type="text" id="studentId" maxlength="40">
-              </label>
-              <label class="field">
-                <span>Your Reg No</span>
-                <input type="text" id="studentReg" maxlength="40">
-              </label>
+            <p class="fixed-note" id="fixedNote" hidden>
+              This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher
+              details are already printed on it. Just fill in <strong>Your Info</strong> below.
+            </p>
+
+            <div class="sub-section" id="teacherSection">
+              <h3>Teacher info <span>Submitted to</span></h3>
+              <div class="field-grid">
+                <label class="field">
+                  <span>Teacher Name</span>
+                  <input type="text" id="teacherName" maxlength="80">
+                </label>
+                <label class="field">
+                  <span>Teacher Title</span>
+                  <input type="text" id="teacherTitle" maxlength="80">
+                </label>
+                <label class="field field--wide">
+                  <span>Teacher Department</span>
+                  <input type="text" id="teacherDept" maxlength="120">
+                </label>
+              </div>
             </div>
-          </div>
-        </section>
 
-        <section class="panel" id="templatesPanel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 2</span>
-            <h2>Choose a cover design</h2>
-          </div>
-          <div class="template-grid" id="templateGrid"></div>
-        </section>
+            <div class="sub-section" id="studentSection">
+              <h3>Your info <span>Submitted by</span></h3>
+              <div class="field-grid">
+                <label class="field">
+                  <span>Your Name</span>
+                  <input type="text" id="studentName" maxlength="80">
+                </label>
+                <label class="field">
+                  <span>Your Section</span>
+                  <input type="text" id="studentSec" maxlength="30">
+                </label>
+                <label class="field">
+                  <span>Your ID No</span>
+                  <input type="text" id="studentId" maxlength="40">
+                </label>
+                <label class="field">
+                  <span>Your Reg No</span>
+                  <input type="text" id="studentReg" maxlength="40">
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="templatesPanel">
+            <div class="panel__head">
+              <span class="panel__eyebrow">Step 2</span>
+              <h2>Choose a cover design</h2>
+            </div>
+            <div class="template-grid" id="templateGrid"></div>
+          </section>
+        </div>
+
+        <div class="layout__side">
+          <section class="panel preview-panel">
+            <div class="panel__head">
+              <span class="panel__eyebrow">Step 3</span>
+              <h2>Preview &amp; download</h2>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
+              <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
+            </div>
+            <button type="button" class="download-btn" id="downloadBtn">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path fill="currentColor"
+                  d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z" />
+              </svg>
+              Download high-quality JPG
+            </button>
+            <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
+          </section>
+        </div>
+      </main>
+    </section>
+
+    <!-- Interactive Dynamic View Section -->
+    <section id="hubDetailView" class="hub-view" style="display: none;">
+      <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+      </button>
+      <div class="hub-panel">
+        <h2 id="hubViewTitle">Module</h2>
+        <div id="hubViewContent"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer__card">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-badge">🚀 Built for DIITians</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://www.facebook.com/share/1C4VXsD7J7/" target="_blank" rel="noopener"><strong>Say Hello
+              👋</strong></a>
+          <span class="link-divider">•</span>
+          <a href="https://diit.edu.bd" target="_blank" rel="noopener">DIIT Official Website</a>
+        </div>
       </div>
 
-      <div class="layout__side">
-        <section class="panel preview-panel">
-          <div class="panel__head">
-            <span class="panel__eyebrow">Step 3</span>
-            <h2>Preview &amp; download</h2>
-          </div>
-          <div class="canvas-wrap">
-            <canvas id="previewCanvas" width="1414" height="2000" aria-label="Cover page preview"></canvas>
-            <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
-          </div>
-          <button type="button" class="download-btn" id="downloadBtn">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z"/></svg>
-            Download high-quality JPG
-          </button>
-          <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
-        </section>
-      </div>
-    </main>
-  </section>
+      <div class="footer-divider"></div>
 
-  <!-- Interactive Dynamic View Section (Routine, Student List, Notes, etc.) -->
-  <section id="hubDetailView" class="hub-view" style="display: none;">
-    <button type="button" class="hub-back-btn" onclick="navigateTo('dashboard')">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      Back
-    </button>
-    <div class="hub-panel">
-      <h2 id="hubViewTitle">Module</h2>
-      <div id="hubViewContent"></div>
+      <div class="footer-bottom">
+        <p class="footer-credits">
+          Brain: <a href="https://www.facebook.com/riyan.iftekhar" target="_blank" rel="noopener noreferrer"><strong>Riyan</strong></a>
+          <span class="credit-divider">|</span>
+          Backup Brain: <strong>Al Mama</strong>
+        </p>
+        <p class="footer-copy">&copy; 2026 Super DIITian. All rights reserved.</p>
+      </div>
     </div>
-  </section>
+  </footer>
 
-</div>
-
-<footer class="site-footer">
-  <div class="site-footer__card">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <span class="footer-badge">🚀 Built for DIITians</span>
+  <div id="cr-widget-container">
+    <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
+    <div id="cr-chat-box" class="cr-hidden">
+      <div class="cr-chat-header">
+        <strong>CR GPT (CSE 26)</strong>
+        <button id="cr-chat-close">✖</button>
       </div>
-      <div class="footer-links">
-        <a href="https://www.facebook.com/share/1C4VXsD7J7/" target="_blank" rel="noopener"><strong>Say Hello 👋</strong></a>
-        <span class="link-divider">•</span>
-        <a href="https://diit.edu.bd" target="_blank" rel="noopener">DIIT Official Website</a>
+
+      <div id="cr-messages" class="cr-messages-body">
+        <div class="cr-msg cr-bot">
+          আসসালামু আলাইকুম! আমি তোমাদের ক্লাসের CR GPT! আমি প্রিয়ন্তি এবং রাফির থেকেও বেশী স্মার্ট! 😎
+          কি জানতে চাও প্রশ্ন কর।
+        </div>
       </div>
-    </div>
 
-    <div class="footer-divider"></div>
-
-    <div class="footer-bottom">
-      <p class="footer-credits">
-       Brain: <a href="https://www.facebook.com/riyan.iftekhar" target="_blank" rel="noopener noreferrer"><strong>Riyan</strong></a>
-        <span class="credit-divider">|</span>
-        Backup Brain: <strong>Al Mama</strong>
-      </p>
-      <p class="footer-copy">&copy; 2026 Super DIITian. All rights reserved.</p>
+      <div class="cr-chat-input-area">
+        <input type="text" id="cr-input" placeholder="আজকে কী ক্লাস আছে?..." />
+        <button id="cr-send-btn">➤</button>
+      </div>
     </div>
   </div>
-</footer>
 
-<div id="cr-widget-container">
-  <button id="cr-chat-toggle" title="Ask CR GPT">💬 CR GPT</button>
-  <div id="cr-chat-box" class="cr-hidden">
-    <div class="cr-chat-header">
-      <strong>CR GPT (CSE 26)</strong>
-      <button id="cr-chat-close">✖</button>
-    </div>
-    
-    <div id="cr-messages" class="cr-messages-body">
-      <div class="cr-msg cr-bot">
-        আসসালামু আলাইকুম! আমি তোমাদের ক্লাসের CR GPT! আমি প্রিয়ন্তি এবং রাফির থেকেও বেশী স্মার্ট! 😎
-        কি জানতে চাও প্রশ্ন কর। 
+  <div id="bkash-modal" class="bkash-overlay bkash-hidden">
+    <div class="bkash-card">
+      <div class="bkash-header">
+        <div class="bkash-logo-text">bKash <span>Payment</span></div>
+        <button id="bkash-close-btn">&times;</button>
       </div>
-    </div>
 
-    <div class="cr-chat-input-area">
-      <input type="text" id="cr-input" placeholder="আজকে কী ক্লাস আছে?..." />
-      <button id="cr-send-btn">➤</button>
+      <div class="bkash-body" id="bkash-main-view">
+        <div class="bkash-merchant">
+          <p class="merchant-name">Super DIITian Premium</p>
+          <p class="merchant-inv">Invoice: EEC-2026</p>
+        </div>
+
+        <div class="bkash-amount-box">
+          <span>Amount to Pay</span>
+          <h3>৳ 99.00</h3>
+        </div>
+
+        <div class="bkash-input-group">
+          <label>Your bKash Account Number</label>
+          <input type="tel" id="bkash-phone-input" placeholder="e.g 017XXXXXXXX" value="017" maxlength="11" />
+        </div>
+
+        <p class="bkash-terms">By clicking Pay, you agree to terms & conditions.</p>
+
+        <button id="bkash-pay-btn" class="bkash-confirm-btn">Pay ৳ 99.00</button>
+      </div>
+
+      <div class="bkash-loading-view bkash-hidden" id="bkash-loading-view">
+        <div class="bkash-spinner"></div>
+        <p>Processing Payment...</p>
+      </div>
+
+      <div class="bkash-success-view bkash-hidden" id="bkash-success-view">
+        <div class="fun-emoji">😁🎉</div>
+        <h3 class="fun-title">আচ্ছা থাক টাকা লাগবে না!</h3>
+        <p class="fun-desc">ফ্রিতেই আনলক করে দিয়ে দিলাম, এনজয় করো!</p>
+        <button id="bkash-enjoy-btn" class="bkash-confirm-btn">থ্যাংক ইউ! 🚀</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="bkash-modal" class="bkash-overlay bkash-hidden">
-  <div class="bkash-card">
-    <div class="bkash-header">
-      <div class="bkash-logo-text">bKash <span>Payment</span></div>
-      <button id="bkash-close-btn">&times;</button>
-    </div>
-
-    <div class="bkash-body" id="bkash-main-view">
-      <div class="bkash-merchant">
-        <p class="merchant-name">Super DIITian Premium</p>
-        <p class="merchant-inv">Invoice: EEC-2026</p>
-      </div>
-
-      <div class="bkash-amount-box">
-        <span>Amount to Pay</span>
-        <h3>৳ 99.00</h3>
-      </div>
-
-      <div class="bkash-input-group">
-        <label>Your bKash Account Number</label>
-        <input type="tel" id="bkash-phone-input" placeholder="e.g 017XXXXXXXX" value="017" maxlength="11" />
-      </div>
-
-      <p class="bkash-terms">By clicking Pay, you agree to terms & conditions.</p>
-
-      <button id="bkash-pay-btn" class="bkash-confirm-btn">Pay ৳ 99.00</button>
-    </div>
-
-    <div class="bkash-loading-view bkash-hidden" id="bkash-loading-view">
-      <div class="bkash-spinner"></div>
-      <p>Processing Payment...</p>
-    </div>
-
-    <div class="bkash-success-view bkash-hidden" id="bkash-success-view">
-      <div class="fun-emoji">😁🎉</div>
-      <h3 class="fun-title">আচ্ছা থাক টাকা লাগবে না!</h3>
-      <p class="fun-desc">ফ্রিতেই আনলক করে দিয়ে দিলাম, এনজয় করো!</p>
-      <button id="bkash-enjoy-btn" class="bkash-confirm-btn">থ্যাংক ইউ! 🚀</button>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <!-- মডার্ন ফোল্ডার স্ট্রাকচারের JS ফাইলসমূহ -->
+  <script src="js/routine.js"></script>
+  <script src="js/students.js"></script>
+  <script src="js/notice.js"></script>
+  <script src="js/chatbot.js"></script>
+  
 </body>
+
 </html>

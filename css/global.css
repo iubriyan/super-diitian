@@ -1,0 +1,252 @@
+/* ============================================================
+   Super DIITian — Hub & Cover Page Maker
+   Design tokens
+   ============================================================ */
+:root{
+  --paper:      #F2F6FB;
+  --surface:    #FFFFFF;
+  --ink:        #16232F;
+  --muted:      #5C7286;
+  --line:       #DEE6EF;
+  --blue:       #8c959b;
+  --blue-deep:  #5c72b6;
+  --green:      #1E9E4A;
+  --yellow:     #FFC72C;
+  --shadow-sm:  0 1px 2px rgba(16,36,56,.06), 0 1px 1px rgba(16,36,56,.04);
+  --shadow-md:  0 8px 24px rgba(16,36,56,.10), 0 2px 6px rgba(16,36,56,.06);
+  --shadow-lg:  0 20px 45px rgba(16,36,56,.16);
+  --radius-sm:  10px;
+  --radius-md:  16px;
+  --radius-lg:  22px;
+  --font-display: "Lora", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ -webkit-text-size-adjust: 100%; }
+
+body{
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img{ max-width: 100%; display: block; }
+
+a{ color: var(--blue-deep); }
+
+button{ font-family: inherit; }
+
+:focus-visible{
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ============================================================
+   bKash Modal Perfect Professional Styling
+   ============================================================ */
+
+.bkash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.bkash-hidden {
+  display: none !important;
+}
+
+.bkash-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: bkashPopupScale 0.25s ease-out;
+}
+
+@keyframes bkashPopupScale {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bkash-header {
+  background: #e2136e;
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bkash-logo-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.bkash-logo-text span {
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+#bkash-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.bkash-body {
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.bkash-merchant {
+  margin-bottom: 16px;
+}
+
+.merchant-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.merchant-inv {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.bkash-amount-box {
+  background: #fdf2f8;
+  border: 1px dashed #e2136e;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+
+.bkash-amount-box span {
+  display: block;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.bkash-amount-box h3 {
+  font-size: 1.5rem;
+  color: #e2136e;
+  margin: 0;
+  font-weight: 800;
+}
+
+.bkash-input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.bkash-input-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.bkash-input-group input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.bkash-input-group input:focus {
+  border-color: #e2136e;
+}
+
+.bkash-confirm-btn {
+  width: 100%;
+  background: #e2136e;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bkash-confirm-btn:hover {
+  background: #c81062;
+}
+
+/* Success View Styling Fixed */
+.bkash-success-view {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.fun-emoji {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.fun-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.fun-desc {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+/* Loading Spinner */
+.bkash-loading-view {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.bkash-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #e2136e;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

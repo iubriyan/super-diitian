@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Routine — Super DIITian</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/chatbot.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner" onclick="window.location.href='../index.html'" style="cursor: pointer;">
+      <img class="site-header__logo" src="../templates/diititan-logo.PNG" alt="Logo">
+    </div>
+  </header>
+
+  <div class="hub-container">
+    <button type="button" class="hub-back-btn" onclick="window.location.href='../index.html'">
+      &larr; Back to Dashboard
+    </button>
+
+    <div class="hub-panel">
+      <h2>Class Routine — CSE 26th Batch</h2>
+      
+      <div id="routineLiveTracker" class="live-tracker-card"></div>
+
+      <div class="routine-controls">
+        <div class="section-switch-group">
+          <button id="secBtnA" class="sec-tab-btn is-active" onclick="renderRoutineView('A')">Section A</button>
+          <button id="secBtnB" class="sec-tab-btn" onclick="renderRoutineView('B')">Section B</button>
+        </div>
+        <button class="download-routine-btn" onclick="downloadRoutineJPG()">
+          Save Routine (JPG)
+        </button>
+      </div>
+
+      <div id="routineCardsList"></div>
+    </div>
+  </div>
+
+  <!-- রুটিন ডেটা এবং স্ক্রিপ্ট লিংক -->
+  <script>
+    const FACULTY = {
+      PB: "Poly Bhoumik", MZH: "Md. Zakir Hossain", SR: "Saidur Rahman",
+      MIH: "Md. Imran Hossain", MMR: "Md. Mushfiqur Rahaman", RKD: "Ramen Kumar Das",
+      PRM: "Md. Parvezur Rahman Mahin", MFO: "Mubtasim Fuad Opee", SQ: "Sabrina Quadir", FP: "Farjana Parvin"
+    };
+
+    const ROUTINE_DATA = {
+      A: {
+        room: "704",
+        days: [
+          {
+            name: "Sunday", dayIdx: 0,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Calculus", teacher: FACULTY.MZH, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.PB, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Structured Programming Lab", teacher: FACULTY.PB, isLab: true }
+            ]
+          },
+          {
+            name: "Monday", dayIdx: 1,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Calculus", teacher: FACULTY.MZH, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Electrical & Electronic Circuit", teacher: FACULTY.RKD, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "English", teacher: FACULTY.SQ, isLab: false }
+            ]
+          },
+          {
+            name: "Tuesday", dayIdx: 2,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Electrical & Electronic Circuit", teacher: FACULTY.RKD, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Physics", teacher: FACULTY.MFO, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Electrical & Electronic Circuit Lab", teacher: FACULTY.SR, isLab: true }
+            ]
+          },
+          {
+            name: "Wednesday", dayIdx: 3,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "English", teacher: FACULTY.SQ, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.PB, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Physics", teacher: FACULTY.MFO, isLab: false }
+            ]
+          }
+        ]
+      },
+      B: {
+        room: "706",
+        days: [
+          {
+            name: "Sunday", dayIdx: 0,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Physics", teacher: FACULTY.PRM, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Electrical & Electronic Circuit", teacher: FACULTY.SR, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Calculus", teacher: FACULTY.MIH, isLab: false }
+            ]
+          },
+          {
+            name: "Monday", dayIdx: 1,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "English", teacher: FACULTY.FP, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Calculus", teacher: FACULTY.MIH, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Electrical & Electronic Circuit Lab", teacher: FACULTY.SR, isLab: true }
+            ]
+          },
+          {
+            name: "Tuesday", dayIdx: 2,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Electrical & Electronic Circuit", teacher: FACULTY.SR, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "Structured Programming", teacher: FACULTY.MMR, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Physics", teacher: FACULTY.PRM, isLab: false }
+            ]
+          },
+          {
+            name: "Wednesday", dayIdx: 3,
+            classes: [
+              { time: "11:40 AM - 12:50 PM", startM: 700, endM: 770, subject: "Structured Programming", teacher: FACULTY.MMR, isLab: false },
+              { time: "12:50 PM - 02:00 PM", startM: 770, endM: 840, subject: "English", teacher: FACULTY.FP, isLab: false },
+              { time: "02:20 PM - 03:30 PM", startM: 860, endM: 930, subject: "Structured Programming Lab", teacher: FACULTY.MMR, isLab: true }
+            ]
+          }
+        ]
+      }
+    };
+  </script>
+  <script src="../js/routine.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRoutineView('A');
+    });
+  </script>
+</body>
+</html>

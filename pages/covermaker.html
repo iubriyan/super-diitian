@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Page Maker — Super DIITian</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/chatbot.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner" onclick="window.location.href='../index.html'" style="cursor: pointer;">
+      <img class="site-header__logo" src="/templates/diititan-logo.PNG" alt="Logo">
+    </div>
+  </header>
+
+  <div class="hub-container">
+    <button type="button" class="hub-back-btn" onclick="window.location.href='../index.html'">&larr; Back to Dashboard</button>
+
+    <div class="hub-panel">
+      <h2>Cover Page Maker</h2>
+      <main class="layout">
+        <div class="layout__main">
+          <section class="panel" id="detailsPanel">
+            <div class="panel__head">
+              <span class="panel__eyebrow">Step 1</span>
+              <h2>Your details</h2>
+              <button type="button" class="reset-link" id="resetBtn">Reset to defaults</button>
+            </div>
+
+            <div class="field-grid">
+              <label class="field"><span>Department Name</span><input type="text" id="deptName" maxlength="120"></label>
+              <label class="field"><span>Batch Name</span><input type="text" id="batchName" maxlength="80"></label>
+              <label class="field"><span>Course Code</span><input type="text" id="courseCode" maxlength="40"></label>
+              <label class="field"><span>Course Title</span><input type="text" id="courseTitle" maxlength="120"></label>
+            </div>
+
+            <p class="fixed-note" id="fixedNote" hidden>
+              This design is fixed for the <strong>EEC Lab Report</strong> — department, course and teacher details are already printed on it. Just fill in <strong>Your Info</strong> below.
+            </p>
+
+            <div class="sub-section" id="teacherSection">
+              <h3>Teacher info <span>Submitted to</span></h3>
+              <div class="field-grid">
+                <label class="field"><span>Teacher Name</span><input type="text" id="teacherName" maxlength="80"></label>
+                <label class="field"><span>Teacher Title</span><input type="text" id="teacherTitle" maxlength="80"></label>
+                <label class="field field--wide"><span>Teacher Department</span><input type="text" id="teacherDept" maxlength="120"></label>
+              </div>
+            </div>
+
+            <div class="sub-section" id="studentSection">
+              <h3>Your info <span>Submitted by</span></h3>
+              <div class="field-grid">
+                <label class="field"><span>Your Name</span><input type="text" id="studentName" maxlength="80"></label>
+                <label class="field"><span>Section</span><input type="text" id="studentSec" maxlength="30"></label>
+                <label class="field"><span>ID No</span><input type="text" id="studentId" maxlength="40"></label>
+                <label class="field"><span>Reg No</span><input type="text" id="studentReg" maxlength="40"></label>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="templatesPanel">
+            <div class="panel__head"><span class="panel__eyebrow">Step 2</span><h2>Choose a cover design</h2></div>
+            <div class="template-grid" id="templateGrid"></div>
+          </section>
+        </div>
+
+        <div class="layout__side">
+          <section class="panel preview-panel">
+            <div class="panel__head"><span class="panel__eyebrow">Step 3</span><h2>Preview & download</h2></div>
+            <div class="canvas-wrap">
+              <canvas id="previewCanvas" width="1414" height="2000"></canvas>
+              <div class="canvas-wrap__loading" id="canvasLoading">Loading template…</div>
+            </div>
+            <button type="button" class="download-btn" id="downloadBtn">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path fill="currentColor" d="M12 16.5l-5.5-5.5 1.4-1.4L11 12.7V3h2v9.7l3.1-3.1 1.4 1.4L12 16.5zM5 19h14v2H5z" />
+              </svg>
+              Download high-quality JPG
+            </button>
+            <p class="preview-hint">Downloads as a print-ready JPG sized for A4.</p>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- bKash Modal -->
+  <div id="bkash-modal" class="bkash-overlay bkash-hidden">
+    <div class="bkash-card">
+      <div class="bkash-header">
+        <div class="bkash-logo-text">bKash <span>Payment</span></div>
+        <button id="bkash-close-btn">&times;</button>
+      </div>
+      <div class="bkash-body" id="bkash-main-view">
+        <div class="bkash-merchant">
+          <p class="merchant-name">Super DIITian Premium</p>
+          <p class="merchant-inv">Invoice: EEC-2026</p>
+        </div>
+        <div class="bkash-amount-box">
+          <span>Amount to Pay</span>
+          <h3>৳ 99.00</h3>
+        </div>
+        <div class="bkash-input-group">
+          <label>Your bKash Account Number</label>
+          <input type="tel" id="bkash-phone-input" placeholder="e.g 017XXXXXXXX" value="017" maxlength="11" />
+        </div>
+        <button id="bkash-pay-btn" class="bkash-confirm-btn">Pay ৳ 99.00</button>
+      </div>
+      <div class="bkash-loading-view bkash-hidden" id="bkash-loading-view">
+        <div class="bkash-spinner"></div>
+        <p>Processing Payment...</p>
+      </div>
+      <div class="bkash-success-view bkash-hidden" id="bkash-success-view">
+        <div class="fun-emoji">😁🎉</div>
+        <h3 class="fun-title">আচ্ছা থাক টাকা লাগবে না!</h3>
+        <p class="fun-desc">ফ্রিতেই আনলক করে দিয়ে দিলাম, এনজয় করো!</p>
+        <button id="bkash-enjoy-btn" class="bkash-confirm-btn">থ্যাংক ইউ! 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/covermaker.js"></script>
+</body>
+</html>

@@ -1,6 +1,82 @@
 /* ============================================================
-   Super DIITian — Main App Initialization & Cover Maker Engine
+   Standalone Cover Page Maker Engine (Fixed & Restored)
    ============================================================ */
+
+const CANVAS_W = 1414;
+const CANVAS_H = 2000;
+const STORAGE_PREFIX = 'super_diitian_';
+
+const TEMPLATES = [
+  {
+    id: 't1', file: '../templates/t1.jpg', label: 'Template 1', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 15, hPct: 20, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 38, hPct: 19, align: 'center' },
+      teacher:   { xPct: 17, wPct: 41, yPct: 62.8, hPct: 17, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 64.5, hPct: 17, align: 'left' },
+    }
+  },
+  {
+    id: 't2', file: '../templates/t2.jpg', label: 'Template 2', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 15, hPct: 13, align: 'center' },
+      course:    { xPct: 12, wPct: 75, yPct: 30, hPct: 15, align: 'center' },
+      teacher:   { xPct: 9,  wPct: 28, yPct: 47, hPct: 23, align: 'left' },
+      student:   { xPct: 41, wPct: 40, yPct: 48.8, hPct: 23, align: 'left' },
+    }
+  },
+  {
+    id: 't3', file: '../templates/t3.jpg', label: 'Template 3', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 13, hPct: 17, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 35, hPct: 14, align: 'center' },
+      teacher:   { xPct: 17, wPct: 41, yPct: 51.8, hPct: 20, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 53.6, hPct: 20, align: 'left' },
+    }
+  },
+  {
+    id: 't4', file: '../templates/t4.jpg', label: 'Template 4', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 18, hPct: 15, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 37, hPct: 14, align: 'center' },
+      teacher:   { xPct: 17, wPct: 41, yPct: 55, hPct: 18, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 56.6, hPct: 18, align: 'left' },
+    }
+  },
+  {
+    id: 't5', file: '../templates/t5.jpg', label: 'Template 5', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 17.6, hPct: 14, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 34, hPct: 14, align: 'center' },
+      teacher:   { xPct: 17, wPct: 41, yPct: 55, hPct: 11, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 56.5, hPct: 11, align: 'left' },
+    }
+  },
+  {
+    id: 't6', file: '../templates/t6.jpg', label: 'Template 6', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 15.6, hPct: 11, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 31, hPct: 14, align: 'center' },
+      teacher:   { xPct: 17, wPct: 41, yPct: 50, hPct: 18, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 51.6, hPct: 18, align: 'left' },
+    }
+  },
+  {
+    id: 't7', file: '../templates/t7.jpg', label: 'Template 7', fixed: false,
+    zones: {
+      deptBatch: { xPct: 10, wPct: 80, yPct: 16.6, hPct: 15, align: 'center' },
+      course:    { xPct: 10, wPct: 80, yPct: 35, hPct: 14, align: 'center' },
+      teacher:   { xPct: 17, wPct: 43, yPct: 51, hPct: 23, align: 'left' },
+      student:   { xPct: 65, wPct: 40, yPct: 52.8, hPct: 23, align: 'left' },
+    }
+  },
+  {
+    id: 't8', file: '../templates/t8.jpg', label: 'EEC Lab Report', fixed: true, isPremium: true,
+    zones: {
+      student:   { xPct: 44, wPct: 46, yPct: 53, hPct: 27, align: 'left' },
+    }
+  },
+];
 
 const DEFAULTS = {
   deptName: 'Department of Computer Science and Engineering',
@@ -122,6 +198,7 @@ function loadImage(src) {
   if (imageCache[src]) return imageCache[src];
   const p = new Promise((resolve, reject) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.onerror = (err) => {
       delete imageCache[src];
@@ -286,7 +363,7 @@ function buildTemplateGrid() {
       <span class="template-card__clip" aria-hidden="true"></span>
       ${badgeHtml}
       <span class="template-card__frame">
-        <img src="${tpl.file}" alt="${tpl.label} cover design" loading="lazy" onerror="this.src='https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg'">
+        <img src="${tpl.file}" alt="${tpl.label}" loading="lazy" onerror="this.src='https://i.postimg.cc/ryft4CT4/White-and-Purple-Flower-Logo.jpg'">
       </span>
       <span class="template-card__label">${tpl.label}</span>
     `;
@@ -311,11 +388,38 @@ function loadFormData() {
 
     const saved = localStorage.getItem(STORAGE_PREFIX + id);
     if (saved !== null && saved !== '') {
-      el.value = (id === 'studentName') ? formatStudentName(saved) : saved;
+      el.value = saved;
     } else {
       el.value = DEFAULTS[id] || '';
     }
   });
+
+  // স্টুডেন্ট লিস্ট থেকে আসা ডেটা চেক করে ইনপুটে বসানো এবং লোকালস্টোরেজ আপডেট করা
+  const savedStudentName = localStorage.getItem('super_diitian_studentName');
+  const savedStudentId = localStorage.getItem('super_diitian_studentId');
+  const savedStudentSec = localStorage.getItem('super_diitian_studentSec');
+
+  if (savedStudentName) {
+    const nameInput = document.getElementById('studentName');
+    if (nameInput) {
+      nameInput.value = savedStudentName;
+      localStorage.setItem(STORAGE_PREFIX + 'studentName', savedStudentName);
+    }
+  }
+  if (savedStudentId) {
+    const idInput = document.getElementById('studentId');
+    if (idInput) {
+      idInput.value = savedStudentId;
+      localStorage.setItem(STORAGE_PREFIX + 'studentId', savedStudentId);
+    }
+  }
+  if (savedStudentSec) {
+    const secInput = document.getElementById('studentSec');
+    if (secInput) {
+      secInput.value = savedStudentSec;
+      localStorage.setItem(STORAGE_PREFIX + 'studentSec', savedStudentSec);
+    }
+  }
 }
 
 function wireForm() {
@@ -329,7 +433,7 @@ function wireForm() {
     });
   });
 
-  const resetBtn = document.getElementById('resetBtn') || document.querySelector('.reset-link');
+  const resetBtn = document.getElementById('resetBtn');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       FIELD_IDS.forEach(id => {
@@ -376,17 +480,7 @@ function wireDownload() {
   });
 }
 
-function blockEvent(e) { e.preventDefault(); }
-function protectTemplateImages() {
-  const templateImages = document.querySelectorAll('.template-card img');
-  templateImages.forEach(img => {
-    img.removeEventListener('contextmenu', blockEvent);
-    img.addEventListener('contextmenu', blockEvent);
-    img.removeEventListener('dragstart', blockEvent);
-    img.addEventListener('dragstart', blockEvent);
-  });
-}
-
+// bKash modal handling
 const bkashModal = document.getElementById("bkash-modal");
 const bkashCloseBtn = document.getElementById("bkash-close-btn");
 const bkashPayBtn = document.getElementById("bkash-pay-btn");
@@ -408,12 +502,10 @@ function closeBkashModal() {
 }
 
 if (bkashCloseBtn) bkashCloseBtn.onclick = closeBkashModal;
-
 if (bkashPayBtn) {
   bkashPayBtn.onclick = () => {
     bkashMainView.classList.add("bkash-hidden");
     bkashLoadingView.classList.remove("bkash-hidden");
-
     setTimeout(() => {
       bkashLoadingView.classList.add("bkash-hidden");
       bkashSuccessView.classList.remove("bkash-hidden");
@@ -421,158 +513,20 @@ if (bkashPayBtn) {
     }, 1500);
   };
 }
-
 if (bkashEnjoyBtn) {
   bkashEnjoyBtn.onclick = () => {
     closeBkashModal();
     buildTemplateGrid();
-    protectTemplateImages();
     selectTemplate('t8');
   };
 }
 
-window.navigateTo = function(viewKey, pushToHistory = true) {
-  const hubDashboard = document.getElementById("hubDashboard");
-  const hubCoverMaker = document.getElementById("hubCoverMaker");
-  const hubDetailView = document.getElementById("hubDetailView");
-  const titleEl = document.getElementById("hubViewTitle");
-  const contentEl = document.getElementById("hubViewContent");
-
-  if (!hubDashboard || !hubCoverMaker || !hubDetailView) return;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (pushToHistory) {
-    history.pushState({ view: viewKey }, "", viewKey === 'dashboard' ? "#" : `#${viewKey}`);
-  }
-
-  if (viewKey === 'dashboard') {
-    hubDashboard.style.display = "block";
-    hubCoverMaker.style.display = "none";
-    hubDetailView.style.display = "none";
-    clearInterval(liveTimerInterval);
-    return;
-  }
-
-  hubDashboard.style.display = "none";
-
-  if (viewKey === 'coverMaker') {
-    hubCoverMaker.style.display = "block";
-    hubDetailView.style.display = "none";
-    scheduleRender();
-    return;
-  }
-
-  hubCoverMaker.style.display = "none";
-  hubDetailView.style.display = "block";
-
-  const modules = {
-    routine: {
-      title: "Class Routine — CSE 26th Batch",
-      content: `
-        <div id="routineLiveTracker" class="live-tracker-card"></div>
-
-        <div class="routine-controls">
-          <div class="section-switch-group">
-            <button id="secBtnA" class="sec-tab-btn is-active" onclick="renderRoutineView('A')">Section A</button>
-            <button id="secBtnB" class="sec-tab-btn" onclick="renderRoutineView('B')">Section B</button>
-          </div>
-          <button class="download-routine-btn" onclick="downloadRoutineJPG()">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Save Routine (JPG)
-          </button>
-        </div>
-
-        <div id="routineCardsList"></div>
-      `
-    },
-
-    students: {
-      title: "CSE 26th Batch Student Directory",
-      content: `
-        <div class="directory-header-box">
-          <div class="directory-search-wrapper">
-            <svg class="search-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="studentSearch" class="directory-search-input" placeholder="Search by name or roll number..." oninput="filterStudents()" />
-          </div>
-          <span class="directory-count-badge" id="studentTotalCount">76 Students</span>
-        </div>
-
-        <div class="students-card-grid" id="studentCardContainer"></div>
-      `
-    },
-
-    news: {
-      title: "Bangladesh Live News",
-      content: `
-        <div class="news-container">
-          <div class="news-categories-bar">
-            <button class="news-cat-btn is-active" onclick="fetchNews('politics', this)">🏛️ রাজনীতি</button>
-            <button class="news-cat-btn" onclick="fetchNews('technology', this)">💻 টেকনোলজি</button>
-            <button class="news-cat-btn" onclick="fetchNews('science', this)">🔬 বিজ্ঞান</button>
-            <button class="news-cat-btn" onclick="fetchNews('sports', this)">🏏 খেলাধুলা</button>
-          </div>
-          <div class="news-grid" id="newsGridContainer">
-            <div class="news-loading">📰 লাইভ নিউজ লোড হচ্ছে, একটু অপেক্ষা করুন...</div>
-          </div>
-        </div>
-      `
-    },
-
-    knowledge: {
-      title: "🧠 Daily Knowledge Hub",
-      content: `
-        <div class="knowledge-container">
-          <div class="knowledge-categories-bar">
-            <button class="k-cat-btn is-active" onclick="fetchKnowledge('science', 'বিজ্ঞান', this)">🔬 বিজ্ঞান</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('space', 'মহাকাশ', this)">🌌 মহাকাশ</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('knowledge', 'প্রযুক্তি', this)">💻 প্রযুক্তি</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('history', 'ইতিহাস', this)">🏛️ ইতিহাস</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('nature', 'প্রকৃতি ও প্রাণী', this)">🌿 প্রকৃতি</button>
-            <button class="k-cat-btn" onclick="fetchKnowledge('psychology', 'মনোবিজ্ঞান', this)">🧠 মনোবিজ্ঞান</button>
-          </div>
-          <div class="knowledge-grid" id="knowledgeCardContainer">
-            <div class="knowledge-loading">🧠 উইকিপিডিয়া থেকে র্যান্ডম জ্ঞান আহরণ করা হচ্ছে...</div>
-          </div>
-        </div>
-      `
-    }
-  };
-
-  const selected = modules[viewKey] || { title: "Portal Module", content: "" };
-  if (titleEl) titleEl.innerHTML = selected.title;
-  if (contentEl) contentEl.innerHTML = selected.content;
-
-  if (viewKey === 'routine') {
-    setTimeout(() => renderRoutineView('A'), 50);
-  }
-  if (viewKey === 'students') {
-    setTimeout(() => renderStudentCards(), 50);
-  }
-  if (viewKey === 'news') {
-    setTimeout(() => fetchNews('politics'), 50);
-  }
-  if (viewKey === 'knowledge') {
-    setTimeout(() => fetchKnowledge('science', 'বিজ্ঞান'), 50);
-  }
-};
-
-window.addEventListener("popstate", (e) => {
-  if (e.state && e.state.view) {
-    navigateTo(e.state.view, false);
-  } else {
-    navigateTo("dashboard", false);
-  }
-});
-
+// পেজ লোড হওয়ার সাথে সাথে ফর্ম ডাটা লোড ও ইনিশিয়ালাইজ করার সঠিক লিসেনার
 document.addEventListener('DOMContentLoaded', () => {
   loadFormData();
   buildTemplateGrid();
   updateFixedState();
   wireForm();
   wireDownload();
-  protectTemplateImages();
-  wireCrGptWidget();
   scheduleRender();
-  initSmartWeatherVibe();
 });
