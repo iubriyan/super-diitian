@@ -47,7 +47,7 @@
   }
 
   .site-header__logo {
-    max-height: 50px !important; /* মোবাইলের জন্য আরও কম্প্যাক্ট সাইজ */
+    max-height: 85px !important; /* মোবাইলের জন্য আরও কম্প্যাক্ট সাইজ */
     width: auto !important;
   }
 }
